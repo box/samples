@@ -1,4 +1,4 @@
-Box Platform Samples
+Box Samples
 ====================
 
 box-node-webhook-to-lambda-sample
