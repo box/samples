@@ -1,13 +1,12 @@
 Box Samples
 ====================
 
-box-node-webhook-to-lambda-sample
----------------------------------
+This is a repo dedicated to sharing code snippets and samples to demonstrate how to get the most out of Box. It will include specific use cases, showcasing integrations and other creative uses of the Box API.
 
-This sample shows how to connect a Box webhook to an AWS Lambda function.
-Each time an event occurs that triggers the webhook on Box, the Lambda function will be called with the details of the event.
-The messages are secured with a message signature that is validated in the Lambda function.
+Index
+=====
 
+[box-node-webhook-to-lambda-sample](https://github.com/box/samples/tree/master/box-node-webhook-to-lambda-sample) This sample shows how to connect a Box webhook to an AWS Lambda function. 
 
 Support
 -------
