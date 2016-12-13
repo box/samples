@@ -1,7 +1,7 @@
 Box Samples
 ====================
 
-This is a repo dedicated to sharing code snippets and samples to demonstrate how to get the most out of Box. It will include specific use cases, showcasing integrations and other creative uses of the Box API.
+This is a repo dedicated to sharing code snippets and samples to demonstrate how to get the most out of the Box platform & API. It will include specific use cases, showcasing integrations and other creative uses of the Box API.
 
 Index
 =====
