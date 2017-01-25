@@ -19,23 +19,33 @@ This sample gives step-by-step instructions to set up an AWS Lambda function and
 3. Configure a trigger for the Lambda function by clicking in the gray outlined area
     * Choose API Gateway
     * Leave the API name and Deployment stage with default values
-    * Choose "Open" for Security.  This enables the Box webhook to call the API
+    * Choose "Open" for Security.  This enables the Box webhook to call the API externally
     * Press Next
-4. Configure the lambda function
+4. Create the deployment package for the Lambda function
+    * Run `npm install` to install the [Box Node SDK](https://github.com/box/box-node-sdk) 
+    * Run `npm run zip` to create `box-node-webhook-to-lambda-sample.zip`
+    * The zip file includes the sample code in `index.js` plus the Box Node SDK
+5. Configure the lambda function
     * Name = "box-node-webhook-to-lambda-sample"
-    * Description = "Box webhook to Lambda sample"
+    * Description = "Demonstrates connecting a Box webhook to an AWS Lambda function"
     * Runtime = "Node.js"
-    * Code = Copy and paste the code from the `index.js` sample file
+    * Code entry type = "Upload a .ZIP file"
+    * Function package = Browse and select `box-node-webhook-to-lambda-sample.zip`
+    * Environment variables:
+    ```
+    BOX_WEBHOOK_PRIMARY_SIGNATURE_KEY = SamplePrimaryKey
+    BOX_WEBHOOK_SECONDARY_SIGNATURE_KEY = SampleSecondaryKey
+    ```
     * Handler = "index.handler". This sets the entry point to be the handler() function of the `index.js` file
     * Role = "Create new role from template"
     * Role Name = "box-node-webhook-to-lambda-sample-role"
     * Policy Templates = Leave blank
     * Leave all of the advanced settings with default values
     * Press Next
-5. Press "Create function"
+6. Press "Create function"
 
 #### Step 2. Test the Lambda function in the Lambda Console
-1. Press the "Test" button and copy and paste the test data from the file `lambda-test.json`:
+1. Press the "Test" button and copy and paste the test data below (also in the file `lambda-test.json`):
 
     ```JSON
     {
@@ -43,17 +53,19 @@ This sample gives step-by-step instructions to set up an AWS Lambda function and
         "box-delivery-id": "f96bb54b-ee16-4fc5-aa65-8c2d9e5b546f",
         "box-delivery-timestamp": "2020-01-01T00:00:00-07:00",
         "box-signature-algorithm": "HmacSHA256",
-        "box-signature-primary": "TyBzWaDyIljLM2tbo2kUKBaK7qgjLdYx3DbrPT2opFo=",
-        "box-signature-secondary": "d6TBtg+/f96Pek2hkcOKzHlTz3KjSZAH4liQbudauB8=",
+        "box-signature-primary": "6TfeAW3A1PASkgboxxA5yqHNKOwFyMWuEXny/FPD5hI=",
+        "box-signature-secondary": "v+1CD1Jdo3muIcbpv5lxxgPglOqMfsNHPV899xWYydo=",
         "box-signature-version": "1"
       },
       "body": "{\"type\":\"webhook_event\",\"webhook\":{\"id\":\"1234567890\"},\"trigger\":\"FILE.UPLOADED\",\"source\":{\"id\":\"1234567890\",\"type\":\"file\",\"name\":\"Test.txt\"}}"
     }
     ```
     
-    *Note that the API Gateway will pass the incoming HTTP request headers and body to the Lambda function a JSON object.
+    This sample message has been signed with the keys `SamplePrimaryKey` and `SampleSecondaryKey`.
+    
+    *Note that the API Gateway will pass the incoming HTTP request headers and body to the Lambda function as a JSON object.
     See the [API Gateway documentation](http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-set-up-simple-proxy.html#api-gateway-simple-proxy-for-lambda-input-format) for more information on the input and output formats for the Lambda Proxy Integration.*
-2. The result should be the following JSON object:
+2. The result should be the following JSON response:
 
     ```JSON
     {
@@ -78,8 +90,8 @@ This sample gives step-by-step instructions to set up an AWS Lambda function and
     -H "box-delivery-id: f96bb54b-ee16-4fc5-aa65-8c2d9e5b546f" \
     -H "box-delivery-timestamp: 2020-01-01T00:00:00-07:00" \
     -H "box-signature-algorithm: HmacSHA256" \
-    -H "box-signature-primary: TyBzWaDyIljLM2tbo2kUKBaK7qgjLdYx3DbrPT2opFo=" \
-    -H "box-signature-secondary: d6TBtg+/f96Pek2hkcOKzHlTz3KjSZAH4liQbudauB8=" \
+    -H "box-signature-primary: 6TfeAW3A1PASkgboxxA5yqHNKOwFyMWuEXny/FPD5hI=" \
+    -H "box-signature-secondary: v+1CD1Jdo3muIcbpv5lxxgPglOqMfsNHPV899xWYydo=" \
     -H "box-signature-version: 1"; echo
     ```
 
@@ -137,11 +149,10 @@ Note: See [Getting Started with Webhooks V2](https://docs.box.com/v2.0/docs/gett
     * *See [here](https://docs.box.com/reference#section-retries) for details on how Box handles timeouts, retries, and exponential backoff*
 
 #### Step 6. Update the Lambda function with your app's signing keys
-1. In the Lambda Management Console, edit the code to include the primary and secondary signing keys from the Box Developer Console
-
-    ```javascript
-    const primarySignatureKey = '<YOUR_PRIMARY_SIGNATURE_KEY>';
-    const secondarySignatureKey = '<YOUR_SECONDARY_SIGNATURE_KEY>';
+1. In the Code tab of the Lambda Management Console, update the environment variables to the primary and secondary signing keys from the Box Developer Console
+    ```
+    BOX_WEBHOOK_PRIMARY_SIGNATURE_KEY = <YOUR_PRIMARY_KEY>
+    BOX_WEBHOOK_SECONDARY_SIGNATURE_KEY = <YOUR_SECONDARY_KEY>
     ```
 
 2. Press "Save and Test"
@@ -187,7 +198,8 @@ Now that you are successfully calling your AWS Lambda function from a Box webhoo
 
 1. Modify the sample Lambda function to call an external service with the event data
 2. Have the Lambda function download additional information from Box in response to the event (such as the contents of a newly uploaded file)
-3. Try [rotating your app's signing keys](https://docs.box.com/reference#section-rotating-signatures)
+    * See the documentation for the [Box Node SDK](https://github.com/box/box-node-sdk) for how to call Box APIs 
+3. [Rotate your app's signing keys](https://docs.box.com/reference#section-rotating-signatures)
     * Generate a new primary key on Box
         * Messages will continue to be validated using the secondary key
     * Update you Lambda function with the new primary key

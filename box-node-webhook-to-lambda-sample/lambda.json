@@ -1,0 +1,30 @@
+{
+  "lambda": {
+    "FunctionName": "box-node-webhook-to-lambda-sample",
+    "Handler": "index.handler",
+    "Runtime": "nodejs4.3",
+    "Description": "Demonstrates connecting a Box webhook to an AWS Lambda function",
+    "Environment": {
+      "Variables": {
+        "BOX_WEBHOOK_PRIMARY_SIGNATURE_KEY": "SamplePrimaryKey",
+        "BOX_WEBHOOK_SECONDARY_SIGNATURE_KEY": "SampleSecondaryKey"
+      }
+    }
+  },
+  "triggers": {
+    "api-gateway": [
+      {}
+    ]
+  },
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "tags": [
+    "nodejs",
+    "box",
+    "webhook",
+    "ext-libraries"
+  ],
+  "authors": [
+    "Box <oss@box.com>"
+  ]
+}

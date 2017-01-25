@@ -1,104 +1,34 @@
+/**
+ * This sample shows how to connect a Box webhook to an AWS Lambda function.
+ *
+ * Each time an event occurs that triggers the webhook on Box, the Lambda function will be called with the details
+ * of the event. The messages are secured with a message signature that is validated in the Lambda function.
+ *
+ * The sample Box test event is signed with the keys 'SamplePrimaryKey' and 'SampleSecondaryKey'.
+ * To process events from your Box application, replace these keys with your keys (from the Box developer console),
+ * configure the API Gateway to have 'Open' security and create a Box webhook that specifies your API Gateway URL
+ * (from the Triggers tab).
+ *
+ * For step-by-step instructions, see box-node-webhook-to-lambda-sample in https://github.com/box/samples
+ */
 
 'use strict';
-const crypto = require('crypto');
+const AWS = require('aws-sdk');
+const BoxSDK = require('box-node-sdk');
 const util = require('util');
 
-console.log('Loading box-node-webhook-to-lambda-sample');
+// Load the signing keys from environment variables for security and configuration management
+const primarySignatureKey = process.env.BOX_WEBHOOK_PRIMARY_SIGNATURE_KEY;
+const secondarySignatureKey = process.env.BOX_WEBHOOK_SECONDARY_SIGNATURE_KEY;
 
-// Validate message signatures using the keys below
-// This ensures that messages have been sent from your Box application
-const primarySignatureKey = '<YOUR_PRIMARY_SIGNATURE_KEY>';
-const secondarySignatureKey = '<YOUR_SECONDARY_SIGNATURE_KEY>';
-const validateSignatures = primarySignatureKey || secondarySignatureKey;
-
-// Enable this to validate message timestamps
-// This prevents replay attacks
-const maxMessageAge = 10 * 60; // 10 minutes
-const validateTimestamps = true;
-
-console.log('Signature validation: %s', validateSignatures ? 'enabled' : 'disabled');
-console.log('Timestamp validation: %s', validateTimestamps ? 'enabled' : 'disabled');
-
-// Compute the message signature (see https://docs.box.com/reference#signatures)
-function computeSignature(event, signatureKey) {
-   if (!signatureKey) {
-     return undefined;
-   }
-
-  if (event.headers['box-signature-version'] !== '1') {
-    console.log('Unrecognized signature version: %s', event.headers['box-signature-version']);
-    return undefined;
-  }
-
-  if (event.headers['box-signature-algorithm'] !== 'HmacSHA256') {
-    console.log('Unrecognized signature algorithm: %s', event.headers['box-signature-algorithm']);
-    return undefined;
-  }
-
-  let hmac = crypto.createHmac('sha256', signatureKey);
-  hmac.update(event.body);
-  hmac.update(event.headers['box-delivery-timestamp']);
-
-  const signature = hmac.digest('base64');
-  console.log('Signature: %s', signature);
-
-  return signature;
-}
-
-// Validate the message signature (see https://docs.box.com/reference#signatures)
-function validateSignature(event, primarySignatureKey, secondarySignatureKey) {
-  // Either the primary or secondary signature must match the corresponding signature from Box
-  // (The use of two signatures allows the signing keys to be rotated one at a time)
-  const primarySignature = computeSignature(event, primarySignatureKey);
-
-  if (primarySignature && primarySignature === event.headers['box-signature-primary']) {
-    console.log('Primary signature verified');
-    return true;
-  }
-
-  const secondarySignature = computeSignature(event, secondarySignatureKey);
-
-  if (secondarySignature && secondarySignature === event.headers['box-signature-secondary']) {
-    console.log('Secondary signature verified');
-    return true;
-  }
-
-  console.log('Signature not verified');
-  return false;
-}
-
-// Validate that the delivery timestamp is not too far in the past (to prevent replay attacks)
-function validateDeliveryTimestamp(event, maxMessageAge) {
-  const deliveryTime = Date.parse(event.headers['box-delivery-timestamp']);
-  const currentTime = Date.now();
-  const messageAge = (currentTime - deliveryTime) / 1000;
-
-  console.log('Message age: %d', messageAge);
-
-  if (messageAge > maxMessageAge) {
-    console.log('Message too old');
-    return false;
-  }
-
-  return true;
-}
-
-// Validate the message by verifying the signature and the delivery timestamp
-function validateMessage(event) {
-  if (validateSignatures && !validateSignature(event, primarySignatureKey, secondarySignatureKey)) {
-    return false;
-  }
-
-  if (validateTimestamps && !validateDeliveryTimestamp(event, maxMessageAge)) {
-    return false;
-  }
-
-  return true;
-}
-
-//////////////////////////
-// YOUR CODE GOES HERE! //
-//////////////////////////
+/**
+ *  YOUR CODE GOES HERE!!!
+ *
+ *  This sample function simply logs details of the webhook event to Cloudwatch.
+ *  Your code could forward the event to SNS or Kinesis for further processing.
+ *  For FILE.UPLOADED events, you could use the Box Node SDK to download the file, analyze it, and update the
+ *  file on Box with metadata that contains the results of the analysis.
+ */
 function handleWebhookEvent(webhookEvent) {
   // Print basic information about the Box event
   let message = util.format('webhook=%s', webhookEvent.webhook.id);
@@ -116,10 +46,14 @@ function handleWebhookEvent(webhookEvent) {
   return { statusCode: 200, body: message };
 }
 
+/**
+ * The event handler validates the message using the signing keys to ensure that the message was sent from
+ * your Box application.
+ */
 exports.handler = (event, context, callback) => {
   console.log('Received event: ' + JSON.stringify(event, null, 2));
 
-  if (!validateMessage(event)) {
+  if(!BoxSDK.validateWebhookMessage(event.body, event.headers, primarySignatureKey, secondarySignatureKey)) {
     const response = { statusCode: 403, body: 'Message authenticity not verified' };
     console.log("Response: " + JSON.stringify(response, null, 2));
     callback(null, response);
