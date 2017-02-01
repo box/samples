@@ -1,6 +1,6 @@
 # box-node-webhook-to-lambda-sample
 
-This sample shows how to connect a Box webhook to an AWS Lambda function.
+This sample shows how to connect a Box webhook to an AWS Lambda function via API Gateway.
 Each time an event occurs that triggers the webhook on Box, the Lambda function will be called with the details of the event.
 The messages are secured with a message signature that is validated in the Lambda function.
 
@@ -113,17 +113,17 @@ This sample gives step-by-step instructions to set up an AWS Lambda function and
 #### Step 4. Create a Box application and get a developer token
 1. Log into the [Box Developer Console](https://developers.box.com)
 2. Select "Create a Box application"
-    * Name the application "Box Webhook to Lambda Sample"
-    * Set the redirect_uri to "https://box.com"
+    * Name the application "Box Webhook to Lambda Sample - YOUR NAME"
+        * *Application names must be unique across Box*
+    * Set the redirect_uri to "https://example.com"
         * *This isn't needed for this sample app, but it is a required field*
     * Check "Manage webhooks v2"
         * This enables the application to create and use V2 webhooks
     * Press "Generate primary key" and "Generate secondary key" to create keys for signing the events
         * These are the keys that Box will use to sign events sent by webhooks created by this application
         * The events are signed using two separate keys to make it easier to [rotate your signing keys](https://docs.box.com/reference#section-rotating-signatures)
-    * Press Save Application
+    * Press "Save Application" before proceeding
 3. Press "Create a developer token"
-    * *Be sure to save the application before generating a developer token*
 
 #### Step 5. Create a Box webhook to call the lambda function
 Note: See [Getting Started with Webhooks V2](https://docs.box.com/v2.0/docs/getting-started-with-webhooks-v2) and [Overview of Webhooks V2](https://docs.box.com/reference#webhooks-v2) for more info.
@@ -150,6 +150,7 @@ Note: See [Getting Started with Webhooks V2](https://docs.box.com/v2.0/docs/gett
 
 #### Step 6. Update the Lambda function with your app's signing keys
 1. In the Code tab of the Lambda Management Console, update the environment variables to the primary and secondary signing keys from the Box Developer Console
+    * *Storing the application secrets in environment variables makes them easier to secure and manage*
     ```
     BOX_WEBHOOK_PRIMARY_SIGNATURE_KEY = <YOUR_PRIMARY_KEY>
     BOX_WEBHOOK_SECONDARY_SIGNATURE_KEY = <YOUR_SECONDARY_KEY>
@@ -193,13 +194,15 @@ Note: See [Getting Started with Webhooks V2](https://docs.box.com/v2.0/docs/gett
 6. To get the webhook to send the full payload again, generate a new developer token in the Box Developer Console
     * *Note that you don't need to recreate the webhook with the new developer token -- there just needs to be a non-expired token associated with the app that created the webhook*
 
-#### Profit! ...and Next Steps
+#### Next Steps
 Now that you are successfully calling your AWS Lambda function from a Box webhook, here are some things you can try next:
 
-1. Modify the sample Lambda function to call an external service with the event data
-2. Have the Lambda function download additional information from Box in response to the event (such as the contents of a newly uploaded file)
+1. Use the AWS "encryption helpers" to encrypt the environment variables that hold the application secrets
+    * Modify the sample code to decrypt the secrets
+2. Modify the sample Lambda function to call an external service with the event data
+3. Have the Lambda function download additional information from Box in response to the event (such as the contents of a newly uploaded file)
     * See the documentation for the [Box Node SDK](https://github.com/box/box-node-sdk) for how to call Box APIs 
-3. [Rotate your app's signing keys](https://docs.box.com/reference#section-rotating-signatures)
+4. [Rotate your app's signing keys](https://docs.box.com/reference#section-rotating-signatures)
     * Generate a new primary key on Box
         * Messages will continue to be validated using the secondary key
     * Update you Lambda function with the new primary key

@@ -1,5 +1,5 @@
 /**
- * This sample shows how to connect a Box webhook to an AWS Lambda function.
+ * This sample shows how to connect a Box webhook to an AWS Lambda function via API Gateway.
  *
  * Each time an event occurs that triggers the webhook on Box, the Lambda function will be called with the details
  * of the event. The messages are secured with a message signature that is validated in the Lambda function.
@@ -17,7 +17,7 @@ const AWS = require('aws-sdk');
 const BoxSDK = require('box-node-sdk');
 const util = require('util');
 
-// Load the signing keys from environment variables for security and configuration management
+// Load the application secrets from environment variables for security and configuration management
 const primarySignatureKey = process.env.BOX_WEBHOOK_PRIMARY_SIGNATURE_KEY;
 const secondarySignatureKey = process.env.BOX_WEBHOOK_SECONDARY_SIGNATURE_KEY;
 
@@ -51,7 +51,7 @@ function handleWebhookEvent(webhookEvent) {
  * your Box application.
  */
 exports.handler = (event, context, callback) => {
-  console.log('Received event: ' + JSON.stringify(event, null, 2));
+  console.log('Event: ' + JSON.stringify(event, null, 2));
 
   if(!BoxSDK.validateWebhookMessage(event.body, event.headers, primarySignatureKey, secondarySignatureKey)) {
     const response = { statusCode: 403, body: 'Message authenticity not verified' };
@@ -68,7 +68,7 @@ exports.handler = (event, context, callback) => {
   }
 
   // Parse the message body from the Lambda proxy
-  var body = JSON.parse(event.body);
+  const body = JSON.parse(event.body);
   console.log('Event body: ' + JSON.stringify(body, null, 2));
 
   // Handle the webhook event
