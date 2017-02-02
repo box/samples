@@ -1,0 +1,28 @@
+{
+  "lambda": {
+    "FunctionName": "box-node-lambda-sample",
+    "Handler": "index.handler",
+    "Runtime": "nodejs4.3",
+    "Description": "Demonstrates how to call Box APIs from an AWS Lambda function using the Box Node SDK",
+    "Environment": {
+      "Variables": {
+        "BOX_CLIENT_ID": "Your CLIENT_ID",
+        "BOX_CLIENT_SECRET": "Your CLIENT_SECRET",
+        "BOX_PUBLIC_KEY_ID": "Your PUBLIC_KEY_ID",
+        "BOX_PRIVATE_KEY_PASSPHRASE": "Your PRIVATE_KEY_PASSPHRASE",
+        "BOX_ENTERPRISE_ID": "Your ENTERPRISE_ID"
+      }
+    }
+  },
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "tags": [
+    "nodejs",
+    "box",
+    "app-auth",
+    "ext-libraries"
+  ],
+  "authors": [
+    "Box <oss@box.com>"
+  ]
+}

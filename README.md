@@ -1,12 +1,16 @@
 Box Samples
 ====================
 
-This is a repo dedicated to sharing code snippets and samples to demonstrate how to get the most out of the Box platform & API. It will include specific use cases, showcasing integrations and other creative uses of the Box API.
+This repo is dedicated to sharing code snippets and samples to demonstrate how to get the most out of the Box platform & API. It will include specific use cases, showcasing integrations and other creative uses of the Box API.
 
 Index
 -----
 
-[box-node-webhook-to-lambda-sample](https://github.com/box/samples/tree/master/box-node-webhook-to-lambda-sample) This sample shows how to connect a Box webhook to an AWS Lambda function. 
+[box-node-lambda-sample](https://github.com/box/samples/tree/master/box-node-lambda-sample)
+This sample demonstrates how to call Box APIs from an AWS Lambda function using the [Box Node SDK](https://github.com/box/box-node-sdk). 
+
+[box-node-webhook-to-lambda-sample](https://github.com/box/samples/tree/master/box-node-webhook-to-lambda-sample)
+This sample shows how to connect a Box webhook to an AWS Lambda function via API Gateway. 
 
 Support
 -------
