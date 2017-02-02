@@ -7,10 +7,12 @@ Index
 -----
 
 [box-node-lambda-sample](https://github.com/box/samples/tree/master/box-node-lambda-sample)
-This sample demonstrates how to call Box APIs from an AWS Lambda function using the [Box Node SDK](https://github.com/box/box-node-sdk). 
+This sample demonstrates how to call Box APIs from an AWS Lambda function using the [Box Node SDK](https://github.com/box/box-node-sdk).
+This lets you call Box from a Lambda function.
 
 [box-node-webhook-to-lambda-sample](https://github.com/box/samples/tree/master/box-node-webhook-to-lambda-sample)
-This sample shows how to connect a Box webhook to an AWS Lambda function via API Gateway. 
+This sample shows how to connect a Box webhook to an AWS Lambda function via API Gateway.
+This lets you call a Lambda function from Box. 
 
 Support
 -------
