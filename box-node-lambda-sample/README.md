@@ -132,7 +132,7 @@ Now that you are successfully calling Box from your AWS Lambda function, here ar
     ```
 
 #### Troubleshooting
-1. If your `PRIVATE_KEY_PASSPHRASE` is wrong, you will get: `{}`
+1. If your `PRIVATE_KEY_PASSPHRASE` is wrong, you will get: `"Error: error:06065064:digital envelope routines:EVP_DecryptFinal_ex:bad decrypt"`
 2. If your `CLIENT_ID` is wrong, you will get: `"Please check the 'iss' claim."`
 3. If your `ENTERPRISE_ID` is wrong, you will get: `"Please check the 'sub' claim."`
 4. If your `PUBLIC_KEY_ID` is wrong, you will get: `"OpenSSL unable to verify data: "`

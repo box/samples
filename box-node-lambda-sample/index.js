@@ -51,7 +51,7 @@ exports.handler = (event, context, callback) => {
       if (err.response && err.response.body) {
           response = err.response.body;
       } else {
-        response = err;
+        response = err.toString();
       }
     } else {
         response = result;
