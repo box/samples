@@ -13,9 +13,8 @@
  */
 
 'use strict';
-const AWS = require('aws-sdk');
+
 const BoxSDK = require('box-node-sdk');
-const util = require('util');
 
 // Load the application secrets from environment variables for security and configuration management
 const primarySignatureKey = process.env.BOX_WEBHOOK_PRIMARY_SIGNATURE_KEY;
@@ -30,20 +29,21 @@ const secondarySignatureKey = process.env.BOX_WEBHOOK_SECONDARY_SIGNATURE_KEY;
  *  file on Box with metadata that contains the results of the analysis.
  */
 function handleWebhookEvent(webhookEvent) {
-  // Print basic information about the Box event
-  let message = util.format('webhook=%s', webhookEvent.webhook.id);
+    // Print basic information about the Box event
+    let message = `webhook=${webhookEvent.webhook.id}`;
 
-  // The event trigger: FILE.DOWNLOADED, FILE.UPLOADED, etc.
-  message = message + util.format(', trigger=%s', webhookEvent.trigger);
+    // The event trigger: FILE.DOWNLOADED, FILE.UPLOADED, etc.
+    message += `, trigger=${webhookEvent.trigger}`;
 
-  // The source that triggered the event: a file, folder, etc.
-  if (webhookEvent.source) {
-    message = message + util.format(', source=<%s id=%s name=\"%s\">',
-        webhookEvent.source.type, webhookEvent.source.id, webhookEvent.source.name || 'unknown');
-  }
+    // The source that triggered the event: a file, folder, etc.
+    if (webhookEvent.source) {
+        const source = webhookEvent.source;
 
-  console.log("Box event: " + message);
-  return { statusCode: 200, body: message };
+        message += `, source=<${source.type} id=${source.id} name=${source.name || 'unknown'}>`;
+    }
+
+    console.log(`Box event: ${message}`);
+    return { statusCode: 200, body: message };
 }
 
 /**
@@ -51,29 +51,48 @@ function handleWebhookEvent(webhookEvent) {
  * your Box application.
  */
 exports.handler = (event, context, callback) => {
-  console.log('Event: ' + JSON.stringify(event, null, 2));
+    console.log(`Event: ${JSON.stringify(event, null, 2)}`);
 
-  if(!BoxSDK.validateWebhookMessage(event.body, event.headers, primarySignatureKey, secondarySignatureKey)) {
-    const response = { statusCode: 403, body: 'Message authenticity not verified' };
-    console.log("Response: " + JSON.stringify(response, null, 2));
+    if (!BoxSDK.validateWebhookMessage(event.body, event.headers, primarySignatureKey, secondarySignatureKey)) {
+        const response = { statusCode: 403, body: 'Message authenticity not verified' };
+        console.log(`Response: ${JSON.stringify(response, null, 2)}`);
+        callback(null, response);
+        return;
+    }
+
+    if (!event.body) {
+        const response = { statusCode: 403, body: 'Missing event body' };
+        console.log(`Response: ${JSON.stringify(response, null, 2)}`);
+        callback(null, response);
+        return;
+    }
+
+    // Parse the message body from the Lambda proxy
+    const body = JSON.parse(event.body);
+    console.log(`Event body: ${JSON.stringify(body, null, 2)}`);
+
+    // Handle the webhook event
+    const response = handleWebhookEvent(body);
+
+    console.log(`Response: ${JSON.stringify(response, null, 2)}`);
     callback(null, response);
-    return;
-  }
-
-  if (!event.body) {
-    const response = { statusCode: 403, body: 'Missing event body' };
-    console.log("Response: " + JSON.stringify(response, null, 2));
-    callback(null, response);
-    return;
-  }
-
-  // Parse the message body from the Lambda proxy
-  const body = JSON.parse(event.body);
-  console.log('Event body: ' + JSON.stringify(body, null, 2));
-
-  // Handle the webhook event
-  const response = handleWebhookEvent(body);
-
-  console.log("Response: " + JSON.stringify(response, null, 2));
-  callback(null, response);
 };
+
+
+let foo = {
+    "type": "error",
+    "status": 409,
+    "code": "conflict",
+    "context_info": {
+        "errors": [
+            {
+                "reason": "invalid_parameter",
+                "name": "existWebhookId",
+                "message": "Webhook:1306319 already exists on the specified target."
+            }]
+    }
+    ,
+    "help_url": "http:\/\/developers.box.com\/docs\/#errors",
+    "message": "Bad Request",
+    "request_id": "87176267658a2217692375"
+}

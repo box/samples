@@ -70,7 +70,7 @@ This sample gives step-by-step instructions to set up an AWS Lambda function and
     ```JSON
     {
       "statusCode": 200,
-      "body": "webhook=1234567890, trigger=FILE.UPLOADED, source=<file id=1234567890 name=\"Test.txt\">"
+      "body": "webhook=1234567890, trigger=FILE.UPLOADED, source=<file id=1234567890 name=Test.txt>"
     }
     ```
 
@@ -144,6 +144,8 @@ Note: See [Getting Started with Webhooks V2](https://docs.box.com/v2.0/docs/gett
     ```
     {"id":"<WEBHOOK_ID>","type":"webhook","target":{"id":"<FOLDER_ID>","type":"folder"},"created_by":<YOUR_USER_INFO>,"created_at":"2016-11-10T15:00:10-08:00","address":"<YOUR_GATEWAY_API_URL>","triggers":["FILE.UPLOADED"]}
     ```
+    
+    * Note down the `<WEBHOOK_ID>` in case you need to modify or delete the webhook
 
 4. The webhook will call the Lambda function each time a file is uploaded to the folder
     * *See [here](https://docs.box.com/reference#section-retries) for details on how Box handles timeouts, retries, and exponential backoff*
@@ -208,6 +210,41 @@ Now that you are successfully calling your AWS Lambda function from a Box webhoo
     * Update you Lambda function with the new primary key
     * Wait long enough for all in-flight messages to have been processed by the Lambda function
     * Repeat the process, this time rotating the secondary key
+
+#### Troubleshooting
+1. Each app can only have one webhook for a given target.  If you try to create a second one you will get an API error:
+
+    ```JSON
+    {
+        "type": "error",
+        "status": 409,
+        "code": "conflict",
+        "context_info": {
+            "errors": [
+                {
+                    "reason": "invalid_parameter",
+                    "name": "existWebhookId",
+                    "message": "Webhook:<WEBHOOK_ID> already exists on the specified target."
+                }]
+        }
+        ,
+        "help_url": "http:\/\/developers.box.com\/docs\/#errors",
+        "message": "Bad Request",
+        "request_id": "87176267658a2217692375"
+    }
+    ```
+
+2. To inspect the webhook, use:
+
+    ```
+    curl https://api.box.com/2.0/webhooks/<WEBHOOK_ID> -H "Authorization: Bearer <DEVELOPER_TOKEN>"
+    ```
+
+3. To delete the webhook when you are done, use:
+
+    ```
+    curl https://api.box.com/2.0/webhooks/<WEBHOOK_ID> -H "Authorization: Bearer <DEVELOPER_TOKEN>" -X DELETE
+    ```
 
 Support
 -------

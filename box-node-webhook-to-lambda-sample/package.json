@@ -10,7 +10,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "zip": "zip -rMM box-node-webhook-to-lambda-sample index.js node_modules",
-    "bp": "zip -rMM box-node-webhook-to-lambda-sample-bp index.js lambda.json node_modules"
+    "bp": "zip -rMM box-node-webhook-to-lambda-sample-bp index.js lambda.json node_modules",
+    "lint": "eslint index.js"
   },
   "author": "Box <oss@box.com>",
   "license": "Apache-2.0"

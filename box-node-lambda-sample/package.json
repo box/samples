@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "genrsa": "openssl genrsa -aes256 -out private_key.pem 2048; openssl rsa -pubout -in private_key.pem -out public_key.pem",
     "zip": "zip -rMM box-node-lambda-sample index.js private_key.pem node_modules",
-    "bp": "zip -rMM box-node-lambda-sample-bp index.js lambda.json node_modules"
+    "bp": "zip -rMM box-node-lambda-sample-bp index.js lambda.json node_modules",
+    "lint": "eslint index.js"
   },
   "author": "Box <oss@box.com>",
   "license": "Apache-2.0"

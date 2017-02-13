@@ -6,23 +6,23 @@
  */
 
 'use strict';
-const AWS = require('aws-sdk');
+
 const BoxSDK = require('box-node-sdk');
 const fs = require('fs');
 
 // The private key can't be stored in an environment variable, so load the PEM file from the deployment package
-const privateKeyPath = process.env.LAMBDA_TASK_ROOT + "/private_key.pem";
+const privateKeyPath = `${process.env.LAMBDA_TASK_ROOT}/private_key.pem`;
 const privateKey = fs.readFileSync(privateKeyPath);
 
 // Load the application secrets from environment variables for security and configuration management
 const sdk = new BoxSDK({
-  clientID: process.env.BOX_CLIENT_ID,
-  clientSecret: process.env.BOX_CLIENT_SECRET,
-  appAuth: {
-    keyID: process.env.BOX_PUBLIC_KEY_ID,
-    privateKey: privateKey,
-    passphrase: process.env.BOX_PRIVATE_KEY_PASSPHRASE
-  }
+    clientID: process.env.BOX_CLIENT_ID,
+    clientSecret: process.env.BOX_CLIENT_SECRET,
+    appAuth: {
+        keyID: process.env.BOX_PUBLIC_KEY_ID,
+        privateKey: privateKey,
+        passphrase: process.env.BOX_PRIVATE_KEY_PASSPHRASE,
+    },
 });
 
 /**
@@ -41,23 +41,23 @@ const client = sdk.getAppAuthClient('enterprise', process.env.BOX_ENTERPRISE_ID)
  *  This sample function returns details of the current user (the service account)
  */
 exports.handler = (event, context, callback) => {
-  console.log('Event: ' + JSON.stringify(event, null, 2));
+    console.log(`Event: ${JSON.stringify(event, null, 2)}`);
 
-  // Get details on the current user
-  client.users.get(client.CURRENT_USER_ID, null, (err, result) => {
-    var response;
+    // Get details on the current user
+    client.users.get(client.CURRENT_USER_ID, null, (err, result) => {
+        let response;
 
-    if (err) {
-      if (err.response && err.response.body) {
-          response = err.response.body;
-      } else {
-        response = err.toString();
-      }
-    } else {
-        response = result;
-    }
+        if (err) {
+            if (err.response && err.response.body) {
+                response = err.response.body;
+            } else {
+                response = err.toString();
+            }
+        } else {
+            response = result;
+        }
 
-    console.log("Response: " + JSON.stringify(response, null, 2));
-    callback(null, response);
-  });
+        console.log(`Response: ${JSON.stringify(response, null, 2)}`);
+        callback(null, response);
+    });
 };
