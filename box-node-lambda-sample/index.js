@@ -11,6 +11,7 @@ const BoxSDK = require('box-node-sdk');
 const fs = require('fs');
 
 // The private key can't be stored in an environment variable, so load the PEM file from the deployment package
+// (You could also load it from an S3 bucket)
 const privateKeyPath = `${process.env.LAMBDA_TASK_ROOT}/private_key.pem`;
 const privateKey = fs.readFileSync(privateKeyPath);
 
@@ -27,9 +28,9 @@ const sdk = new BoxSDK({
 
 /**
  * Create an enterprise client that performs actions in the context of the service account.
- * There is a unique service account for each enterprise that authorizes this application.
- * The service account contains any app-specific content for the enterprise and can create and manage
- * app users.
+ * The app has a unique service account in each enterprise that authorizes the app.
+ * The service account contains any app-specific content for the enterprise.
+ * Depending on the scopes selected, it can also create and manage app users or managed users in that enterprise.
  *
  * The client will create and refresh the service account access token automatically.
  */
@@ -43,7 +44,7 @@ const client = sdk.getAppAuthClient('enterprise', process.env.BOX_ENTERPRISE_ID)
 exports.handler = (event, context, callback) => {
     console.log(`Event: ${JSON.stringify(event, null, 2)}`);
 
-    // Get details on the current user
+    // Get details on the current user  (the service account)
     client.users.get(client.CURRENT_USER_ID, null, (err, result) => {
         let response;
 
