@@ -13,8 +13,8 @@ This sample demonstrates how to call Box APIs from an AWS Lambda function using 
     * Name the application "Box Node Lambda Sample - YOUR NAME"
         * *Application names must be unique across Box*
     * Press "Create App" and then "View Your App"
-        * *You can leave all of the default settings for the sample app*
-        * Note your "Client ID" and "Client Secret" for later
+    * Check the "Manage users" scope and press "Save Changes"
+        * You'll need your "Client ID" and "Client Secret" later
 
 #### Step 2. Generate your private and public keys
 1. Generate a private key and a public key to use with Server Authentication
@@ -23,7 +23,7 @@ This sample demonstrates how to call Box APIs from an AWS Lambda function using 
     openssl genrsa -aes256 -out private_key.pem 2048
     openssl rsa -pubout -in private_key.pem -out public_key.pem
     ```
-    You'll need your "Private Key Passphrase" later
+    You'll need the passphrase for your private key later
 2. Add the public key to the application
     * Press "Add Public Key"
         * You will need to set up 2-factor authentication, if you haven't already
@@ -31,14 +31,14 @@ This sample demonstrates how to call Box APIs from an AWS Lambda function using 
     * Paste it into the "Public Key" field
     * Press "Verify and Save"
         * You will need to enter a 2-factor confirmation code
-    * Note your "Public Key ID" for later
+    * You'll need the ID of your public key later
 3. Your application is ready to go
 
 #### Step 3. Authorize the application into your Box account
 1. In a new tab, log into your Box account as an admin and go to the Admin Console
     * *Applications that use Server Authentication must be authorized by the admin of the account*
 2. Under the gear icon, go to Enterprise Settings (or Business Settings, depending on your account type)
-    * Note the "Enterprise ID" of your account
+    * You'll need the "Enterprise ID" of your account later
 3. Go to the Apps tab
 3. Under "Custom Applications", press "Authorize New App"
 4. Enter your "Client ID" from the developer console in the "API Key" field
