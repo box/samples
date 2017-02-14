@@ -112,25 +112,28 @@ This sample gives step-by-step instructions to set up an AWS Lambda function and
 
 #### Step 4. Create a Box application and get a developer token
 1. Log into the [Box Developer Console](https://developers.box.com)
-2. Select "Create a Box application"
+    * Switch to the open beta of the new Developer Console, if needed
+2. Select "Create New App"
+    * Select "Enterprise Integration" and press "Next"
+    * Select "Server Authentication" and press "Next"
     * Name the application "Box Webhook to Lambda Sample - YOUR NAME"
         * *Application names must be unique across Box*
-    * Set the redirect_uri to "https://example.com"
-        * *This isn't needed for this sample app, but it is a required field*
-    * Check "Manage webhooks v2"
-        * This enables the application to create and use V2 webhooks
-    * Press "Generate primary key" and "Generate secondary key" to create keys for signing the events
-        * These are the keys that Box will use to sign events sent by webhooks created by this application
+    * Press "Create App" and then "View Your App"
+    * Check "Manage webhooks" and press "Save Changes"
+        * This enables the application to create and use webhooks
+    * In the left navbar, switch to the "Webhooks" section
+        * Press "Generate Key" for both the "Primary Key" and "Secondary Key" to create keys for signing the events
+        * These are the keys that Box will use to sign events sent by your application's webhooks
         * The events are signed using two separate keys to make it easier to [rotate your signing keys](https://docs.box.com/reference#section-rotating-signatures)
-    * Press "Save Application" before proceeding
-3. Press "Create a developer token"
+    * Return to the "Configuration" section and get your "Developer Token"
+        * *The token is valid for an hour, but you can get another one if it expires*
 
-#### Step 5. Create a Box webhook to call the lambda function
+#### Step 5. Create a Box webhook to call the Lambda function
 Note: See [Getting Started with Webhooks V2](https://docs.box.com/v2.0/docs/getting-started-with-webhooks-v2) and [Overview of Webhooks V2](https://docs.box.com/reference#webhooks-v2) for more info.
 
-1. Create a folder on Box and record the folder ID
-    * See these [instructions](https://docs.box.com/v2.0/docs/getting-started-with-webhooks-v2#section-3-create-a-webhook) for how to find the folder ID 
-2. Create a webhook using curl to call the [Box webhook API](https://docs.box.com/reference#create-webhook):
+1. Create a folder in your account on Box and record the "Folder ID"
+    * See these [instructions](https://docs.box.com/v2.0/docs/getting-started-with-webhooks-v2#section-3-create-a-webhook) for how to find the "Folder ID" 
+2. Create a webhook using `curl` to call the [Box webhook API](https://docs.box.com/reference#create-webhook):
 
     ```
     curl https://api.box.com/2.0/webhooks \
@@ -148,7 +151,7 @@ Note: See [Getting Started with Webhooks V2](https://docs.box.com/v2.0/docs/gett
     * Note down the `<WEBHOOK_ID>` in case you need to modify or delete the webhook
 
 4. The webhook will call the Lambda function each time a file is uploaded to the folder
-    * *See [here](https://docs.box.com/reference#section-retries) for details on how Box handles timeouts, retries, and exponential backoff*
+    * *See [here](https://docs.box.com/reference#section-retries) for details on how Box webhooks handle timeouts, retries, and exponential backoff*
 
 #### Step 6. Update the Lambda function with your app's signing keys
 1. In the Code tab of the Lambda Management Console, update the environment variables to the primary and secondary signing keys from the Box Developer Console
@@ -194,7 +197,7 @@ Note: See [Getting Started with Webhooks V2](https://docs.box.com/v2.0/docs/gett
     ```
 
 6. To get the webhook to send the full payload again, generate a new developer token in the Box Developer Console
-    * *Note that you don't need to recreate the webhook with the new developer token -- there just needs to be a non-expired token associated with the app that created the webhook*
+    * *Note that you don't need to recreate the webhook with the new developer token -- there just needs to be a non-expired token associated with the user that created the webhook*
 
 #### Next Steps
 Now that you are successfully calling your AWS Lambda function from a Box webhook, here are some things you can try next:

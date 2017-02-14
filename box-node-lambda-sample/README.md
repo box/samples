@@ -4,14 +4,14 @@ This sample demonstrates how to call Box APIs from an AWS Lambda function using 
 
 #### Step 1. Create a Box application
 1. Log into the [Box Developer Console](https://developers.box.com)
-2. Select "Create a Box application"
+    * Switch to the open beta of the new Developer Console, if needed
+2. Select "Create New App"
+    * Select "Enterprise Integration" and press "Next"
+    * Select "Server Authentication" and press "Next"
     * Name the application "Box Node Lambda Sample - YOUR NAME"
         * *Application names must be unique across Box*
-    * Set the redirect_uri to "https://example.com"
-        * *This isn't needed for this sample app, but it is a required field*
-    * Choose Authentication Type: "Server Authentication"
-        * *Because this is a server-to-server integration, rather than an end-user application*
-    * Press "Save Application" before proceeding
+    * Press "Create App" and then "View Your App"
+        * Note your "Client ID" and "Client Secret" for later
 
 #### Step 2. Generate the private and public keys
 1. Generate a private key and a public key
@@ -20,16 +20,16 @@ This sample demonstrates how to call Box APIs from an AWS Lambda function using 
     openssl genrsa -aes256 -out private_key.pem 2048
     openssl rsa -pubout -in private_key.pem -out public_key.pem
     ```
+    You'll need your "Private Key Passphrase" later
 2. Add the public key to the application
     * Press "Add Public Key"
         * You will need to set up 2-factor authentication, if you haven't already
     * Copy the public key: `cat public_key.pem | pbcopy`
     * Paste it into the "Public Key" field
-    * Press "Verify" and then "Save"
+    * Press "Verify and Save"
         * You will need to enter a 2-factor confirmation code
-    * Press "Save Application"
-3. Your application is ready.
-    * Note the "Api Key" for the next step
+    * Note your "Public Key ID" for later
+3. Your application is ready
 
 #### Step 3. Authorize the application in your account
 1. In a new tab, log in to your Box account as an admin and go to the Admin Console
@@ -38,7 +38,7 @@ This sample demonstrates how to call Box APIs from an AWS Lambda function using 
     * Note the "Enterprise ID" of your account
 3. Go to the Apps tab
 3. Under "Custom Applications", press "Authorize New App"
-4. Copy and paste the "API Key" from the developer console
+4. Enter your "Client ID" from the developer console in the "API Key" field
     * Your application is now authorized to access your Box account
 
 #### Step 4. Create the AWS Lambda function
@@ -62,11 +62,11 @@ This sample demonstrates how to call Box APIs from an AWS Lambda function using 
     * Environment variables:
         * *Storing the application secrets in environment variables makes them easier to secure and manage*
     ```
-    BOX_CLIENT_ID = Your CLIENT_ID
-    BOX_CLIENT_SECRET = Your CLIENT_SECRET
-    BOX_PUBLIC_KEY_ID = Your PUBLIC_KEY_ID
-    BOX_PRIVATE_KEY_PASSPHRASE = Your PRIVATE_KEY_PASSPHRASE
-    BOX_ENTERPRISE_ID = Your ENTERPRISE_ID
+    BOX_CLIENT_ID = Your Client ID
+    BOX_CLIENT_SECRET = Your Client Secret
+    BOX_PUBLIC_KEY_ID = Your Public Key ID
+    BOX_PRIVATE_KEY_PASSPHRASE = Your Private Key Passphrase
+    BOX_ENTERPRISE_ID = Your Enterprise ID
     ```
     * Handler = "index.handler". This sets the entry point to be the `handler()` function of the `index.js` module
     * Role = "Create new role from template"
@@ -132,12 +132,12 @@ Now that you are successfully calling Box from your AWS Lambda function, here ar
     ```
 
 #### Troubleshooting
-1. If your `PRIVATE_KEY_PASSPHRASE` is wrong, you will get: `"Error: error:06065064:digital envelope routines:EVP_DecryptFinal_ex:bad decrypt"`
-2. If your `CLIENT_ID` is wrong, you will get: `"Please check the 'iss' claim."`
-3. If your `ENTERPRISE_ID` is wrong, you will get: `"Please check the 'sub' claim."`
-4. If your `PUBLIC_KEY_ID` is wrong, you will get: `"OpenSSL unable to verify data: "`
+1. If your Private Key Passphrase is wrong, you will get: `"Error: error:06065064:digital envelope routines:EVP_DecryptFinal_ex:bad decrypt"`
+2. If your Client ID is wrong, you will get: `"Please check the 'iss' claim."`
+3. If your Enterprise ID is wrong, you will get: `"Please check the 'sub' claim."`
+4. If your Public Key ID is wrong, you will get: `"OpenSSL unable to verify data: "`
 5. If your `private_key.pem` is wrong, you will get: `"OpenSSL unable to verify data: error:0906D06C:PEM routines:PEM_read_bio:no start line"`
-6. If your `CLIENT_SECRET` is wrong, you will get: `"The client credentials are invalid"`
+6. If your Client Secret is wrong, you will get: `"The client credentials are invalid"`
 
 Support
 -------
