@@ -117,6 +117,7 @@ This sample demonstrates how to call Box APIs from an AWS Lambda function using 
 #### Next Steps
 Now that you can call Box from your AWS Lambda function, modify the sample Lambda function to make other Box API calls
 using the [Box Node SDK](https://github.com/box/box-node-sdk):
+
 1. Create and view content owned by the service account
 
     ```Javascript
