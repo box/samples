@@ -90,6 +90,7 @@ This sample demonstrates how to call Box APIs from an AWS Lambda function using 
 1. Press the "Test" button
     * This Lambda function does not require any input, so just leave the sample test data as is and press "Save and test"
 2. The result should be similar to the following JSON response:
+
     ```JSON
     {
       "type": "user",
@@ -110,37 +111,46 @@ This sample demonstrates how to call Box APIs from an AWS Lambda function using 
       "avatar_url": "https://xyz.app.box.com/api/avatar/large/12345678"
     }
     ```
+    
 3. Your Lambda function is sucessfully calling the Box API!
 
 #### Next Steps
 Now that you can call Box from your AWS Lambda function, modify the sample Lambda function to make other Box API calls
 using the [Box Node SDK](https://github.com/box/box-node-sdk):
 1. Create and view content owned by the service account
+
     ```Javascript
     client.folders.create(0, 'Test Folder', (err, result) => {...});
     client.folders.getItems(0, null, (err, result) => {...});
     ```
+    
 2. Create app users
     * Add the "Manage users" scope to the application in the Developer Console
     * Whenever you add scopes to your application, you need to re-authorize it in the Admin Console
+    
     ```Javascript
     client.enterprise.addUser(null, 'Test App User', {is_platform_access_only: true}, (err, result) => {...});
     ```
+    
 3. Make API calls using a user's account
     * Add the "Generate User Access Tokens" scope to the application and re-authorize it in the Admin Console
     * Create a user client that makes API calls as a specific user
+    
     ```Javascript
     const userClient = sdk.getAppAuthClient('user', user_id);
     userClient.folders.create(0, 'User Folder', (err, result) => {...});
     ```
+    
 4. Alternatively, you can make API calls on behalf of a user using the service account client
     * Add the "Perform Actions as Users" scope to the application and re-authorize it in the Admin Console
     * Use the `asUser()` and `asSelf()` functions to make API calls as a specific user
+    
     ```Javascript
     client.asUser(user_id);
     client.folders.create(0, 'User Folder', (err, result) => {...});
     client.asSelf();
     ```
+    
 5. Use the AWS ["encryption helpers"](http://docs.aws.amazon.com/lambda/latest/dg/tutorial-env_console.html)
    to encrypt the environment variables that hold the application secrets
     * Modify the sample code to decrypt the secrets before creating the Box SDK and client objects
