@@ -1,0 +1,18 @@
+<div class="col-md-12 well">
+  <% path.forEach(function(pathItem, index) { %>
+    <% if((path.length - 1) === index) { %>
+      <span id="rootFolder" data-id="<%= pathItem.id %>" class="path-item">
+        <strong><%= pathItem.name %></strong>
+      </span>
+    <% } else { %>
+      <a href="<%= domain %>/user/<%= pathItem.id %>">
+        <span class="path-item">
+          <%= pathItem.name %>
+        </span>
+      </a>	
+    <% } %> 
+    <% if (!(path.length - 1  === index)) { %>
+      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    <% } %>
+  <% }); %>
+</div>

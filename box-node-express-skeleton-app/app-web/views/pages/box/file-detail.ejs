@@ -1,0 +1,52 @@
+<% include ../../partials/common/header %>
+<div class='container-fluid vertical-center col-md-offset-5'>
+  <div class='row'>
+    <div class='row'>
+      <div class='col-md-12'>
+         <a href="/files/<%= file.id %>/preview"><img class='thumbnail preview-thumbnail' data-id='<%= file.id %>' src='<%= domain %>/files/<%= file.id %>/thumbnail'></a>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-12'>
+        <div class='row'>
+          <div class='col-md-12'>
+            <p>
+              <%= file.name %>
+            </p>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-md-12'>
+            <small>Created by: <%= file.created_by.name %></small>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-md-12'>
+            <small>Created on: <%= file.content_created_at %></small>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-md-12'>
+            <small>Uploaded on: <%= file.created_at %></small>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-md-12'>
+            <small>Last modified by: <%= file.modified_by.name %></small>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-md-12'>
+            <small>Last modified on: <%= file.modified_at %></small>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='col-md-12'>
+            <a href="/user/<%= file.parent.id %>">Return</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% include ../../partials/common/footer %>
