@@ -27,9 +27,9 @@ const sdk = new BoxSDK({
 });
 
 /**
- * Create an enterprise client that performs actions in the context of the service account.
+ * Create a service account client that performs actions in the context of the specified enterprise.
  * The app has a unique service account in each enterprise that authorizes the app.
- * The service account contains any app-specific content for the enterprise.
+ * The service account contains any app-specific content for that enterprise.
  * Depending on the scopes selected, it can also create and manage app users or managed users in that enterprise.
  *
  * The client will create and refresh the service account access token automatically.

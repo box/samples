@@ -3,7 +3,7 @@
 This sample demonstrates how to call Box APIs from an AWS Lambda function using the [Box Node SDK](https://github.com/box/box-node-sdk).
 
 #### Step 1. Create a Box application
-1. Log into the [Box Developer Console](https://developers.box.com)
+1. Log into the [Box Developer Console](https://developers.box.com) in your Box developer account
     * Switch to the open beta of the new Developer Console, if needed
 2. Select "Create New App"
     * Select "Custom App" and press "Next"
@@ -35,7 +35,7 @@ This sample demonstrates how to call Box APIs from an AWS Lambda function using 
 3. Your application is ready to go
 
 #### Step 3. Authorize the application into your Box account
-1. In a new tab, log into your Box account as an admin and go to the Admin Console
+1. In a new tab, log into your Box developer account as an admin and go to the Admin Console
     * *Applications that use Server Authentication must be authorized by the admin of the account*
 2. Under the gear icon, go to Enterprise Settings (or Business Settings, depending on your account type)
     * You'll need the "Enterprise ID" of your account later
@@ -157,21 +157,21 @@ using the [Box Node SDK](https://github.com/box/box-node-sdk):
     * Modify the sample code to decrypt the secrets before creating the Box SDK and client objects
 
 #### Troubleshooting
-1. If you didn't set the `BOX_CLIENT_ID` environment variable, you will get: `"clientID" must be set via init() before using the SDK.`
-2. If you didn't set the `BOX_PRIVATE_KEY_PASSPHRASE` environment variable, you will get: `"Passphrase must be provided in app auth params"`
-3. If you didn't set the `BOX_PUBLIC_KEY_ID` environment variable, you will get: `"Must provide app auth configuration to use JWT Grant"`
-4. If your Private Key Passphrase is wrong, you will get: `"Error: error:06065064:digital envelope routines:EVP_DecryptFinal_ex:bad decrypt"`
-5. If your Client ID is wrong, you will get: `"Please check the 'iss' claim."`
-6. If your Enterprise ID is wrong, you will get: `"Please check the 'sub' claim."`
-7. If your Public Key ID is wrong, you will get: `"OpenSSL unable to verify data: "`
-8. If your `private_key.pem` is wrong, you will get: `"OpenSSL unable to verify data: error:0906D06C:PEM routines:PEM_read_bio:no start line"`
-9. If your Client Secret is wrong, you will get: `"The client credentials are invalid"`
-10. If you forgot to add your public key, you will get: `"This app is not configured properly. No public key(s) added"`
-11. If you forgot to authorize the app, you wil get: `"This app is not authorized by the enterprise admin"`
-12. If you get `"Task timed out after 3.00 seconds"`, you may be getting a network error or Box server error.
-Try increasing the "Timeout" value in "Advanced Settings" of the Lambda function's "Configuration" tab in order
+1. If your Client ID is wrong, you will get: `"Please check the 'iss' claim."`
+2. If your Enterprise ID is wrong, you will get: `"Please check the 'sub' claim."`
+3. If your Client Secret is wrong, you will get: `"The client credentials are invalid"`
+4. If your Public Key ID is wrong, you will get: `"OpenSSL unable to verify data: "`
+5. If your `private_key.pem` is wrong, you will get: `"OpenSSL unable to verify data: error:0906D06C:PEM routines:PEM_read_bio:no start line"`
+6. If your Private Key Passphrase is wrong, you will get: `"Error: error:06065064:digital envelope routines:EVP_DecryptFinal_ex:bad decrypt"`
+7. If you pass an integer instead of a string for the `id` parameter of `getAppAuthClient()`, you wil get `"Please check the 'sub' claim."`
+18. If you forgot to add your public key, you will get: `"This app is not configured properly. No public key(s) added"`
+9. If you forgot to authorize the app, you wil get: `"This app is not authorized by the enterprise admin"`
+10. If you didn't set the `BOX_CLIENT_ID` environment variable, you will get: `"clientID" must be set via init() before using the SDK.`
+11. If you didn't set the `BOX_PRIVATE_KEY_PASSPHRASE` environment variable, you will get: `"Passphrase must be provided in app auth params"`
+12. If you didn't set the `BOX_PUBLIC_KEY_ID` environment variable, you will get: `"Must provide app auth configuration to use JWT Grant"`
+13. If you get `"Task timed out after 3.00 seconds"`, you may be getting a network error or Box server error.
+Try increasing the "Timeout" value in "Advanced Settings" of the Lambda function's "Configuration" tab to 30 seconds in order
 to see more details of the error
-13. If you pass an integer instead of a string for the `id` parameter of `getAppAuthClient()`, you wil get `"Please check the 'sub' claim."`
 
 Support
 -------

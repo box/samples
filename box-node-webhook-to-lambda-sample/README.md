@@ -119,7 +119,7 @@ This sample gives step-by-step instructions to set up an AWS Lambda function and
     * Name the application "Box Webhook to Lambda Sample - YOUR NAME"
         * *Application names must be unique across Box*
     * Press "Create App" and then "View Your App"
-    * Check "Manage webhooks" and press "Save Changes"
+    * Check the "Manage users" and "Manage webhooks" scopes and press "Save Changes"
         * This enables the application to create and use webhooks
     * In the left navbar, switch to the "Webhooks" section
         * Press "Generate Key" for both the "Primary Key" and "Secondary Key" to create keys for signing the events
