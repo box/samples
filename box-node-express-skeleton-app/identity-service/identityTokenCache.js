@@ -1,6 +1,7 @@
 'use strict';
 const CacheService = require('../cache-service/cacheService');
-const Auth0Config = require('../config').Auth0Config;
+const config = require('config');
+const Auth0Config = config.get('Auth0Config');
 const Promise = require('bluebird');
 const asyncFunc = Promise.coroutine;
 

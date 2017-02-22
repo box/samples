@@ -1,13 +1,34 @@
 'use strict';
-const BoxConfig = require('../config').BoxConfig;
 const _ = require('lodash');
 const Promise = require('bluebird');
 let autoPage = require('./util/autopage');
 let recurseFolders = require('./util/recurse');
 
+const BOX_MANAGERS = [
+	"users",
+	"files",
+	"folders",
+	"comments",
+	"collaborations",
+	"groups",
+	"sharedItems",
+	"metadata",
+	"collections",
+	"events",
+	"search",
+	"tasks",
+	"trash",
+	"enterprise",
+	"legalHoldPolicies",
+	"weblinks",
+	"retentionPolicies",
+	"devicePins",
+	"webhooks"
+]
+
 class BoxUtilityServices {
 	static promisifyClient(client) {
-		_.each(BoxConfig.managers, (manager) => {
+		_.each(BOX_MANAGERS, (manager) => {
 			Promise.promisifyAll(client[manager]);
 		});
 		return client;

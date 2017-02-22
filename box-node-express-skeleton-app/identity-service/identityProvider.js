@@ -1,8 +1,9 @@
 'use strict';
 const Promise = require('bluebird');
 const asyncFunc = Promise.coroutine;
-let Auth0Config = require('../config').Auth0Config;
-let BoxConfig = require('../config').BoxConfig;
+const config = require('config');
+const Auth0Config = config.get('Auth0Config');
+const BoxOptions = config.get('BoxOptions');
 let AuthenticationClient = require('auth0').AuthenticationClient;
 let ManagementClient = require('auth0').ManagementClient;
 let IdentityTokenCache = require('./identityTokenCache');
@@ -36,7 +37,7 @@ class IdentityProvider {
 		return asyncFunc(function* () {
 			let params = { id: userId };
 			let metadata = {};
-			metadata[BoxConfig.boxAppUserId] = boxAppUserId
+			metadata[BoxOptions.boxAppUserIdFieldName] = boxAppUserId
 			let userManagementClient = yield self.getUserManagementClient();
 			return yield userManagementClient.updateAppMetadata(params, metadata);
 

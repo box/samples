@@ -1,7 +1,8 @@
 'use strict';
 const Promise = require('bluebird');
 const asyncFunc = Promise.coroutine;
-const Auth0Config = require('../../config').Auth0Config;
+const config = require('config');
+const Auth0Config = config.get('Auth0Config');
 
 let Box = require('../../box-service/boxClientService');
 let IdentityProvider = require('../../identity-service/identityProvider');

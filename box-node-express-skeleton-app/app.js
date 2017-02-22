@@ -8,11 +8,12 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const SessionCache = require('connect-redis')(session);
 const CacheService = require('./cache-service/cacheService');
+const config = require('config');
 
 const passport = require('passport');
 const strategy = require('./identity-service/passport-strategies/auth0-strategy');
 
-let Auth0Config = require('./config').Auth0Config;
+const Auth0Config = config.get('Auth0Config');
 
 let webapp = require('./app-web/routes/index');
 

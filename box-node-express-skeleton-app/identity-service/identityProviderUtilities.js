@@ -1,6 +1,7 @@
 'use strict';
-const BoxConfig = require('../config').BoxConfig;
-const Auth0Config = require('../config').Auth0Config;
+const config = require('config');
+const BoxOptions = config.get('BoxOptions');
+const Auth0Config = config.get('Auth0Config');
 const Promise = require('bluebird');
 const asyncFunc = Promise.coroutine;
 const request = require('request');
@@ -14,7 +15,7 @@ class IdentityProviderUtilities {
   }
 
   static checkForExistingBoxAppUserId(profile) {
-    return (profile && profile.app_metadata && profile.app_metadata[BoxConfig.boxAppUserId]) ? profile.app_metadata[BoxConfig.boxAppUserId] : null;
+    return (profile && profile.app_metadata && profile.app_metadata[BoxOptions.boxAppUserIdFieldName]) ? profile.app_metadata[BoxOptions.boxAppUserIdFieldName] : null;
   }
 
   static retrieveManagementToken() {

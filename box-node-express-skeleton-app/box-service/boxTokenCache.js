@@ -1,12 +1,17 @@
 'use strict';
 
 const CacheService = require('../cache-service/cacheService');
-const BoxConfig = require('../config').BoxConfig;
+const config = require('config');
+const BoxSDKConfig = config.get('BoxSDKConfig');
+const BoxOptions = config.get('BoxOptions');
 const Promise = require('bluebird');
 const asyncFunc = Promise.coroutine;
 
-const CACHE_KEY_PREFIX_ENTERPRISE_TOKEN = `${BoxConfig.boxEnterpriseId}|${BoxConfig.enterprise}`;
-const CACHE_KEY_PREFIX_USER_TOKEN = `${BoxConfig.boxEnterpriseId}|${BoxConfig.user}`;
+const BOX_ENTERPRISE = "enterprise";
+const BOX_USER = "user";
+
+const CACHE_KEY_PREFIX_ENTERPRISE_TOKEN = `${BoxSDKConfig.boxEnterpriseId}|${BOX_ENTERPRISE}`;
+const CACHE_KEY_PREFIX_USER_TOKEN = `${BoxSDKConfig.boxEnterpriseId}|${BOX_USER}`;
 
 //Implementation of a BoxCache: has getBoxToken and setBoxToken
 class BoxTokenCache {
@@ -47,7 +52,7 @@ class BoxTokenCache {
 }
 
 function clearInMemoryStore(store) {
-	if (store.size > BoxConfig.inMemoryStoreSize) {
+	if (store.size > BoxOptions.inMemoryStoreSize) {
 		store.clear();
 	}
 }

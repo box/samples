@@ -1,12 +1,13 @@
 'use strict';
 const Promise = require('bluebird');
 const asyncFunc = Promise.coroutine;
-const BoxConfig = require('../../config').BoxConfig;
-const AppConfig = require('../../config').AppConfig;
+const config = require('config');
+const BoxOptions = config.get('BoxOptions');
+const AppConfig = config.get('AppConfig');
 let BoxService = require('../../box-service/boxClientService');
 
 module.exports.main = asyncFunc(function* (req, res, next) {
-	let boxAppUserId = req.user.app_metadata[BoxConfig.boxAppUserId];
+	let boxAppUserId = req.user.app_metadata[BoxOptions.boxAppUserIdFieldName];
 	if (!boxAppUserId) {
 		res.redirect('/');
 	}
@@ -29,7 +30,7 @@ module.exports.main = asyncFunc(function* (req, res, next) {
 });
 
 module.exports.addFolder = asyncFunc(function* (req, res, next) {
-	let boxAppUserId = req.user.app_metadata[BoxConfig.boxAppUserId];
+	let boxAppUserId = req.user.app_metadata[BoxOptions.boxAppUserIdFieldName];
 	if (!boxAppUserId) {
 		res.redirect('/login');
 	}

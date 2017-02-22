@@ -1,7 +1,8 @@
 'use strict';
 let passport = require('passport');
 let Auth0Strategy = require('passport-auth0');
-let Auth0Config = require('../../config').Auth0Config;
+const config = require('config');
+const Auth0Config = config.get('Auth0Config');
 let IdentityProviderUtilities = require('../identityProviderUtilities');
 
 let strategy = new Auth0Strategy({

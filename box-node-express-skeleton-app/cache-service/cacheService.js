@@ -2,7 +2,8 @@
 const Promise = require('bluebird');
 const asyncFunc = Promise.coroutine;
 const Redis = require('ioredis');
-const RedisConfig = require('../config').RedisConfig;
+const config = require('config');
+const RedisConfig = config.get('RedisConfig');
 
 class CacheService {
 	constructor() {
