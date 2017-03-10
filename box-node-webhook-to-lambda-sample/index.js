@@ -77,22 +77,3 @@ exports.handler = (event, context, callback) => {
     console.log(`Response: ${JSON.stringify(response, null, 2)}`);
     callback(null, response);
 };
-
-
-let foo = {
-    "type": "error",
-    "status": 409,
-    "code": "conflict",
-    "context_info": {
-        "errors": [
-            {
-                "reason": "invalid_parameter",
-                "name": "existWebhookId",
-                "message": "Webhook:1306319 already exists on the specified target."
-            }]
-    }
-    ,
-    "help_url": "http:\/\/developers.box.com\/docs\/#errors",
-    "message": "Bad Request",
-    "request_id": "87176267658a2217692375"
-}
