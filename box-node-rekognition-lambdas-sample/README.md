@@ -1,4 +1,4 @@
-# box-node-webhook-to-lambda-sample
+# box-node-rekognition-lambdas-sample
 
 This sample shows how to integrate AWS Rekognition with Box for image analysis.
 Each time a image file is uploaded under a tree folder or it's sub folders, Box can be configured to generate the webhook event FILE.UPLOADED with the image file details. A AWS Lambda function that can receives the webhooks and stores the event in DyanmoDB. Another Lambda function receives the DynamoDB event that conatains the file id. It retrieves the content of the file from Box using the file id in the event. The image content is processed by AWS Rekognition service. The output labels from Rekognition service are created as metadata of the image file in Box.
@@ -20,7 +20,7 @@ This sample gives the step-by-step instructions.
     * Check the Application scopes "Manage users", "Manage webhooks", "Manage enterprise properties",
     * Enable both Advanced Features "Perform Actions as Users" and "Generate User Access Tokens".
     * Press "Save Changes"
-        * You'll need your "Client ID" and "Client Secret" later
+        * *You'll need your "Client ID" and "Client Secret" later
 
 #### Step 2. Generate your private and public keys
 1. Generate a private key and a public key to use with Server Authentication
@@ -32,17 +32,17 @@ This sample gives the step-by-step instructions.
     You'll need the passphrase for your private key later
 2. Add the public key to the application created in Step 1.
     * Press "Add Public Key"
-        * You will need to set up 2-factor authentication, if you haven't already
+        * *You will need to set up 2-factor authentication, if you haven't already
     * Copy the public key: `cat public_key.pem | pbcopy`
     * Paste it into the "Public Key" field
     * Press "Verify and Save"
-        * You will need to enter a 2-factor confirmation code
+        * *You will need to enter a 2-factor confirmation code
     * You'll need the ID of your public key later
 3. Your application is ready to go
 
 #### Step 3. Authorize the application into your Box account
 1. In a new tab, log into your Box developer account as an admin and go to the Admin Console
-    * *Applications that use Server Authentication must be authorized by the admin of the account*
+    * Applications that use Server Authentication must be authorized by the admin of the account*
 2. Under the gear icon, go to Enterprise Settings (or Business Settings, depending on your account type)
     * You'll need the "Enterprise ID" of your account later
 3. Go to the Apps tab

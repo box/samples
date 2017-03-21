@@ -1,7 +1,7 @@
 {
   "name": "box-node-rekognition-webhook-lambda-sample",
   "version": "1.0.0",
-  "description": "The lambda function that receives the FILE.UPLOADED webhook event and stores the event in DynamoDB",
+  "description": "The Lambda function that receives the FILE.UPLOADED webhook event and stores the event in DynamoDB",
   "main": "index.js",
   "dependencies": {
     "aws-sdk": "^2.27.0",
@@ -12,7 +12,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "zip": "zip -rMM box-node-rekognition-webhook-lambda-sample index.js node_modules",
-    "bp": "zip -rMM box-node-rekognition-lambda-sample-bp index.js lambda.json node_modules",
     "lint": "eslint index.js"
   },
   "author": "Box <oss@box.com>",

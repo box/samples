@@ -1,7 +1,7 @@
 {
-  "name": "box-node-rekognition-lambda-sample",
+  "name": "box-node-rekognition-metadata-lambda-sample",
   "version": "1.0.0",
-  "description": "This sample lambda function receives DyanmoDB events that represents the FILE.UPLOADED webhook event. Using the file id in the event, the labels are generated from AWS Rekognition service. These labels are stored as file metadata in Box.",
+  "description": "This Lambda function receives DyanmoDB events that represents the FILE.UPLOADED webhook event. Using the file id in the event, the labels are generated from AWS Rekognition service. These labels are stored as file metadata in Box.",
   "main": "index.js",
   "dependencies": {
     "aws-sdk": "^2.27.0",
@@ -10,8 +10,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "zip": "zip -rMM box-node-rekognition-lambda-sample index.js private_key.pem node_modules",
-    "bp": "zip -rMM box-node-rekognition-lambda-sample-bp index.js lambda.json private_key.pem node_modules",
+    "zip": "zip -rMM box-node-rekognition-metadata-lambda-sample index.js private_key.pem node_modules",
     "lint": "eslint index.js"
   },
   "author": "Box <oss@box.com>",
