@@ -7,7 +7,18 @@ The labels and values are stored as metadata of the image file in Box.
 
 This sample gives step-by-step instructions for creating the Lambda function.
 
-#### Create an AWS Lambda function
+#### Step 1. Create IAM role
+1. Go to IAM
+2. Press "Create New Role"
+3. Give Role Name "box-node-rekognition-metadata-sample-role". Click "Next Step"
+4. Select "AWS Lambda".
+5. Select Policies
+    * AmazonDynamoDBFullAccess
+    * CloudWatchLogsFullAccess
+    * AmazonRekognitionFullAccess
+6. Review and press "Create Role".
+
+#### Step 2. Create an AWS Lambda function
 1. Log into the [AWS Management Console](https://aws.amazon.com/console) and go to the Lambda Management Console
 2. Press "Create a Lambda function"
     * Choose the "Blank Function" blueprint

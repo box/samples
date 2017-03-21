@@ -24,7 +24,18 @@ Note: For detailed information on setting up Box webhook with Lambda function, s
 5. Leave the Table settings as default.
 6. Press "Create".
 
-#### Step 3. Create the AWS Lambda function
+#### Step 3. Create IAM role
+1. Go to IAM
+2. Press "Create New Role"
+3. Give Role Name "box-node-rekognition-webhook-lambda-sample-role". Click "Next Step"
+4. Select "AWS Lambda".
+5. Select Policies
+    * AmazonDynamoDBFullAccess
+    * CloudWatchLogsFullAccess
+    * AmazonAPIGatewayAdministrator
+6. Review and press "Create Role".
+
+#### Step 4. Create the AWS Lambda function
 1. Log into the [AWS Management Console](https://aws.amazon.com/console) and go to the Lambda Management Console
 2. Press "Create a Lambda function"
     * Choose the "Blank Function" blueprint
@@ -60,14 +71,14 @@ Note: For detailed information on setting up Box webhook with Lambda function, s
     * Press Next
 6. Press "Create function"
 
-#### Step 4. Test the API Gateway API endpoint using curl
+#### Step 5. Test the API Gateway API endpoint using curl
 Find the URL for your API Gateway on the "Triggers" tab.  It look similar to:
 
     ```
     https://xxxxxxxxxx.execute-api.us-west-2.amazonaws.com/prod/box-node-rekognition-webhook-lambda-sample
     ```
 
-#### Step 5. Create a Box webhook to call the Lambda function
+#### Step 6. Create a Box webhook to call the Lambda function
 Note: See [Getting Started with Webhooks V2](https://docs.box.com/v2.0/docs/getting-started-with-webhooks-v2) and [Overview of Webhooks V2](https://docs.box.com/reference#webhooks-v2) for more info.
 
 1. Create a folder in your account on Box and record the "Folder ID"
