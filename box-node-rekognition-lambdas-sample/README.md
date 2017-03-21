@@ -20,7 +20,7 @@ This sample gives the step-by-step instructions.
     * Check the Application scopes "Manage users", "Manage webhooks", "Manage enterprise properties",
     * Enable both Advanced Features "Perform Actions as Users" and "Generate User Access Tokens".
     * Press "Save Changes"
-        * *You'll need your "Client ID" and "Client Secret" later
+        * *You'll need your "Client ID" and "Client Secret" later*
 
 #### Step 2. Generate your private and public keys
 1. Generate a private key and a public key to use with Server Authentication
@@ -32,11 +32,11 @@ This sample gives the step-by-step instructions.
     You'll need the passphrase for your private key later
 2. Add the public key to the application created in Step 1.
     * Press "Add Public Key"
-        * *You will need to set up 2-factor authentication, if you haven't already
+        * *You will need to set up 2-factor authentication, if you haven't already.*
     * Copy the public key: `cat public_key.pem | pbcopy`
     * Paste it into the "Public Key" field
     * Press "Verify and Save"
-        * *You will need to enter a 2-factor confirmation code
+        * *You will need to enter a 2-factor confirmation code.*
     * You'll need the ID of your public key later
 3. Your application is ready to go
 
@@ -76,7 +76,7 @@ Now that you are successfully integrated AWS Rekognition with Box to process the
     * Modify the sample code to decrypt the secrets
 2. [Rotate your app's signing keys](https://docs.box.com/reference#section-rotating-signatures)
     * Generate a new primary key on Box
-        * Messages will continue to be validated using the secondary key
+        * *Messages will continue to be validated using the secondary key*
     * Update you Lambda function with the new primary key
     * Wait long enough for all in-flight messages to have been processed by the Lambda function
     * Repeat the process, this time rotating the secondary key
