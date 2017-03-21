@@ -54,6 +54,11 @@ exports.handler = (event, context, callback) => {
     console.log(JSON.stringify(event, null, 2));
     //Reads only one record as this sample configuration sets dynamodb batch size as 1.
     event.Records.forEach(function(record) {
+        if (event.eventName === 'REMOVE') {
+            console.log('Skipping Remove event')
+            return;
+        }
+
         var fileId = record.dynamodb.Keys.file_id.S;
         var userId = record.dynamodb.NewImage.user_id.S;
         
@@ -71,12 +76,14 @@ exports.handler = (event, context, callback) => {
                 return addMetadata(client, fileId, metadata);
             })
             .then(function(data) {
-                callback(null, data);
+                console.log(`Metadata saved successfully for File Id: ${fileId}`)
             })
             .catch(function(error) {
                 callback(error);
             })
     });
+
+    callback(null, 'Rekognition Lambda function executed successfully')
 };
 
 var detectLabels = function(fileId, buffer) {
