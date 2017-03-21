@@ -1,213 +1,80 @@
 # box-node-webhook-to-lambda-sample
 
-This sample shows how to connect a Box webhook to an AWS Lambda function via API Gateway.
-Each time an event occurs that triggers the webhook on Box, the Lambda function will be called with the details of the event.
-The messages are secured with a message signature that is validated in the Lambda function.
+This sample shows how to integrate AWS Rekognition with Box for image analysis.
+Each time a image file is uploaded under a tree folder or it's sub folders, Box can be configured to generate the webhook event FILE.UPLOADED with the image file details. A AWS Lambda function that can receives the webhooks and stores the event in DyanmoDB. Another Lambda function receives the DynamoDB event that conatains the file id. It retrieves the content of the file from Box using the file id in the event. The image content is processed by AWS Rekognition service. The output labels from Rekognition service are created as metadata of the image file in Box.
 
-There are several use cases for using Lambda functions with Box:
+This sample gives the step-by-step instructions.
 
-* **Trigger external systems.**  Send an SMS when certain events occur in Box
-* **Extend Box with external processing.**  When an image file is uploaded to Box, use image analysis to extract information and add that as metadata to the file in Box
-* **Build analytics.**  Record events that happen in Box in an external analytics system
-
-This sample gives step-by-step instructions to set up an AWS Lambda function and trigger it from a Box webhook.
-
-#### Step 1. Create an AWS Lambda function
-1. Log into the [AWS Management Console](https://aws.amazon.com/console) and go to the Lambda Management Console
-2. Press "Create a Lambda function"
-    * Choose the "Blank Function" blueprint
-3. Configure a trigger for the Lambda function by clicking in the gray outlined area
-    * Choose API Gateway
-    * Leave the API name and Deployment stage with default values
-    * Choose "Open" for Security.  This enables the Box webhook to call the API externally
-    * Press Next
-4. Create the deployment package for the Lambda function
-    * Run `npm install` to install the [Box Node SDK](https://github.com/box/box-node-sdk) 
-    * Run `npm run zip` to create `box-node-webhook-to-lambda-sample.zip`
-    * The zip file includes the sample code in `index.js` plus the Box Node SDK
-5. Configure the lambda function
-    * Name = "box-node-webhook-to-lambda-sample"
-    * Description = "Demonstrates connecting a Box webhook to an AWS Lambda function"
-    * Runtime = "Node.js"
-    * Code entry type = "Upload a .ZIP file"
-    * Function package = Browse and select `box-node-webhook-to-lambda-sample.zip`
-    * Environment variables:
-    ```
-    BOX_WEBHOOK_PRIMARY_SIGNATURE_KEY = SamplePrimaryKey
-    BOX_WEBHOOK_SECONDARY_SIGNATURE_KEY = SampleSecondaryKey
-    ```
-    * Handler = "index.handler". This sets the entry point to be the handler() function of the `index.js` file
-    * Role = "Create new role from template"
-    * Role Name = "box-node-webhook-to-lambda-sample-role"
-    * Policy Templates = Leave blank
-    * Leave all of the advanced settings with default values
-    * Press Next
-6. Press "Create function"
-
-#### Step 2. Test the Lambda function in the Lambda Console
-1. Press the "Test" button and copy and paste the test data below (also in the file `lambda-test.json`):
-
-    ```JSON
-    {
-      "headers": {
-        "box-delivery-id": "f96bb54b-ee16-4fc5-aa65-8c2d9e5b546f",
-        "box-delivery-timestamp": "2020-01-01T00:00:00-07:00",
-        "box-signature-algorithm": "HmacSHA256",
-        "box-signature-primary": "6TfeAW3A1PASkgboxxA5yqHNKOwFyMWuEXny/FPD5hI=",
-        "box-signature-secondary": "v+1CD1Jdo3muIcbpv5lxxgPglOqMfsNHPV899xWYydo=",
-        "box-signature-version": "1"
-      },
-      "body": "{\"type\":\"webhook_event\",\"webhook\":{\"id\":\"1234567890\"},\"trigger\":\"FILE.UPLOADED\",\"source\":{\"id\":\"1234567890\",\"type\":\"file\",\"name\":\"Test.txt\"}}"
-    }
-    ```
-    
-    This sample message has been signed with the keys `SamplePrimaryKey` and `SampleSecondaryKey`.
-    
-    *Note that the API Gateway will pass the incoming HTTP request headers and body to the Lambda function as a JSON object.
-    See the [API Gateway documentation](http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-set-up-simple-proxy.html#api-gateway-simple-proxy-for-lambda-input-format) for more information on the input and output formats for the Lambda Proxy Integration.*
-2. The result should be the following JSON response:
-
-    ```JSON
-    {
-      "statusCode": 200,
-      "body": "webhook=1234567890, trigger=FILE.UPLOADED, source=<file id=1234567890 name=Test.txt>"
-    }
-    ```
-
-3. Your Lambda function is working properly!
-
-#### Step 3. Test the API Gateway API endpoint using curl
-1. Find the URL for your API Gateway on the "Triggers" tab.  It should look like:
-
-    ```
-    https://xxxxxxxxxx.execute-api.us-west-2.amazonaws.com/prod/box-node-webhook-to-lambda-sample
-    ```
-
-2. Run the following `curl` command:
-
-    ```
-    curl <YOUR_GATEWAY_API_URL> -d @curl-test.json \
-    -H "box-delivery-id: f96bb54b-ee16-4fc5-aa65-8c2d9e5b546f" \
-    -H "box-delivery-timestamp: 2020-01-01T00:00:00-07:00" \
-    -H "box-signature-algorithm: HmacSHA256" \
-    -H "box-signature-primary: 6TfeAW3A1PASkgboxxA5yqHNKOwFyMWuEXny/FPD5hI=" \
-    -H "box-signature-secondary: v+1CD1Jdo3muIcbpv5lxxgPglOqMfsNHPV899xWYydo=" \
-    -H "box-signature-version: 1"; echo
-    ```
-
-3. The file `curl-test.json` contains the following test data:
-
-    ```JSON
-    {"type":"webhook_event","webhook":{"id":"1234567890"},"trigger":"FILE.UPLOADED","source":{"id":"1234567890","type":"file","name":"Test.txt"}}
-    ```
-
-4. This should return the following response message from the Lambda function:
-
-    ```
-    webhook=1234567890, trigger=FILE.UPLOADED, source=<file id=1234567890 name="Test.txt">
-    ```
-
-    *If you have trouble, try using `curl -v` to see the HTTP response code*
-5. Your public API endpoint is working properly!
-
-#### Step 4. Create a Box application and get a developer token
-1. Log into the [Box Developer Console](https://developers.box.com)
+#### Step 1. Create a Box application
+1. Log into the [Box Developer Console](https://developers.box.com) in your Box developer account
     * Switch to the open beta of the new Developer Console, if needed
 2. Select "Create New App"
-    * Select "Enterprise Integration" and press "Next"
+    * Select "Custom App" and press "Next"
+        * *You can also pick "Enterprise Integration" if your app will interact with existing Box enterprises*
     * Select "Server Authentication" and press "Next"
-    * Name the application "Box Webhook to Lambda Sample - YOUR NAME"
+        * *This sample demonstrates a server-to-server integration*
+    * Name the application "Box Node Lambda Sample - YOUR NAME"
         * *Application names must be unique across Box*
     * Press "Create App" and then "View Your App"
-    * Check the "Manage users" and "Manage webhooks" scopes and press "Save Changes"
-        * This enables the application to create and use webhooks
-    * In the left navbar, switch to the "Webhooks" section
-        * Press "Generate Key" for both the "Primary Key" and "Secondary Key" to create keys for signing the events
-        * These are the keys that Box will use to sign events sent by your application's webhooks
-        * The events are signed using two separate keys to make it easier to [rotate your signing keys](https://docs.box.com/reference#section-rotating-signatures)
-    * Return to the "Configuration" section and get your "Developer Token"
-        * *The token is valid for an hour, but you can get another one if it expires*
+    * Select "Application Access" as "Enterprise".
+    * Check the Application scopes "Manage users", "Manage webhooks", "Manage enterprise properties",
+    * Enable both Advanced Features "Perform Actions as Users" and "Generate User Access Tokens".
+    * Press "Save Changes"
+        * You'll need your "Client ID" and "Client Secret" later
 
-#### Step 5. Create a Box webhook to call the Lambda function
-Note: See [Getting Started with Webhooks V2](https://docs.box.com/v2.0/docs/getting-started-with-webhooks-v2) and [Overview of Webhooks V2](https://docs.box.com/reference#webhooks-v2) for more info.
-
-1. Create a folder in your account on Box and record the "Folder ID"
-    * See these [instructions](https://docs.box.com/v2.0/docs/getting-started-with-webhooks-v2#section-3-create-a-webhook) for how to find the "Folder ID" 
-2. Create a webhook using `curl` to call the [Box webhook API](https://docs.box.com/reference#create-webhook):
-
+#### Step 2. Generate your private and public keys
+1. Generate a private key and a public key to use with Server Authentication
+    * In the `box-node-rekognition-lambdas-sample/rekognition` directory, run the following commands:
     ```
-    curl https://api.box.com/2.0/webhooks \
-    -H "Authorization: Bearer <DEVELOPER_TOKEN>" \
-    -d '{"target": {"id": "<FOLDER_ID>", "type": "folder"}, "address": "<YOUR_GATEWAY_API_URL>", "triggers": ["FILE.UPLOADED"]}'; echo
+    openssl genrsa -aes256 -out private_key.pem 2048
+    openssl rsa -pubout -in private_key.pem -out public_key.pem
     ```
+    You'll need the passphrase for your private key later
+2. Add the public key to the application created in Step 1.
+    * Press "Add Public Key"
+        * You will need to set up 2-factor authentication, if you haven't already
+    * Copy the public key: `cat public_key.pem | pbcopy`
+    * Paste it into the "Public Key" field
+    * Press "Verify and Save"
+        * You will need to enter a 2-factor confirmation code
+    * You'll need the ID of your public key later
+3. Your application is ready to go
 
-    *Note: You must use the API to create V2 webhooks -- there is no Web UI*
-3. You should get a response confirming that the webhook has been created:
+#### Step 3. Authorize the application into your Box account
+1. In a new tab, log into your Box developer account as an admin and go to the Admin Console
+    * *Applications that use Server Authentication must be authorized by the admin of the account*
+2. Under the gear icon, go to Enterprise Settings (or Business Settings, depending on your account type)
+    * You'll need the "Enterprise ID" of your account later
+3. Go to the Apps tab
+3. Under "Custom Applications", press "Authorize New App"
+4. Enter your "Client ID" from the developer console in the "API Key" field
+    * Your application is now authorized to access your Box account
 
-    ```
-    {"id":"<WEBHOOK_ID>","type":"webhook","target":{"id":"<FOLDER_ID>","type":"folder"},"created_by":<YOUR_USER_INFO>,"created_at":"2016-11-10T15:00:10-08:00","address":"<YOUR_GATEWAY_API_URL>","triggers":["FILE.UPLOADED"]}
-    ```
+#### Step 4. Create a Lambda function to handle Box webhook FILE.UPLOADED events.
+See [Webhook Lambda function](https://github.com/box/samples/tree/rekognition_integration/box-node-rekognition-lambdas-sample/webhook) for more info.
+
+#### Step 5. Create a Lambda function that uses Rekognition service and updates the metadata of the image file in Box.
+See [Rekognition Lambda function](https://github.com/box/samples/tree/rekognition_integration/box-node-rekognition-lambdas-sample/rekognition) for more info.
+
+#### Step 6. Test
+1. Login to box.com
+2. Upload a image file in to the folder in which the webhook is enabled.
+3. The webhook Lambda function should receive the event and store the event in DynamoDB. 
+    * A new Item with the file name is created in 'box_file_uploaded' table.
+    * If any errors, logs will provides more details.
+4. The Rekognition Lambda function is triggered if the Item is added to the 'box_file_uploaded' table.
+5. Once the Lambda function is successful, the image file in Box is updated with the meta data.
+    * Click the image file to preview the file.
+    * Click 'Info'. The 'CUSTOM METADATA' section is updated with the labels identified and their corresponding confidence level percentage.
     
-    * Note down the `<WEBHOOK_ID>` in case you need to modify or delete the webhook
-
-4. The webhook will call the Lambda function each time a file is uploaded to the folder
-    * *See [here](https://docs.box.com/reference#section-retries) for details on how Box webhooks handle timeouts, retries, and exponential backoff*
-
-#### Step 6. Update the Lambda function with your app's signing keys
-1. In the Code tab of the Lambda Management Console, update the environment variables to the primary and secondary signing keys from the Box Developer Console
-    * *Storing the application secrets in environment variables makes them easier to secure and manage*
-    ```
-    BOX_WEBHOOK_PRIMARY_SIGNATURE_KEY = <YOUR_PRIMARY_KEY>
-    BOX_WEBHOOK_SECONDARY_SIGNATURE_KEY = <YOUR_SECONDARY_KEY>
-    ```
-
-2. Press "Save and Test"
-3. You should get an error response, because the sample test data is not signed with the keys you just added to the Lambda function
-
-    ```JSON
-    {
-      "statusCode": 403,
-      "body": "Message authenticity not verified"
-    }
-    ```
-
-4. Publish the new version of your lambda function by selecting "Publish new version" in the "Actions" menu
-
-#### Step 7. Test the webhook on Box
-1. Upload a file to the Box folder that you specified when creating the webhook
-2. In the Lambda Management Console, click on the Monitoring tab and click on "View Logs in Cloudwatch"
-3. Click on the most recent log stream (the top one)
-4. You should see a new set of events appear in Cloudwatch that include the console logs created by the Lambda function:
-
-    ```JSON
-    {
-        "statusCode": 200,
-        "body": "webhook=386135, trigger=FILE.UPLOADED, source=<file id=99174057812 name=\"Electron 4.png\">"
-    }
-    ```
-
-    *It may take a few seconds for the events to appear.  Press the "Retry" link or scroll down to see new events*
-5. Note that if your developer token expires, the webhook will no longer send events with a full payload.  In that case, the event trigger will be `NO_ACTIVE_SESSION`
-
-    ```JSON
-    {
-        "statusCode": 200,
-        "body": "webhook=386135, trigger=NO_ACTIVE_SESSION, source=<file id=99174057812 name=\"unknown\">"
-    }
-    ```
-
-6. To get the webhook to send the full payload again, generate a new developer token in the Box Developer Console
-    * *Note that you don't need to recreate the webhook with the new developer token -- there just needs to be a non-expired token associated with the user that created the webhook*
 
 #### Next Steps
-Now that you are successfully calling your AWS Lambda function from a Box webhook, here are some things you can try next:
+Now that you are successfully integrated AWS Rekognition with Box to process the image files. You could also try other options for the integration.
 
-1. Use the AWS "encryption helpers" to encrypt the environment variables that hold the application secrets
+1. Use the AWS SQS service instead of DynamoDD in the integration. The Rekognition Lambda function need to poll SQS queue to receive the events.
+2.  Use the AWS "encryption helpers" to encrypt the environment variables that hold the application secrets
     * Modify the sample code to decrypt the secrets
-2. Modify the sample Lambda function to call an external service with the event data
-3. Have the Lambda function download additional information from Box in response to the event (such as the contents of a newly uploaded file)
-    * See the documentation for the [Box Node SDK](https://github.com/box/box-node-sdk) for how to call Box APIs 
-4. [Rotate your app's signing keys](https://docs.box.com/reference#section-rotating-signatures)
+2. [Rotate your app's signing keys](https://docs.box.com/reference#section-rotating-signatures)
     * Generate a new primary key on Box
         * Messages will continue to be validated using the secondary key
     * Update you Lambda function with the new primary key
@@ -215,39 +82,13 @@ Now that you are successfully calling your AWS Lambda function from a Box webhoo
     * Repeat the process, this time rotating the secondary key
 
 #### Troubleshooting
-1. Each app can only have one webhook for a given target.  If you try to create a second one you will get an API error:
+1. If the image file is not updated, the Lambda function logs can be analysed to find out the issue.
+    * Go to "Monitoring" tab in the Lambda function.
+    * Click "View logs in CloudWatch" link
+    * Click the latest (or the best matches you execution time) log stream from the list of Log Streams. The errors will be displayed if any.
 
-    ```JSON
-    {
-        "type": "error",
-        "status": 409,
-        "code": "conflict",
-        "context_info": {
-            "errors": [
-                {
-                    "reason": "invalid_parameter",
-                    "name": "existWebhookId",
-                    "message": "Webhook:<WEBHOOK_ID> already exists on the specified target."
-                }]
-        }
-        ,
-        "help_url": "http:\/\/developers.box.com\/docs\/#errors",
-        "message": "Bad Request",
-        "request_id": "87176267658a2217692375"
-    }
-    ```
+2. The DynamoDB trigger function failure. If there is a failure, the DyanmoDB event may contain the old image file that is sent multiple times. In that case, analyse the failure.
 
-2. To inspect the webhook, use:
-
-    ```
-    curl https://api.box.com/2.0/webhooks/<WEBHOOK_ID> -H "Authorization: Bearer <DEVELOPER_TOKEN>"
-    ```
-
-3. To delete the webhook when you are done, use:
-
-    ```
-    curl https://api.box.com/2.0/webhooks/<WEBHOOK_ID> -H "Authorization: Bearer <DEVELOPER_TOKEN>" -X DELETE
-    ```
 
 Support
 -------
