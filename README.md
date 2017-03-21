@@ -14,6 +14,9 @@ This lets you call Box from a Lambda function.
 This sample shows how to connect a Box webhook to an AWS Lambda function via API Gateway.
 This lets you call a Lambda function from Box. 
 
+[box-node-rekognition-lambdas-sample](https://github.com/box/samples/tree/rekognition_integration/box-node-rekognition-lambdas-sample)
+This sample shows how to connect Box with AWS Rekognition service. An AWS lambda function uses the AWS Rekognitions service to analyse the image uploaded in Box and updates the metadata of the image file in Box.
+
 Support
 -------
 

@@ -30,6 +30,7 @@ function saveEvent(webhookEvent) {
             file_name: webhookEvent.source.name,
             file_etag: webhookEvent.source.parent.id,
             file_size: webhookEvent.source.size,
+            user_id: webhookEvent.source.owned_by.id,
             event_id: webhookEvent.id
         }
     };

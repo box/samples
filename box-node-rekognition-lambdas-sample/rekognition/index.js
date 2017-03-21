@@ -44,8 +44,6 @@ var sdk = new BoxSDK({
 });
 
 // var client = sdk.getBasicClient(token);
-var client = sdk.getAppAuthClient('enterprise', process.env.BOX_ENTERPRISE_ID);
-client.asUser(process.env.BOX_APP_USER_ID);
 
 /**
  * The event handler validates the message using the signing keys to ensure that the message was sent from
@@ -57,24 +55,23 @@ exports.handler = (event, context, callback) => {
     //Reads only one record as this sample configuration sets dynamodb batch size as 1.
     event.Records.forEach(function(record) {
         var fileId = record.dynamodb.Keys.file_id.S;
+        var userId = record.dynamodb.NewImage.user_id.S;
+        
+        //Create the Box api client that uses enterprise token
+        var client = sdk.getAppAuthClient('enterprise', process.env.BOX_ENTERPRISE_ID);
+        client.asUser(process.env.BOX_APP_USER_ID);
 
-        console.log('File Id: ', fileId);
+        console.log('Content retrival for File Id: ', fileId);
 
-        readStream(fileId)
+        readStream(client, fileId)
             .then(function(buffer) {
-                detectLabels(fileId, buffer)
-                    .then(function(metadata){
-                        addMetadata(fileId, metadata)
-                            .then(function(data) {
-                                callback(null, data);
-                            })
-                            .catch(function(error) {
-                                callback(error);                                
-                            })
-                    })
-                    .catch(function(error) {
-                        callback(error);
-                    })        
+                return detectLabels(fileId, buffer);
+            })    
+            .then(function(metadata) {
+                return addMetadata(client, fileId, metadata);
+            })
+            .then(function(data) {
+                callback(null, data);
             })
             .catch(function(error) {
                 callback(error);
@@ -101,7 +98,7 @@ var detectLabels = function(fileId, buffer) {
                 var labels = response.Labels;
                 var data = {};
                 for(var i=0; i<labels.length; i++) {
-                    console.log("Name ="+labels[i].Name+", Confidence ="+labels[i].Confidence);  
+                    console.log('Name =' + labels[i].Name + ', Confidence =' + labels[i].Confidence);  
                     data[labels[i].Name] = labels[i].Confidence + '';
                 }
                 console.log("-------- END: Object and scene detection --------");
@@ -113,8 +110,8 @@ var detectLabels = function(fileId, buffer) {
     });
 }
 
-var readStream = function(fileId) {
-    console.log("File ID: " + fileId);
+var readStream = function(client, fileId) {
+    console.log(`Reading stream from File: ${fileId}`);
 
     return new Promise(function(resolve, reject) {
         client.files.getReadStream(fileId, null, (error, stream) => {
@@ -139,7 +136,7 @@ var readStream = function(fileId) {
     })
 }
 
-var addMetadata = function(fileId, metadata) {
+var addMetadata = function(client, fileId, metadata) {
     console.log(`Adding metadata: ${metadata}`);
 
     return new Promise(function(resolve, reject) {
