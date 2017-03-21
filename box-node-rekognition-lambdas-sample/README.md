@@ -5,6 +5,10 @@ Each time a image file is uploaded under a tree folder or it's sub folders, Box 
 
 This sample gives the step-by-step instructions.
 
+#### Prerequisite
+1. Install node.js version 4.3 or above.
+2. Install npm.
+
 #### Step 1. Create a Box application
 1. Log into the [Box Developer Console](https://developers.box.com) in your Box developer account
     * Switch to the open beta of the new Developer Console, if needed
