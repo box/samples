@@ -18,9 +18,6 @@ const BoxSDK = require('box-node-sdk');
 const fs = require('fs');
 
 var AWS = require('aws-sdk');
-console.log('Access Key id: ' + process.env.BOX_AWS_ACCESS_KEY_ID)
-console.log('Access secret: ' + process.env.BOX_AWS_SECRET_ACCESS_KEY)
-console.log('AWS Region: ' + process.env.BOX_AWS_REGION)
 
 AWS.config.update({
     'accessKeyId': process.env.BOX_AWS_ACCESS_KEY_ID,
@@ -49,13 +46,13 @@ var sdk = new BoxSDK({
  * The event handler validates the message using the signing keys to ensure that the message was sent from
  * your Box application.
  */
-exports.handler = (event, context, callback) => {
+exports.handler = function(event, context, callback) {
 
     console.log(JSON.stringify(event, null, 2));
     //Reads only one record as this sample configuration sets dynamodb batch size as 1.
     event.Records.forEach(function(record) {
         if (event.eventName === 'REMOVE') {
-            console.log('Skipping Remove event')
+            console.log('Skipping the Remove event');
             return;
         }
 

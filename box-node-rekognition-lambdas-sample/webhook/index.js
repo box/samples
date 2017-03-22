@@ -3,10 +3,6 @@
 var BoxSDK = require('box-node-sdk');
 var AWS = require('aws-sdk');
 
-console.log('Access Key id: ' + process.env.BOX_AWS_ACCESS_KEY_ID)
-console.log('Access secret: ' + process.env.BOX_AWS_SECRET_ACCESS_KEY)
-console.log('AWS Region: ' + process.env.BOX_AWS_REGION)
-
 AWS.config.update({
     'accessKeyId': process.env.BOX_AWS_ACCESS_KEY_ID,
     'secretAccessKey': process.env.BOX_AWS_SECRET_ACCESS_KEY,
@@ -88,7 +84,7 @@ function validateWebhookEvent(webhookEvent) {
  * The event handler validates the message using the signing keys to ensure that the message was sent from
  * your Box application. Then it saves the event in the DynamoDB.
  */
-exports.handler = (event, context, callback) => {
+exports.handler = function(event, context, callback) {
     console.log(`Event: ${JSON.stringify(event, null, 2)}`);
 
     //Check the event is signed and signature is valid
