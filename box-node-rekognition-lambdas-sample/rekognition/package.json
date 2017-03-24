@@ -10,8 +10,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "zip": "zip -rMM box-node-rekognition-metadata-lambda-sample index.js private_key.pem node_modules",
-    "lint": "eslint index.js"
+    "zip": "zip -rMM box-node-rekognition-metadata-lambda-sample index.js private_key.pem node_modules"
   },
   "author": "Box <oss@box.com>",
   "license": "Apache-2.0"
