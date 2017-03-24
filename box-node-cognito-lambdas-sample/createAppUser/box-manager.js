@@ -24,11 +24,13 @@ let createAppUser = function (userName) {
 	      }
     };
   
-  	let boxAdminClient = BoxSdk.getAppAuthClient("enterprise", process.env.BOX_ENTERPRISE_ID);
+    //Get App auth client
+  	let boxAdminClient = BoxSdk.getAppAuthClient('enterprise', process.env.BOX_ENTERPRISE_ID);
   	return new Promise(function (resolve, reject) {
-     	  boxAdminClient.post('/users', requestParams, boxAdminClient.defaultResponseHandler(function (err, boxResponse) {
-      	  	if (err) {
-      		    	reject(err)
+        //Create the user in Box
+     	  boxAdminClient.post('/users', requestParams, boxAdminClient.defaultResponseHandler(function (error, boxResponse) {
+      	  	if (error) {
+      		    	reject(error)
       		  }
       		
       		  resolve(boxResponse);
@@ -37,5 +39,5 @@ let createAppUser = function (userName) {
 }
 
 module.exports = {
-  createAppUser
+    createAppUser
 }

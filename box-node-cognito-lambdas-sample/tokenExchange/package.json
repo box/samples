@@ -10,8 +10,7 @@
     },
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "zip": "zip -rMM box-node-cognito-token-exchange-lambda-sample index.js aws-service.js generateUserToken.js getAppUserProp.js private_key.pem node_modules",
-      "lint": "eslint index.js"
+      "zip": "zip -rMM box-node-cognito-token-exchange-lambda-sample index.js aws-service.js box-manager.js cognito-manager.js private_key.pem node_modules"
     },
     "author": "Box <oss@box.com>",
     "license": "Apache-2.0"
