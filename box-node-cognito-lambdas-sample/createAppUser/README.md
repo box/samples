@@ -10,7 +10,7 @@ This sample gives step-by-step instructions for creating the Lambda function.
 #### Step 1. Create IAM role
 1. Go to IAM
 2. Press "Create New Role"
-3. Give Role Name "box-node-cognito-create-appuser-sample-role". Click "Next Step"
+3. Give Role Name `box-node-cognito-create-appuser-sample-role`. Click "Next Step"
 4. Select "AWS Lambda".
 5. Select Policies
     * AWSLambdaFullAccess

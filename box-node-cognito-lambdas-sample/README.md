@@ -59,7 +59,7 @@ This sample gives the step-by-step instructions.
 1. Log into the [AWS Management Console](https://aws.amazon.com/console) and go to the Cognito console.
 2. Press "Manage you User Pools"
 3. Press "Create user pool"
-4. Fill pool name as "box-cognito-integration". Press the "Step through settings"
+4. Fill pool name as `box-cognito-integration`. Press the "Step through settings"
 5. Press "Add a custom attribute"
 6. Choose the String type. Give the attribute name as "box_appuser_id". Press "Next step".
 7. Configure next steps based on the application needs.

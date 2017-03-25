@@ -10,13 +10,13 @@ Note: For detailed information on setting up Box webhook with Lambda function, s
 1. Log into the [AWS Management Console](https://aws.amazon.com/console) and go to the API Gateway console.
 2. Press "Create API".
 3. Click "New API". 
-4. Give API name as "box-node-cognito-token-exchange" and fill description.
+4. Give API name as `box-node-cognito-token-exchange` and fill description.
 5. Press "Create API".
 
 #### Step 2. Create IAM role
 1. Go to IAM
 2. Press "Create New Role"
-3. Give Role Name "box-node-cognito-token-exchange-sample-role". Click "Next Step"
+3. Give Role Name `box-node-cognito-token-exchange-sample-role`. Click "Next Step"
 4. Select "AWS Lambda".
 5. Select Policies
     * AWSLambdaFullAccess
