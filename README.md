@@ -14,8 +14,11 @@ This lets you call Box from a Lambda function.
 This sample shows how to connect a Box webhook to an AWS Lambda function via API Gateway.
 This lets you call a Lambda function from Box. 
 
-[box-node-rekognition-lambdas-sample](https://github.com/box/samples/tree/rekognition_integration/box-node-rekognition-lambdas-sample)
+[box-node-rekognition-lambdas-sample](https://github.com/box/samples/tree/master/box-node-rekognition-lambdas-sample)
 This sample shows how to connect Box with AWS Rekognition service. An AWS lambda function uses the AWS Rekognitions service to analyse the image uploaded in Box and updates the metadata of the image file in Box.
+
+[box-node-cognito-lambdas-sample](https://github.com/box/samples/tree/master/box-node-cognito-lambdas-sample)
+This sample shows how to integrate Box with AWS Cognito service. Every user created in the Cognito pool is created as an app user in the Box enterprise. Using the Cognito JWT user token, the app user token can be generated from Box. Using Box's app user token, the user performs operations in Box.
 
 Support
 -------

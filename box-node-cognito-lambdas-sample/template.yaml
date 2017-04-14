@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AWS SAM template for automatically adding Box App User IDs to Cognito users and setting up a client side accessible token exchange between Cognito tokens and Box AppUser tokens.
+Resources:
+  AWSTemplateFormatVersion: "2010-09-09"
+Resources: 
+  CreateAppUserOnCognitoLoginLambda:
+    Type: AWS::Serverless::Function
+      Properties: 
+        Handler: index.handler
+        Runtime: nodejs4.3
+        CodeUri: s3://<bucket>/createAppUser.zip
+        Policies: AmazonCognitoPowerUser
+        Environment:
+          Variables:
+            BOX_CLIENT_ID: ''
+            BOX_CLIENT_SECRET: ''
+            BOX_ENTERPRISE_ID: ''
+            BOX_PUBLIC_KEY_ID: ''
+            BOX_PRIVATE_KEY_FILENAME: ''
+            BOX_PRIVATE_KEY_PASSWORD: ''
+            COGNITO_USER_ATTRIBUTE_BOX_APPUSER_ID_KEY: "custom:box_appuser_id"
+            COGNITO_USER_POOL_ID: ''
+
+  TokenExchangeApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      DefinitionUri: s3://<bucket>/swagger.yaml
+      StageName: Prod
+      Variables:
+        LambdaFunctionName: !Ref TokenExchangeLambdaFunction
+
+  TokenExchangeLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://<bucket>/tokenExchange.zip
+      Handler: index.handler
+      Runtime: nodejs4.3
+      Policies: AmazonCognitoPowerUser
+      Events:
+        ProxyApiRoot:
+          Type: Api
+          Properties:
+            RestApiId: !Ref TokenExchangeApi
+            Path: /
+            Method: ANY
+        ProxyApiGreedy:
+          Type: Api
+          Properties:
+            RestApiId: !Ref TokenExchangeApi
+            Path: /{proxy+}
+            Method: ANY
+      Environment:
+        Variables:
+          BOX_CLIENT_ID: ''
+          BOX_CLIENT_SECRET: ''
+          BOX_ENTERPRISE_ID: ''
+          BOX_PUBLIC_KEY_ID: ''
+          BOX_PRIVATE_KEY_FILENAME: ''
+          BOX_PRIVATE_KEY_PASSWORD: ''
+          COGNITO_USER_ATTRIBUTE_BOX_APPUSER_ID_KEY: "custom:box_appuser_id"
+          COGNITO_USER_POOL_ID: ''
+
+Outputs:
+  ApiUrl:
+    Description: URL of your API endpoint
+    Value: !Join
+      - ''
+      - - https://
+        - !Ref TokenExchangeApi
+        - '.execute-api.'
+        - !Ref 'AWS::Region'
+        - '.amazonaws.com/Prod'

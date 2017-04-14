@@ -1,0 +1,17 @@
+{
+    "name": "box-node-cognito-token-exchange-lambda-sample",
+    "version": "1.0.0",
+    "description": "This lambda extracts the box user id from Cognito using the Cognito token. Then generate app user token from Box and returns the token.",
+    "main": "index.js",
+    "dependencies": {
+      "bluebird": "^3.5.0",
+      "box-node-sdk": "^1.3.0",
+      "lodash": "^4.17.4"
+    },
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "zip": "zip -rMM box-node-cognito-token-exchange-lambda-sample index.js aws-service.js box-manager.js cognito-manager.js private_key.pem node_modules"
+    },
+    "author": "Box <oss@box.com>",
+    "license": "Apache-2.0"
+}

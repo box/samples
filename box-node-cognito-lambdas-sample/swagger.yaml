@@ -1,0 +1,110 @@
+swagger: "2.0"
+info:
+  version: "2017-01-27T16:48:55Z"
+  title: AWS Cognito and Box Platform Token Exchange
+host: "<host>"
+basePath: "/prototype"
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /api/token:
+    post:
+      description: |
+        Exchanges an AWS Cognito user access token for a Box App User access token.
+      operationId: tokenExchange
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: body
+          description: AWS Cognito user access token
+          required: true
+          schema:
+            title: token
+            type: string
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/token"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/error"
+        default:
+          description: unexpected error
+          schema:
+            $ref: "#/definitions/error"
+            
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+        uri: "<uri>"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+definitions:
+  token: 
+    title: BoxAccessToken
+    type: object
+    properties:
+      accessToken:
+        type: string
+      accessTokenTTLMS:
+        type: integer
+      acquiredAtMS:
+        type: string
+        format: date-time
+  Empty:
+    type: "object"
+    title: "Empty Schema"
+  error:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string

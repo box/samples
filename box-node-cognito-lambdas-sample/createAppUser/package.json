@@ -1,0 +1,17 @@
+{
+    "name": "box-node-cognito-create-appuser-lambda-sample",
+    "version": "1.0.0",
+    "description": "This lambda creates the user in Box as a Post Authorization of the user's first login. It updates the box_appuser_id in Cognito user",
+    "main": "index.js",
+    "dependencies": {
+      "bluebird": "^3.5.0",
+      "box-node-sdk": "^1.3.0",
+      "lodash": "^4.17.4"
+    },
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "zip": "zip -rMM box-node-cognito-create-appuser-lambda-sample index.js cognito-manager.js box-manager.js aws-service.js private_key.pem node_modules"
+    },
+    "author": "Box <oss@box.com>",
+    "license": "Apache-2.0"
+}
