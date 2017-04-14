@@ -1,10 +1,10 @@
-'use strict'
+'use strict';
 
 const boxManager = require('./box-manager');
 const cognitoManager = require('./cognito-manager');
 
 exports.handler = function (event, context, callback) {
-    console.log(`Event : ${JSON.stringify(event)}`)
+    console.log(`Event : ${JSON.stringify(event)}`);
     
     //Extract the troken from the event body
     let token = JSON.parse(event.body).token;
@@ -20,12 +20,12 @@ exports.handler = function (event, context, callback) {
     //Get the Cognito user using the token
     cognitoManager.getUser(token)
         .then(function(user) {
-            console.log(`User is: ${JSON.stringify(user)}`) ;
+            console.log(`User is: ${JSON.stringify(user)}`);
             
             return cognitoManager.adminGetUser(user);
         }).then(function(response) {
             //Get the Box user property
-            let boxAppUserId = cognitoManager.getAppUserProperty(response.UserAttributes);
+            var boxAppUserId = cognitoManager.getAppUserProperty(response.UserAttributes);
             console.log(`Box App user id: ${boxAppUserId}`);
             
             //If the box user is not present in Cognito, throw error
@@ -54,5 +54,5 @@ exports.handler = function (event, context, callback) {
                     error: error
                 })
             });        
-        });                  
-}
+        });
+};

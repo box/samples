@@ -3,7 +3,7 @@ let cognitoManager = require('./cognito-manager');
 let boxManager = require('./box-manager');
 
 exports.handler = function (event, context) {
-    console.log('Calling create app user')
+    console.log('Calling create app user');
     
     //Get the Cognito user using the event details
     cognitoManager.adminGetUser(event)
@@ -26,5 +26,5 @@ exports.handler = function (event, context) {
         }).catch(function(error) {
             //Send the error response
             context.done(error);
-        })
-}
+        });
+};

@@ -15,6 +15,6 @@ class AWSService {
     getCognitoClient() {
         return new this.AWS.CognitoIdentityServiceProvider();
     }
-}
+};
 
 module.exports = new AWSService;

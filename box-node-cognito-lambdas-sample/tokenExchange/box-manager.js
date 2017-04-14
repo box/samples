@@ -6,7 +6,7 @@ const Box = require('box-node-sdk');
 const privateKeyPath = `${process.env.LAMBDA_TASK_ROOT}/private_key.pem`;
 const privateKey = fs.readFileSync(privateKeyPath);
 
-let BoxSdk = new Box({
+const BoxSdk = new Box({
     clientID: process.env.BOX_CLIENT_ID,
     clientSecret: process.env.BOX_CLIENT_SECRET,
     
@@ -17,12 +17,12 @@ let BoxSdk = new Box({
     }
 });
 
-let generateUserToken = function (appUserId) {
+const generateUserToken = function (appUserId) {
 	console.log(`Generate user token for ${appUserId}`);
 
     return new Promise(function (resolve, reject) {
     	//Generate the app user token using the app user id in Box.
-        BoxSdk.getAppUserTokens(appUserId, (err, userToken) => {
+        BoxSdk.getAppUserTokens(appUserId, function(err, userToken) {
             if (err) {
               throw err;
             }
@@ -30,8 +30,8 @@ let generateUserToken = function (appUserId) {
             resolve(userToken);
         });
     });
-}
+};
 
 module.exports = {
 	generateUserToken
-}
+};
