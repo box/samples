@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="authApp">
+
+<head>
+	<title ng-bind="pageTitle"></title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+	<!-- font awesome from BootstrapCDN -->
+	<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="./js/node_modules/angular-material/angular-material.css" />
+	<link rel="stylesheet" type="text/css" href="./js/app.css">
+	<link rel="stylesheet" type="text/css" href="./js/home/home.css">
+	<link rel="stylesheet" type="text/css" href="./js/components/previewModal/previewModal.css">
+
+	<style type="text/css">
+		/**
+         * Hide when Angular is not yet loaded and initialized
+         */
+		
+		[ng\:cloak],
+		[ng-cloak],
+		[data-ng-cloak],
+		[x-ng-cloak],
+		.ng-cloak,
+		.x-ng-cloak {
+			display: none !important;
+		}
+	</style>
+</head>
+
+<body ng-controller="AppCtrl" ng-cloak>
+	<toolbar></toolbar>
+	<ui-view layout-padding></ui-view>
+	<script src="./js/libs/BoxSdk.min.js"></script>
+	<script src="./js/app-config.js"></script>
+	<script src="./js/node_modules/angular/angular.js"></script>
+	<script src="./js/node_modules/angular-animate/angular-animate.js"></script>
+	<script src="./js/node_modules/angular-aria/angular-aria.js"></script>
+	<script src="./js/node_modules/angular-material/angular-material.js"></script>
+	<script src="https://cdn.auth0.com/js/lock/10.2/lock.min.js"></script>
+	<script src="./js/node_modules/angular-jwt/dist/angular-jwt.js"></script>
+	<script src="./js/node_modules/angular-lock/dist/angular-lock.js"></script>
+	<script src="./js/node_modules/angular-local-storage/dist/angular-local-storage.js"></script>
+	<script src="./js/node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+	<script src="./js/node_modules/angular-messages/angular-messages.js"></script>
+	<script src="./js/node_modules/ng-file-upload/dist/ng-file-upload-shim.min.js"></script>
+	<script src="./js/node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
+	<script src="./js/app.js"></script>
+	<script src="./js/app.run.js"></script>
+	<script src="./js/app.controller.js"></script>
+	<script src="./js/home/home.js"></script>
+	<script src="./js/components/toolbar/toolbar.js"></script>
+	<script src="./js/services/boxTokenService.js"></script>
+	<script src="./js/services/boxApiService.js"></script>
+	<script src="./js/services/authenticate.js"></script>
+</body>
+
+</html>

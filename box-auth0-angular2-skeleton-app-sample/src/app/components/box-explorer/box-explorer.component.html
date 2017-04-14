@@ -1,0 +1,13 @@
+<div *ngIf="isLoading">
+  <h5>Loading...</h5>
+</div>
+<div *ngIf="!isLoading" class="container">
+  <div class="row">
+    <div class="row">
+      <box-folder-path [currentFolder]="currentFolder"></box-folder-path>
+    </div>
+    <div class="divider"></div>
+    <box-folder-view [currentFolder]="currentFolder" [folders]="folders"></box-folder-view>
+    <box-file-view [parentFolder]="currentFolder" [files]="files"></box-file-view>
+  </div>
+</div>

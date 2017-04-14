@@ -1,0 +1,18 @@
+<md-dialog aria-label="Preview" flex="66">
+	<md-dialog-actions>
+		<md-button ng-click="upload(uploadFiles)">
+      Upload
+		</md-button>
+	</md-dialog-actions>
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			<h2>Upload a file</h2>
+			<div ngf-drop ngf-select ng-model="uploadFiles" class="upload-box" ngf-drag-over-class="'dragover'" ngf-multiple="true">Drop files here or click to upload</div>
+			<md-list ng-if="uploadFiles">
+				<md-list-item ng-repeat="file in uploadFiles">
+					<p> {{ file.name }} </p>
+				</md-list-item>
+			</md-list>
+		</div>
+	</md-dialog-content>
+</md-dialog>

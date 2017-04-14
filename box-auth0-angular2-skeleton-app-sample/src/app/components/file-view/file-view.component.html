@@ -1,0 +1,33 @@
+<div id="files" class="col m7 s12">
+  <div class="container">
+    <div class="section">
+      <div class="row">
+        <div class="col m12">
+          <h4>Files</h4>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="section">
+      <div class="row">
+        <box-file-upload (onFileUploaded)="onFileUploaded($event)" [currentFolder]="parentFolder"></box-file-upload>
+      </div>
+    </div>
+    <div class="section">
+      <div class="row">
+        <div *ngIf='files.length === 0'>
+          <p id="noFiles" class="red-text text-darken-4 text-center">No files found.</p>
+        </div>
+        <ul class="collection">
+          <li *ngFor="let file of files" class="collection-item hoverable">
+            <a class="collection-item" [routerLink]="['/explorer/file', file.id]">
+              <i class="small material-icons">description</i>
+              <span class="file-name">{{file.name}}</span>
+            </a>
+            <box-preview-modal [file]="file"></box-preview-modal>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+.app {
+    width: 100%;
+    height: 100%;
+}
+
+.app-sidenav {
+  padding: 10px;
+  min-width: 15%;
+}
+
+.app-sidenav-menu {
+    
+}
+
+.app-content {
+    min-height: calc(100vh - 180px);
+    background: #eee;
+    padding: 10px;
+}

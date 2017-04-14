@@ -20,6 +20,9 @@ This sample shows how to connect Box with AWS Rekognition service. An AWS lambda
 [box-node-cognito-lambdas-sample](https://github.com/box/samples/tree/master/box-node-cognito-lambdas-sample)
 This sample shows how to integrate Box with AWS Cognito service. Every user created in the Cognito pool is created as an app user in the Box enterprise. Using the Cognito JWT user token, the app user token can be generated from Box. Using Box's app user token, the user performs operations in Box.
 
+[box-auth0-angular2-skeleton-app-sample](https://github.com/box/samples/tree/master/box-auth0-angular2-skeleton-app-sample)
+This sample demonstrates how to build a serverless web client application in Angular 2 that makes use of [Box Platform's integration with Auth0](https://github.com/auth0-extensions/auth0-box-platform-extension).
+
 Support
 -------
 

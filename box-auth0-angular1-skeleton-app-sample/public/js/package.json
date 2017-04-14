@@ -1,0 +1,23 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-aria": "^1.5.8",
+    "angular-jwt": "^0.1.3",
+    "angular-local-storage": "^0.5.0",
+    "angular-lock": "^1.0.2",
+    "angular-material": "^1.1.1",
+    "angular-messages": "^1.5.8",
+    "angular-ui-router": "^0.3.1",
+    "ng-file-upload": "^12.2.12"
+  }
+}
