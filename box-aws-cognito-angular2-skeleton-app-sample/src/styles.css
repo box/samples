@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+      
+
+  .spacer {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+  }
+
+  .pointer {
+    cursor: pointer
+  }

@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="form-group">
+        <h2>Confirm Registration</h2>
+    </div>
+    <div *ngIf="errorMessage!=null" class="alert alert-danger">
+        {{ errorMessage }}
+    </div>
+    <div class="form-group" *ngIf="email===null">
+        <label class="control-label" for="confirmationCode">Email</label>
+        <input id="email" type="email" maxlength="50" class="form-control" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="confirmationCode">Confirmation Code</label>
+        <input id="confirmationCode" type="text" maxlength="50" class="form-control" [(ngModel)]="confirmationCode" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="form-group">
+        <button (click)="onConfirmRegistration($event)" id="confirmRegistration" type="submit" class="btn btn-info btn-block">Confirm
+        </button>
+    </div>
+    <hr>
+    <ul>
+        <p>Can't find your code?</p>
+        <li>
+            <a [routerLink]="['/resendCode']"> <i class="material-icons">email</i> Resend Code</a>
+        </li>
+        <li>
+            <a [routerLink]="['/register']"> <i class="material-icons">perm_identity</i> Register</a>
+        </li>
+        <li>
+            <a [routerLink]="['/login']"> <i class="material-icons">launch</i> Login</a>
+        </li>
+    </ul>
+</div>

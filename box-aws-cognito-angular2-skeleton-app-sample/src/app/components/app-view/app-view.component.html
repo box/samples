@@ -1,0 +1,30 @@
+<nav class="nav-extended">
+  <div class="nav-wrapper">
+    <a href="#!" class="brand-logo">Logo</a>
+    <a href="#" materialize="sideNav" data-activates="mobile-menu" class="button-collapse">
+      <i class="material-icons">menu</i>
+    </a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li *ngIf="auth.authenticated">
+        <a href="/explorer">Explorer</a>
+      </li>
+      <li *ngIf="!auth.authenticated">
+        <a href="/login">Log In</a>
+      </li>
+      <li *ngIf="auth.authenticated">
+        <a (click)="auth.logout()" href="/">Log Out</a>
+      </li>
+    </ul>
+    <ul class="side-nav" id="mobile-menu">
+      <li *ngIf="!auth.authenticated">
+        <a href="/login">Log In</a>
+      </li>
+      <li *ngIf="auth.authenticated">
+        <a (click)="auth.logout()" href="/">Log Out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="section no-pad-bot">
+  <router-outlet></router-outlet>
+</div>

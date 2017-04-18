@@ -1,0 +1,7 @@
+<div class="col m12">
+  <span *ngFor="let pathItem of path; let idx = index">
+    <strong *ngIf="idx === (path.length - 1)"><a [routerLink]="['/explorer/folder', pathItem.id]">{{pathItem.name}}</a></strong>
+    <span *ngIf="idx !== (path.length - 1)"><a [routerLink]="['/explorer/folder', pathItem.id]">{{pathItem.name}}</a></span>
+    <span *ngIf="idx !== (path.length - 1)">|</span>
+  </span>
+</div>
