@@ -1,13 +1,13 @@
 # box-node-express-skeleton-app
 
 ## Prerequisites
-[Node.js](https://nodejs.org/en/)
-[NPM](https://www.npmjs.com/)
-[Docker](https://docs.docker.com/docker-for-mac/)
-[Docker Compose](https://docs.docker.com/compose/install/)
+* [Node.js](https://nodejs.org/en/)
+* [NPM](https://www.npmjs.com/)
+* [Docker](https://docs.docker.com/docker-for-mac/)
+* [Docker Compose](https://docs.docker.com/compose/install/)
 
-###Configuration
-####Box Platform Configuration
+### Configuration
+#### Box Platform Configuration
 ##### Step 1. Create a Box application
 1. Log into the [Box Developer Console](https://developers.box.com)
     * Switch to the open beta of the new Developer Console, if needed
@@ -65,7 +65,7 @@
     boxEnterpriseId = Your Enterprise ID
     ```
 
-####Auth0 Configuration
+#### Auth0 Configuration
 Additionally, since you manage the identity and authorization for your Box App Users within your Node Express application, you'll need an identity service to fully utilize JWT authentication on behalf of your App Users.
 
 For that reason, we've included the needed code and setup for an identity service provider named Auth0. You'll need to sign up for a free Auth0 account.

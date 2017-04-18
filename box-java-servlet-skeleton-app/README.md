@@ -13,14 +13,14 @@ Check that your maven version is 3.0.x or above:
 mvn -v
 ```
 
-####Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files
+#### Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files
 If you don't install this, you'll get an exception about key length. This is not a Box thing, this is a U.S. Government requirement concerning strong encryption. Please follow the instructions *exactly*.
 > [Java 7 installer](http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html)
 
 > [Java 8 installer](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html)
 
-###Configuration
-####Box Platform Configuration
+### Configuration
+#### Box Platform Configuration
 ##### Step 1. Create a Box application
 1. Log into the [Box Developer Console](https://developers.box.com)
     * Switch to the open beta of the new Developer Console, if needed
@@ -77,7 +77,7 @@ If you don't install this, you'll get an exception about key length. This is not
     boxEnterpriseId = Your Enterprise ID
     ```
 
-####Auth0 Configuration
+#### Auth0 Configuration
 Additionally, since you manage the identity and authorization for your Box App Users within your Java application, you'll need an identity service to fully utilize JWT authentication on behalf of your App Users.
 
 For that reason, we've included the needed code and setup for an identity service provider named Auth0. You'll need to sign up for a free Auth0 account.

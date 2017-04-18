@@ -1,12 +1,12 @@
 # box-aspnet-mvc-skeleton-app
 
 ## Prerequisites
-A Windows environment and Visual Studio 2015 or above
-ASP.NET MVC 5 
-.NET 4.5 or greater
+* A Windows environment and Visual Studio 2015 or above
+* ASP.NET MVC 5 
+* .NET 4.5 or greater
 
-###Configuration
-####Box Platform Configuration
+### Configuration
+#### Box Platform Configuration
 ##### Step 1. Create a Box application
 1. Log into the [Box Developer Console](https://developers.box.com)
     * Switch to the open beta of the new Developer Console, if needed
@@ -64,7 +64,7 @@ ASP.NET MVC 5
     boxEnterpriseId = Your Enterprise ID
     ```
 
-####Auth0 Configuration
+#### Auth0 Configuration
 Additionally, since you manage the identity and authorization for your Box App Users within your ASPNET MVC application, you'll need an identity service to fully utilize JWT authentication on behalf of your App Users.
 
 For that reason, we've included the needed code and setup for an identity service provider named Auth0. You'll need to sign up for a free Auth0 account.
