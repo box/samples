@@ -38,7 +38,7 @@ This sample demonstrates how to build a serverless web client application in Ang
 [box-auth0-swift-skeleton-app-sample](https://github.com/box/samples/tree/master/box-auth0-swift-skeleton-app-sample)
 This sample demonstrates how to build an iOS application using Swift that makes use of [Box Platform's integration with Auth0](https://github.com/auth0-extensions/auth0-box-platform-extension).
 
-[box-cognito-angular2-skeleton-app-sample](https://github.com/box/samples/tree/master/box-cognito-angular2-skeleton-app-sample)
+[box-aws-cognito-angular2-skeleton-app-sample](https://github.com/box/samples/tree/master/box-aws-cognito-angular2-skeleton-app-sample)
 This sample demonstrates how to build a serverless web client application in Angular 2 that makes use of [Box Platform's integration with AWS Cognito](https://github.com/box/samples/tree/master/box-node-cognito-lambdas-sample).
 
 Support
