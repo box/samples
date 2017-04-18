@@ -1,0 +1,7 @@
+<a class="modal-trigger pointer" (click)="openModal()">Preview</a>
+
+<div class="modal" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="modalActions">
+  <div class="modal-content">
+    <div class="boxPreviewSelector" id="boxPreview{{file.id}}"></div>
+  </div>
+</div>

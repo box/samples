@@ -1,0 +1,20 @@
+<div class="form-group">
+  <div class="row">
+    <div class="col s12">
+      <label for="uploadInput">Add New Files</label>
+    </div>
+    <div class="input-field col s8">
+      <input type="file" class="form-control" ng2FileSelect [uploader]="uploader" multiple />
+    </div>
+    <div class="col s4">
+      <div id='upload-button' (click)="uploadFiles()" class="btn-floating btn-large waves-effect waves-light">
+        <i class="material-icons">add</i>
+      </div>
+    </div>
+    <div class="col s12" *ngFor="let item of uploader.queue">
+      <strong>{{ item?.file?.name }}</strong>
+      <span *ngIf="item.isSuccess"><i class="material-icons">done</i></span>
+      <span *ngIf="item.isError"><i class="material-icons">error</i></span>
+    </div>
+  </div>
+</div>

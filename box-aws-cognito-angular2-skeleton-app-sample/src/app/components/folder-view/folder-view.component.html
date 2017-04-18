@@ -1,0 +1,30 @@
+<div id="folders" class="col m5 s12">
+  <div class="container">
+    <div class="section">
+      <div class="row">
+        <div class="col m12">
+          <h4>Folders</h4>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="section">
+      <div class="row">
+        <box-add-new-folder [parentFolder]="currentFolder" (onFolderCreated)="onFolderCreated($event)"></box-add-new-folder>
+      </div>
+    </div>
+    <div class="section">
+      <div *ngIf='folders.length === 0'>
+        <p id="noFolders" class="red-text text-darken-4 text-center">No subfolders found.</p>
+      </div>
+      <ul class="collection">
+        <li *ngFor="let folder of folders" class="collection-item hoverable">
+          <a class="collection-item" [routerLink]="['/explorer/folder', folder.id]">
+            <i class="small material-icons">perm_media</i>
+            <span>{{folder.name}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

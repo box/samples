@@ -1,0 +1,11 @@
+<form class="col s8" (ngSubmit)="onCreateFolderSubmit()" [formGroup]="addNewFolderForm" novalidate>
+  <div class="row">
+    <div class="input-field col s12">
+      <input id="newFolderName" type="text" class="validate form-control" formControlName="folderName" required>
+      <label for="newFolderName">Folder Name</label>
+    </div>
+    <div class="input-field col s12">
+      <button class="btn waves-effect waves-light" [disabled]="addNewFolderForm.pristine">Add New Folder</button>
+    </div>
+  </div>
+</form>
