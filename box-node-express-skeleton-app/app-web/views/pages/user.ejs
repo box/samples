@@ -1,0 +1,79 @@
+<% include ../partials/common/header %>
+  <div id="box-header" class="container-fluid">
+    <div class="jumbotron">
+      <h1>
+      <%= title %>
+      </h1>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-1">
+            <img class="img-responsive" src="<%= user.picture %>" />
+          </div>
+          <div class="col-md-11">
+            <h2> Welcome
+            <%= user.nickname %>! 
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="box-upload" class="container-fluid">
+  </div>
+  <div id="box-explorer" class="container-fluid">
+    <hr>
+    <div class="row">
+      <%- include ../partials/box/folder-path %>
+      <hr>
+    </div>
+    <hr>
+    <div id="files-folders" class="row">
+      <%- include ../partials/box/folders %>
+      <%- include ../partials/box/files %>
+    </div>
+  </div>
+  <hr>
+  
+  <script type="text/javascript">
+    var accessToken = "<%= user.accessToken %>"; 
+
+    var form = document.getElementById('file-form');
+    var fileSelect = document.getElementById('file-select');
+    var uploadButton = document.getElementById('upload-button');
+
+    form.onsubmit = function(event){
+    event.preventDefault();
+    uploadButton.innerHTML = 'Uploading...';
+    var files = fileSelect.files;
+    var formData = new FormData();
+
+    // The Box Auth Header. Add your access token.
+    var headers = { Authorization: 'Bearer ' + accessToken};
+    var uploadUrl = 'https://upload.box.com/api/2.0/files/content';
+
+    formData.append('files', files[0], files[0].name);
+
+    // Add the destination folder for the upload to the form
+    formData.append('parent_id', '<%= currentFolder %>');
+
+    $.ajax({
+        url: uploadUrl,
+        headers: headers,
+        type: 'POST',
+        // This prevents JQuery from trying to append the form as a querystring
+        processData: false,
+        contentType: false,
+        data: formData
+    }).complete(function ( data ) {
+        uploadButton.innerHTML = 'Upload';
+        // Log the JSON response to prove this worked
+        console.log(data.responseText);
+        location.reload(true);
+    });
+    }
+
+    
+  </script>
+
+<% include ../partials/common/footer %>

@@ -1,0 +1,11 @@
+<% include ../partials/common/header %>
+
+  <%- message %>
+  <%- error.status %>
+  <%- error.stack %>
+  <% if(locals.returnUrl) { %>
+    <a href="<%= returnUrl %>">Go Back</a>
+  <% } else { %>
+    <a href="/"> Start Over </a>
+  <% } %>
+<% include ../partials/common/footer %>

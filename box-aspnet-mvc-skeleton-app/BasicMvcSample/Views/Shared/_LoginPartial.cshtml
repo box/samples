@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Auth0Account", new { returnUrl = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <img class="img-circle" src="@Request.GetOwinContext().Authentication.User.Claims.FirstOrDefault(c => c.Type == "picture").Value" width="30" style="margin-top: 10px;">
+            </li>
+            <li>
+                <a href="#">@User.Identity.GetUserName()</a>
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Login", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Login", "Login", "Account")</li>
+    </ul>
+}
+

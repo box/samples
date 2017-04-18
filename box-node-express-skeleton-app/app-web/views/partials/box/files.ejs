@@ -1,0 +1,31 @@
+<div id="files" class="col-md-6">
+  <div class="row">
+    <div class="col-md-4">
+      <h4>Files</h4>
+    </div>
+  </div>
+  <hr>
+  <form id="file-form"> 
+    <div class="form-group">
+        <label for="folderName">File:</label> 
+        <input id='file-select' name='files' type='file' class="form-control" />  
+    </div>
+    <div class="form-group">
+        <button id='upload-button' class="btn btn-default" type='submit'>Upload File</button>
+    </div>
+  </form>
+  <div id="filesUi">
+    <% if(files.length === 0) { %>
+      <p id="noFiles" class="warning text-center">No files found.</p>
+    <% } %>
+    <ul id="fileGroup" class="list-group">
+    <% files.forEach(function(file) { %>
+      <li class="list-group-item" id="<%= file.id %>" data-id="<%= file.id %>" data-name="<%= file.name %>" data-ext="<%= file.extension %>">
+        <span class="file" data-id="<%= file.id %>" data-name="<%= file.name %>">
+          <i class="fa fa-file fa-2x fa-fw" aria-hidden="true"></i>
+          <span class="file-name"><a href="/files/<%= file.id %>"><%= file.name %></a></span>
+        </span>
+      </li>
+    <% }); %>
+  </div>
+</div>
