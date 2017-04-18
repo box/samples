@@ -1,0 +1,6 @@
+framework module BoxContentSDK {
+  umbrella header "box-ios-sdk-umbrella.h"
+
+  export *
+  module * { export * }
+}

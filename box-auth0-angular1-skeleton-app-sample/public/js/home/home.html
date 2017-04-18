@@ -1,0 +1,32 @@
+<div>
+	<h2>Welcome to Box Platform, {{profile.name}}!</h2>
+	<div>
+		<div layout="row" layout-padding>
+			<div flex>
+				<div ng-repeat="folder in folders">
+					<md-icon class="material-icons md-light md-48"> folder </md-icon>
+					<span ng-click="openFolder(folder.id)" data-box-folder-id={{folder.id}}>{{folder.name}}</span>
+					<md-icon ng-click="deleteFolder(folder.id)" class="material-icons md-light md-48 delete-file"> delete </md-icon>
+				</div>
+				<div flex layout-padding>
+					<md-button ng-click="createNewFolder($event)">Create new folder</md-button>
+				</div>
+				<div ng-show="status" class="animate-show" id="status">
+					<b layout="row" layout-align="center center" class="md-padding">
+      {{status}}
+    </b>
+				</div>
+			</div>
+			<div flex>
+				<div ng-repeat="file in files">
+					<md-icon class="material-icons md-light md-48"> insert_drive_file </md-icon>
+					<span>{{file.name}}</span>
+					<md-button ng-click="previewFile(file.id)">Preview this file</md-button>
+					<md-icon ng-click="deleteFile(file.id)" class="material-icons md-light md-48 delete-file"> delete </md-icon>
+				</div>
+				<div flex layout-padding>
+					<md-button ng-click="uploadFile($event)">Upload new file</md-button>
+				</div>
+			</div>
+		</div>
+	</div>

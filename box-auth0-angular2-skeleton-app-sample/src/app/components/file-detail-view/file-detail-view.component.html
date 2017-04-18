@@ -1,0 +1,30 @@
+<div *ngIf="isLoading">
+    <h5>Loading...</h5>
+</div>
+<div *ngIf="!isLoading">
+    <div class="row">
+        <div class="col s12 m6 offset-m3">
+            <div class="card">
+                <div class="card-content">
+                    <h4 class="card-title">{{currentFile.name}}</h4>
+                    <p *ngIf="currentFile.description !== ''">Description: {{currentFile.description}}</p>
+                    <p *ngIf="currentFile.size !== ''">Size: {{currentFile.size}}</p>
+                    <p *ngIf="ownedByUserName !== ''">Owned by: {{ownedByUserName}}</p>
+                    <p *ngIf="createdByUserName !== ''">Created by: {{createdByUserName}}</p>
+                    <p *ngIf="modifiedByUserName !== ''">Modified by: {{modifiedByUserName}}</p>
+                    <p *ngIf="currentFile.created_at">Created at: {{ currentFile.created_at | date:'medium' }} </p>
+                    <p *ngIf="currentFile.content_modified_at">Modified at: {{ currentFile.content_modified_at | date:'medium' }} </p>
+                    <p *ngIf="currentFile.version_number">Version number: {{ currentFile.version_number }} </p>
+                    <p *ngIf="parentFolderName">Parent folder: {{ parentFolderName }} </p>
+                    <box-preview-modal [file]="currentFile"></box-preview-modal>
+                </div>
+                <div class="card-action">
+                    <ul>
+                        <li><a [routerLink]="['/explorer/folder', parentFolderId]">View this file's parent folder in the Box Explorer</a></li>
+                        <li><a href="/explorer">Return to the Box Explorer</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

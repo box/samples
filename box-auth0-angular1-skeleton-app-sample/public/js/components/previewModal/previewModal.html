@@ -1,0 +1,14 @@
+<md-dialog class="fullscreen-dialog" aria-label="Preview" flex="100">
+	<md-dialog-actions>
+		<md-button class="md-fab md-primary md-mini" ng-click="cancel()">
+			<md-icon>done</md-icon>
+		</md-button>
+	</md-dialog-actions>
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			<h2>{{fileName}}</h2>
+			<iframe class="preview-iframe" ng-src="{{previewLink}}">
+			</iframe>
+		</div>
+	</md-dialog-content>
+</md-dialog>
