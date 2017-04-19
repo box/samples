@@ -37,7 +37,6 @@ export interface IBoxToken {
 
 
 export interface IBoxTokenCache {
-    boxTokenKey: string;
     getToken: () => Observable<IBoxToken>;
     setToken: (IBoxToken) => boolean;
 }
@@ -149,14 +148,15 @@ export function defaultFactory(http: Http, auth: AuthService, options: RequestOp
     };
 
     const DEFAULT_BOX_TOKEN_CACHE: IBoxTokenCache = {
-        boxTokenKey: BOX_CONFIG.boxTokenStorageKey,
         getToken(): Observable<IBoxToken> {
             try {
-                let boxToken = JSON.parse(localStorage.getItem(this.boxTokenKey)) as IBoxToken;
+                let userId = auth.getUserId();
+                let boxToken = JSON.parse(localStorage.getItem(`${BOX_CONFIG.boxTokenStorageKey}.${userId}`)) as IBoxToken;
                 if (!boxToken || !boxToken.access_token || boxToken.expires_at.valueOf() < Date.now().valueOf()) {
                     return DEFAULT_REFRESH_TOKEN_FUNCTION()
                         .mergeMap((token) => {
                             let newToken = token.json();
+                            console.log(newToken);
                             newToken.expires_in = EXPIRES_IN;
                             newToken.expires_at = new Date(Date.now() + EXPIRES_IN).getTime();
                             this.setToken(newToken);
@@ -175,7 +175,8 @@ export function defaultFactory(http: Http, auth: AuthService, options: RequestOp
 
         setToken(boxToken: IBoxToken): boolean {
             try {
-                localStorage.setItem(this.boxTokenKey, JSON.stringify(boxToken));
+                let userId = auth.getUserId();
+                localStorage.setItem(`${BOX_CONFIG.boxTokenStorageKey}.${userId}`, JSON.stringify(boxToken));
                 return true
             } catch (e) {
                 console.log(e);

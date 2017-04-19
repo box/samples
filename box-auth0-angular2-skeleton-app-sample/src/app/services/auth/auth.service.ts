@@ -4,6 +4,7 @@ import { JwtHelper } from 'angular2-jwt';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { BOX_CONFIG } from '../../config/box/box.config';
+import { BoxHttp } from "../box/box-client.service";
 
 // Avoid name not found warnings
 declare var Auth0Lock: any;
@@ -11,6 +12,7 @@ declare var Auth0Lock: any;
 const AUTH_ACCESS_TOKEN_STORAGE_KEY = 'auth_access_token';
 const AUTH_ID_TOKEN_STORAGE_KEY = 'auth_id_token';
 const AUTH_PROFILE_STORAGE_KEY = 'auth_profile';
+const AUTH_USER_ID_STORAGE_KEY = 'auth_user_id';
 const AUTH_REDIRECT_URL = 'auth_redirect_url';
 
 @Injectable()
@@ -24,7 +26,7 @@ export class AuthService {
       responseType: 'token id_token',
       audience: `https://${AUTH_CONFIG.domain}/userinfo`,
       params: {
-
+        
       }
     }
   });
@@ -32,15 +34,7 @@ export class AuthService {
   userProfile: any;
 
   constructor(public router: Router) {
-    let profile = this.getProfile();
-    if (profile) {
-      try {
-        profile = JSON.parse(profile);
-      } catch (e) {
-        profile = null;
-      }
-    }
-    this.userProfile = profile;
+    this.userProfile = this.getProfile();
   }
 
   public login(): void {
@@ -48,7 +42,20 @@ export class AuthService {
   }
 
   public getProfile() {
-    return localStorage.getItem(AUTH_PROFILE_STORAGE_KEY);
+    let profile = localStorage.getItem(AUTH_PROFILE_STORAGE_KEY);
+    if (profile) {
+      try {
+        this.userProfile = JSON.parse(profile);
+      } catch (e) {
+        this.userProfile = null;
+      }
+    }
+    return this.userProfile;
+  }
+
+  public getUserId() {
+    let userId = localStorage.getItem(AUTH_USER_ID_STORAGE_KEY);
+    return userId;
   }
 
   // Call this method in app.component
@@ -79,7 +86,8 @@ export class AuthService {
   private setSession(authResult): void {
     localStorage.setItem(AUTH_ACCESS_TOKEN_STORAGE_KEY, authResult.accessToken);
     localStorage.setItem(AUTH_ID_TOKEN_STORAGE_KEY, authResult.idToken);
-    localStorage.setItem(AUTH_PROFILE_STORAGE_KEY, authResult.profile);
+    localStorage.setItem(AUTH_USER_ID_STORAGE_KEY, authResult.idTokenPayload.sub);
+    console.log(authResult);
     this.lock.getProfile(authResult.idToken, (error, profile) => {
       if (error) {
         // Handle error
@@ -97,9 +105,9 @@ export class AuthService {
     localStorage.removeItem(AUTH_ACCESS_TOKEN_STORAGE_KEY);
     localStorage.removeItem(AUTH_ID_TOKEN_STORAGE_KEY);
     localStorage.removeItem(AUTH_PROFILE_STORAGE_KEY);
+    localStorage.removeItem(AUTH_USER_ID_STORAGE_KEY);
     localStorage.removeItem(AUTH_REDIRECT_URL);
-    localStorage.removeItem(BOX_CONFIG.boxTokenStorageKey);
-
+    localStorage.removeItem(`${BOX_CONFIG.boxTokenStorageKey}.${this.getProfile().user_id}`);
     // Go back to the home route
     this.router.navigate(['/']);
   }
