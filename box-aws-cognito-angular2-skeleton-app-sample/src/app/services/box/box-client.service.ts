@@ -37,7 +37,6 @@ export interface IBoxToken {
 
 
 export interface IBoxTokenCache {
-    boxTokenKey: string;
     getToken: () => Observable<IBoxToken>;
     setToken: (IBoxToken) => boolean;
 }
@@ -153,10 +152,10 @@ export function defaultFactory(http: Http, auth: AuthService, options: RequestOp
     };
 
     const DEFAULT_BOX_TOKEN_CACHE: IBoxTokenCache = {
-        boxTokenKey: BOX_CONFIG.boxTokenStorageKey,
         getToken(): Observable<IBoxToken> {
             try {
-                let boxToken = JSON.parse(localStorage.getItem(this.boxTokenKey)) as IBoxToken;
+                let profile = auth.getProfile();
+                let boxToken = JSON.parse(localStorage.getItem(`${BOX_CONFIG.boxTokenStorageKey}.${profile.username}`)) as IBoxToken;
                 if (!boxToken || !boxToken.accessToken || boxToken.expires_at.valueOf() < Date.now().valueOf()) {
                     return DEFAULT_REFRESH_TOKEN_FUNCTION()
                         .mergeMap((token) => {
@@ -180,7 +179,8 @@ export function defaultFactory(http: Http, auth: AuthService, options: RequestOp
 
         setToken(boxToken: IBoxToken): boolean {
             try {
-                localStorage.setItem(this.boxTokenKey, JSON.stringify(boxToken));
+                let profile = auth.getProfile();
+                localStorage.setItem(`${BOX_CONFIG.boxTokenStorageKey}.${profile.username}`, JSON.stringify(boxToken));
                 return true
             } catch (e) {
                 console.log(e);

@@ -3,6 +3,7 @@ import { JwtHelper } from 'angular2-jwt';
 import { Router } from '@angular/router';
 import { CognitoUtil, UserLoginService } from "../aws/cognito.service";
 import { Observable } from "rxjs/Observable";
+import { BOX_CONFIG } from '../../config/box/box.config';
 
 @Injectable()
 export class AuthService {
@@ -10,6 +11,10 @@ export class AuthService {
     authenticated: boolean = false;
 
     constructor(public router: Router, private cognito: CognitoUtil, private userServices: UserLoginService) {
+    }
+
+    public getProfile() {
+        return this.cognito.getCurrentUser();
     }
 
     public isAuthenticated(): Promise<boolean> {
@@ -36,6 +41,7 @@ export class AuthService {
     }
 
     public logout() {
+        localStorage.removeItem(`${BOX_CONFIG.boxTokenStorageKey}.${this.getProfile().username}`);
         this.userServices.logout();
     }
 
