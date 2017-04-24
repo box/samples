@@ -1,92 +1,46 @@
 # box-node-lambda-sample
 
-This sample demonstrates how to call Box APIs from an AWS Lambda function using the [Box Node SDK](https://github.com/box/box-node-sdk).
+This sample demonstrates how to call Box APIs from a Lambda function using the [Box Node SDK](https://github.com/box/box-node-sdk).
 
 #### Step 1. Create a Box application
 1. Log into the [Box Developer Console](https://developers.box.com) in your Box developer account
-    * Switch to the open beta of the new Developer Console, if needed
+    * *Switch to the open beta of the new Developer Console, if needed*
 2. Select "Create New App"
     * Select "Custom App" and press "Next"
-        * *You can also pick "Enterprise Integration" if your app will interact with existing Box enterprises*
-    * Select "Server Authentication" and press "Next"
-        * *This sample demonstrates a server-to-server integration*
+    * Select "OAuth 2.0 with JWT (Server Authentication)" and press "Next"
     * Name the application "Box Node Lambda Sample - YOUR NAME"
         * *Application names must be unique across Box*
     * Press "Create App" and then "View Your App"
-    * Check the "Manage users" scope and press "Save Changes"
-        * You'll need your "Client ID" and "Client Secret" later
+3. Press "Generate a Public/Private Keypair"
+    * *You may need to enter a 2-factor confirmation code*
+    * Save the JSON config file, which contains your application's secret key
 
-#### Step 2. Generate your private and public keys
-1. Generate a private key and a public key to use with Server Authentication
-    * In the `box-node-lambda-sample` directory, run the following commands:
-    ```
-    openssl genrsa -aes256 -out private_key.pem 2048
-    openssl rsa -pubout -in private_key.pem -out public_key.pem
-    ```
-    You'll need the passphrase for your private key later
-2. Add the public key to the application
-    * Press "Add Public Key"
-        * You will need to set up 2-factor authentication, if you haven't already
-    * Copy the public key: `cat public_key.pem | pbcopy`
-    * Paste it into the "Public Key" field
-    * Press "Verify and Save"
-        * You will need to enter a 2-factor confirmation code
-    * You'll need the ID of your public key later
-3. Your application is ready to go
+#### Step 2. Authorize the application into your Box account
+1. Log into your Box developer account as an admin and go to the [Apps Tab](https://app.box.com/master/settings/openbox) of Enterprise Settings
+    * *Applications that use Server Authentication must be authorized by the admin of the enterprise*
+2. Under "Custom Applications", press "Authorize New App"
+3. Enter your "Client ID" from the developer console in the "API Key" field
+4. Your application is now authorized to access your Box account!
 
-#### Step 3. Authorize the application into your Box account
-1. In a new tab, log into your Box developer account as an admin and go to the Admin Console
-    * *Applications that use Server Authentication must be authorized by the admin of the account*
-2. Under the gear icon, go to Enterprise Settings (or Business Settings, depending on your account type)
-    * You'll need the "Enterprise ID" of your account later
-3. Go to the Apps tab
-3. Under "Custom Applications", press "Authorize New App"
-4. Enter your "Client ID" from the developer console in the "API Key" field
-    * Your application is now authorized to access your Box account
-
-#### Step 4. Create the AWS Lambda function
-1. Build the deployment package for the Lambda function
-    * `cd` into the `box-node-lambda-sample` directory
-    * Run `npm install` to install the [Box Node SDK](https://github.com/box/box-node-sdk) 
-    * Ensure that the `private_key.pem` file is in the directory 
-    * Run `npm run zip` to create `box-node-lambda-sample.zip`
-    * The ZIP file includes the sample code in `index.js`, the private key in `private_key.pem`, plus the Box Node SDK
-2. Log into the [AWS Management Console](https://aws.amazon.com/console) and go to the Lambda Management Console
-3. Press "Create a Lambda function"
-    * Choose the "Blank Function" blueprint
-    * There is no need to configure a trigger for the Lambda function
+#### Step 3. Create the AWS Lambda function
+1. Log into the [AWS Management Console](https://aws.amazon.com/console) and go to the Lambda Management Console
+2. Press "Create a Lambda function"
+    * Search for "box" and choose the "box-node-lambda-sample" blueprint
+    * *There is no need to configure a trigger for the Lambda function*
     * Press "Next"
-4. Configure the lambda function
+3. Configure the lambda function
     * Name = "box-node-lambda-sample"
-    * Description = "Demonstrates how to call Box APIs from an AWS Lambda function using the Box Node SDK"
-    * Runtime = "Node.js 4.3"
-    * Code entry type = "Upload a .ZIP file"
-    * Function package = Browse and select `box-node-lambda-sample.zip`
     * Environment variables:
-        * *Storing the application secrets in environment variables makes them easier to secure and manage*
-    ```
-    BOX_CLIENT_ID = Your Client ID
-    BOX_CLIENT_SECRET = Your Client Secret
-    BOX_PUBLIC_KEY_ID = Your Public Key ID
-    BOX_PRIVATE_KEY_PASSPHRASE = Your Private Key Passphrase
-    BOX_ENTERPRISE_ID = Your Enterprise ID
-    ```
-    * Handler = "index.handler". This sets the entry point to be the `handler()` function of the `index.js` module
+        * Paste the contents of your JSON config file into the `BOX_CONFIG` environment variable.
+            * *Storing the application config in an environment variable makes it easier to secure and manage*
     * Role = "Create new role from template"
     * Role Name = "box-node-lambda-sample-role"
     * Policy Templates = Leave blank
     * Leave all of the advanced settings with default values
     * Press "Next"
-6. Press "Create function"
-    * Once the Lambda function is created, you will see the sample code from `index.js` that was uploaded in the ZIP file
-    * This first section initializes the Lambda function:
-        * First, it creates a `BoxSDK` object, initializing it with your application secrets from the environment variables
-        * Then, it creates a `BoxClient` object that obtains an access token for the Service Account in your Box enterprise
-    *  The Lambda's `handler` function will be called each time the Lambda function is invoked:
-        * For this example, the `handler` function simply retrieves info about the Service Account user and returns it as the response
-        from the Lambda function
-
-#### Step 5. Test the Lambda function
+    * Review the information and press "Create function"
+    
+#### Step 4. Test the Lambda function
 1. Press the "Test" button
     * This Lambda function does not require any input, so just leave the sample test data as is and press "Save and test"
 2. The result should be similar to the following JSON response:
@@ -114,7 +68,25 @@ This sample demonstrates how to call Box APIs from an AWS Lambda function using 
     
 3. Your Lambda function is sucessfully calling the Box API!
 
-#### Next Steps
+#### About the sample code
+* This first section initializes the Lambda function (only run once):
+    * First, it creates a `BoxSDK` object, initializing it with your application secrets from the `BOX_CONFIG` environment variable
+    * Then, it creates a `BoxClient` object that obtains an access token for the Service Account in your Box enterprise
+*  The Lambda's `handler` function will be called each time the Lambda function is invoked:
+    * For this sample, the `handler` function simply retrieves info about the Service Account user and returns it as the response
+    from the Lambda function
+
+#### Modifying the sample code
+You can edit the sample code directly in the inline editor in the Lambda Management Console.
+
+If you need to add files or packages, you will need to rebuild the deployment package for the Lambda function:
+1. `cd` into the `box-node-lambda-sample` directory
+2. Run `npm install` to install the [Box Node SDK](https://github.com/box/box-node-sdk) 
+3. Run `npm run zip` to create `box-node-lambda-sample.zip`
+    * The ZIP file includes the sample code in `index.js` plus any modules in `node_modules`
+4. Choose "Upload a .ZIP file" in the "Code entry type" drop-down button to load the new deployment package
+
+#### Next steps
 Now that you can call Box from your AWS Lambda function, modify the sample Lambda function to make other Box API calls
 using the [Box Node SDK](https://github.com/box/box-node-sdk):
 
@@ -157,19 +129,15 @@ using the [Box Node SDK](https://github.com/box/box-node-sdk):
     * Modify the sample code to decrypt the secrets before creating the Box SDK and client objects
 
 #### Troubleshooting
-1. If your Client ID is wrong, you will get: `"Please check the 'iss' claim."`
-2. If your Enterprise ID is wrong, you will get: `"Please check the 'sub' claim."`
-3. If your Client Secret is wrong, you will get: `"The client credentials are invalid"`
-4. If your Public Key ID is wrong, you will get: `"OpenSSL unable to verify data: "`
-5. If your `private_key.pem` is wrong, you will get: `"OpenSSL unable to verify data: error:0906D06C:PEM routines:PEM_read_bio:no start line"`
-6. If your Private Key Passphrase is wrong, you will get: `"Error: error:06065064:digital envelope routines:EVP_DecryptFinal_ex:bad decrypt"`
+1. If your `clientID` is wrong, you will get: `"Please check the 'iss' claim."`
+2. If your `enterpriseID` is wrong, you will get: `"Please check the 'sub' claim."`
+3. If your `clientSecret` is wrong, you will get: `"The client credentials are invalid"`
+4. If your `publicKeyID` is wrong, you will get: `"OpenSSL unable to verify data: "`
+5. If your `privateKey` is wrong, you will get: `"OpenSSL unable to verify data: error:0906D06C:PEM routines:PEM_read_bio:no start line"`
+6. If your `passphrase` is wrong, you will get: `"Error: error:06065064:digital envelope routines:EVP_DecryptFinal_ex:bad decrypt"`
 7. If you pass an integer instead of a string for the `id` parameter of `getAppAuthClient()`, you wil get `"Please check the 'sub' claim."`
-18. If you forgot to add your public key, you will get: `"This app is not configured properly. No public key(s) added"`
-9. If you forgot to authorize the app, you wil get: `"This app is not authorized by the enterprise admin"`
-10. If you didn't set the `BOX_CLIENT_ID` environment variable, you will get: `"clientID" must be set via init() before using the SDK.`
-11. If you didn't set the `BOX_PRIVATE_KEY_PASSPHRASE` environment variable, you will get: `"Passphrase must be provided in app auth params"`
-12. If you didn't set the `BOX_PUBLIC_KEY_ID` environment variable, you will get: `"Must provide app auth configuration to use JWT Grant"`
-13. If you get `"Task timed out after 3.00 seconds"`, you may be getting a network error or Box server error.
+8. If you forgot to authorize the app, you wil get: `"This app is not authorized by the enterprise admin"`
+9. If you get `"Task timed out after 3.00 seconds"`, you may be getting a network error or Box server error.
 Try increasing the "Timeout" value in "Advanced Settings" of the Lambda function's "Configuration" tab to 30 seconds in order
 to see more details of the error
 

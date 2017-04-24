@@ -1,7 +1,7 @@
 {
   "name": "box-node-lambda-sample",
-  "version": "1.2.0",
-  "description": "This sample demonstrates how to call Box APIs from an AWS Lambda function using the Box Node SDK.",
+  "version": "1.3.0",
+  "description": "This sample demonstrates how to call Box APIs from a Lambda function using the Box Node SDK.",
   "main": "index.js",
   "dependencies": {
     "box-node-sdk": "^1.3.0"
@@ -17,8 +17,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "genrsa": "openssl genrsa -aes256 -out private_key.pem 2048; openssl rsa -pubout -in private_key.pem -out public_key.pem",
-    "zip": "rm -rf node_modules/asn1/tst; zip -rMM9 box-node-lambda-sample index.js private_key.pem node_modules",
+    "zip": "rm -rf node_modules/asn1/tst; zip -rMM9 box-node-lambda-sample index.js node_modules",
     "bp": "rm -rf node_modules/asn1/tst; zip -rMM9 box-node-lambda-sample-bp index.js lambda.json node_modules",
     "lint": "eslint index.js"
   },
