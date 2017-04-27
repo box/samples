@@ -5,7 +5,7 @@ interface BoxConfig {
 }
 
 export const BOX_CONFIG: BoxConfig = {
-    refreshTokenUrl: 'https://allenm.us.webtask.io/auth0-box-platform/api/token',
+    refreshTokenUrl: 'https://allenmsxbg.us.webtask.io/auth0-box-platform/delegation',
     tokenExpirationPeriod: 3000000,
     boxTokenStorageKey: 'box_appuser_token'
 };

@@ -1,11 +1,9 @@
 interface AuthConfiguration {
     clientID: string,
-    domain: string,
-    callbackUrl: string
+    domain: string
 }
 
 export const AUTH_CONFIG: AuthConfiguration = {
-    clientID: 'onWTVG9uWpFFFQurilG6b7tRUd7k8BDi',
-    domain: 'allenm.auth0.com',
-    callbackUrl: 'http://localhost:4200/callback'
+    clientID: 'oc2KB0hgvtShLqvP2hyz21zwuhxsDDcy',
+    domain: 'allenmsxbg.auth0.com'
 };

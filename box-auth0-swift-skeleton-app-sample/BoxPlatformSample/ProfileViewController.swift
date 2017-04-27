@@ -20,11 +20,13 @@ class ProfileViewController : UIViewController {
     
     var profile: Profile!
     var idToken: String!
+    var accessToken: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.profile = SessionManager.shared.profile
         self.idToken = SessionManager.shared.getIdToken()
+        self.accessToken = SessionManager.shared.getAccessToken()
         print("Token")
         print(self.idToken)
         
@@ -78,7 +80,7 @@ class ProfileViewController : UIViewController {
 
 extension ProfileViewController : BOXAPIAccessTokenDelegate {
     func fetchAccessToken(completion: ((String?, Date?, Error?) -> Void)!) {
-        BoxAccessTokenDelegate.retrieveBoxAccessToken(auth0IdentityToken: self.idToken) { (token, expire, error) in
+        BoxAccessTokenDelegate.retrieveBoxAccessToken(auth0AccessToken: self.accessToken) { (token, expire, error) in
             completion(token, expire, nil)
         }
     }

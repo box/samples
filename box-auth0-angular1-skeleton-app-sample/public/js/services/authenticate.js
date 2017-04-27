@@ -5,13 +5,15 @@
   angular
     .module('authApp')
     .service('authenticationService', AuthenticationService);
-  AuthenticationService.$inject = ['$rootScope', 'lock', 'authManager', '$location', 'boxTokenSerivce', 'APP_CONFIG'];
-  function AuthenticationService($rootScope, lock, authManager, $location, boxToken, APP_CONFIG) {
+  AuthenticationService.$inject = ['$rootScope', 'angularAuth0', 'authManager', '$location', 'boxTokenSerivce', 'APP_CONFIG'];
+  function AuthenticationService($rootScope, angularAuth0, authManager, $location, boxToken, APP_CONFIG) {
     var userProfile = JSON.parse(localStorage.getItem(APP_CONFIG.VARIABLES.AUTH0_PROFILE_STORAGE_KEY)) || {};
 
     function login() {
       console.log("Started login process...");
-      lock.show();
+      angularAuth0.login({
+        scope: 'openid name email get:token'
+      });
     }
 
     function logout() {
@@ -19,6 +21,7 @@
       console.log(APP_CONFIG.VARIABLES.AUTH0_ID_TOKEN_STORAGE_KEY);
       localStorage.removeItem(APP_CONFIG.VARIABLES.AUTH0_PROFILE_STORAGE_KEY);
       localStorage.removeItem(APP_CONFIG.VARIABLES.AUTH0_ID_TOKEN_STORAGE_KEY);
+      localStorage.removeItem(APP_CONFIG.VARIABLES.AUTH0_ACCESS_TOKEN_STORAGE_KEY);
       localStorage.removeItem(APP_CONFIG.VARIABLES.AUTH0_IS_AUTHENTICATED);
       localStorage.removeItem(APP_CONFIG.VARIABLES.BOX_TOKEN);
       sessionStorage.removeItem(APP_CONFIG.VARIABLES.BOX_TOKEN);
@@ -27,24 +30,12 @@
       $rootScope.$broadcast(APP_CONFIG.EVENTS.AUTH0_LOGOUT_COMPLETED);
     }
 
-    function registerAuthenticationListener() {
-      lock.on('authenticated', function (authResult) {
-        console.log("Authenicated...");
+    function handleParseHash() {
+      var authResult = angularAuth0.parseHash(window.location.hash)
+      if (authResult && authResult.idToken) {
         console.log(authResult);
-        localStorage.setItem(APP_CONFIG.VARIABLES.AUTH0_ID_TOKEN_STORAGE_KEY, authResult.idToken);
-        console.log(authResult);
-        authManager.authenticate();
-        localStorage.setItem(APP_CONFIG.VARIABLES.AUTH0_IS_AUTHENTICATED, true);
-        $rootScope.$broadcast(APP_CONFIG.EVENTS.AUTH0_SETTING_USER_PROFILE);
-        lock.getProfile(authResult.idToken, function (error, profile) {
-          if (error) {
-            console.log(error);
-          }
-
-          localStorage.setItem(APP_CONFIG.VARIABLES.AUTH0_PROFILE_STORAGE_KEY, JSON.stringify(profile));
-          $rootScope.$broadcast(APP_CONFIG.EVENTS.AUTH0_USER_PROFILE_SET, profile);
-        });
-      });
+        setUser(authResult);
+      }
     }
 
     function getIdToken() {
@@ -52,12 +43,30 @@
       return token;
     }
 
+    function setUser(authResult) {
+      localStorage.setItem(APP_CONFIG.VARIABLES.AUTH0_ID_TOKEN_STORAGE_KEY, authResult.idToken);
+      localStorage.setItem(APP_CONFIG.VARIABLES.AUTH0_ACCESS_TOKEN_STORAGE_KEY, authResult.accessToken);
+      localStorage.setItem(APP_CONFIG.VARIABLES.AUTH0_IS_AUTHENTICATED, true);
+      authManager.authenticate();
+
+      $rootScope.$broadcast(APP_CONFIG.EVENTS.AUTH0_SETTING_USER_PROFILE);
+      angularAuth0.getUserInfo(authResult.accessToken, function (err, profile) {
+        console.log("getting profile...");
+        if (err) {
+          return;
+        }
+        console.log(profile);
+        localStorage.setItem(APP_CONFIG.VARIABLES.AUTH0_PROFILE_STORAGE_KEY, JSON.stringify(profile));
+        $rootScope.$broadcast(APP_CONFIG.EVENTS.AUTH0_USER_PROFILE_SET, profile);
+      });
+    }
+
     return {
       userProfile: userProfile,
       login: login,
       logout: logout,
-      registerAuthenticationListener: registerAuthenticationListener,
-      getIdToken: getIdToken
+      getIdToken: getIdToken,
+      handleParseHash: handleParseHash
     }
   }
 })();

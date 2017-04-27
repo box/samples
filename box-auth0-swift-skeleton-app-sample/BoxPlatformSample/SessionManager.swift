@@ -58,6 +58,15 @@ class SessionManager {
         return idToken
     }
     
+    func getAccessToken() -> String {
+        guard let accessToken = self.keychain.string(forKey: "access_token") else {
+            return ""
+        }
+        print("Access Token from keychain")
+        print(accessToken)
+        return accessToken
+    }
+    
     func retrieveAppUserId(_ callback: @escaping (Error?, String?) -> ()) {
         guard let idToken = self.keychain.string(forKey: "id_token") else {
             return callback(SessionManagerError.noIdToken, nil)

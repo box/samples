@@ -3,16 +3,21 @@
   'use strict';
 
   angular
-    .module('authApp', ['auth0.lock', 'angular-jwt', 'ngMaterial', 'ui.router', 'appAuth.home'])
+    .module('authApp', ['auth0.auth0', 'angular-jwt', 'ngMaterial', 'ui.router', 'appAuth.home'])
     .config(config);
 
-  config.$inject = ['$provide', '$urlRouterProvider', '$stateProvider', '$httpProvider', 'lockProvider', 'jwtOptionsProvider', 'jwtInterceptorProvider', '$mdThemingProvider', '$mdIconProvider'];
-  function config($provide, $urlRouterProvider, $stateProvider, $httpProvider, lockProvider, jwtOptionsProvider, jwtInterceptorProvider, $mdThemingProvider, $mdIconProvider) {
+  config.$inject = ['$provide', '$urlRouterProvider', '$stateProvider', '$httpProvider', 'angularAuth0Provider', 'jwtOptionsProvider', 'jwtInterceptorProvider', '$mdThemingProvider', '$mdIconProvider', '$locationProvider'];
+  function config($provide, $urlRouterProvider, $stateProvider, $httpProvider, angularAuth0Provider, jwtOptionsProvider, jwtInterceptorProvider, $mdThemingProvider, $mdIconProvider, $locationProvider) {
 
-    lockProvider.init({
+    angularAuth0Provider.init({
+      clientID: AUTH0_CLIENT_ID,
       domain: AUTH0_DOMAIN,
-      clientID: AUTH0_CLIENT_ID
+      responseType: 'token id_token',
+      audience: 'urn:box-platform-api',
+      redirectUri: window.location.href
     });
+
+    $locationProvider.hashPrefix('');
 
     $mdIconProvider
       .defaultIconSet("./assets/svg/avatars.svg", 128)
