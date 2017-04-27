@@ -3,6 +3,7 @@ var BOX_EXPIRES_AT='expires_at';
 
 var AUTH0_PROFILE_STORAGE_KEY='auth0_profile';
 var AUTH0_ID_TOKEN_STORAGE_KEY='auth0_id_token';
+var AUTH0_ACCESS_TOKEN_STORAGE_KEY='auth0_access_token';
 
 //Events
 var START_LOADING='start_loading';

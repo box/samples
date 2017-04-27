@@ -1,8 +1,8 @@
-var AUTH0_CLIENT_ID='onWTVG9uWpFFFQurilG6b7tRUd7k8BDi'; 
-var AUTH0_DOMAIN='allenm.auth0.com'; 
+var AUTH0_CLIENT_ID='oc2KB0hgvtShLqvP2hyz21zwuhxsDDcy'; 
+var AUTH0_DOMAIN='allenmsxbg.auth0.com'; 
 var AUTH0_CALLBACK_URL=location.href;
 
-var BOX_REFRESH_TOKEN_URL='https://allenm.us.webtask.io/auth0-box-platform/api/token';
+var BOX_REFRESH_TOKEN_URL='https://allenmsxbg.us.webtask.io/auth0-box-platform/delegation';
 var BOX_TOKEN='box_appuser_token';
 var BOX_EXPIRES_AT='expires_at';
 

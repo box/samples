@@ -15,44 +15,35 @@ import BoxContentSDK
 class HomeViewController: UIViewController {
     
     @IBAction func showLoginController(_ sender: UIButton) {
-        self.checkAccessToken()
+        self.showLock()
     }
     
     fileprivate func showLock() {
-        Lock
-            .classic()
-            .onAuth { credentials in
-                guard let accessToken = credentials.accessToken, let idToken = credentials.idToken else { return }
-                SessionManager.shared.storeTokens(accessToken, idToken: idToken)
-                SessionManager.shared.retrieveProfile { error in
-                    guard error == nil else {
-                        return self.showLock()
+        Auth0
+            .webAuth()
+            .audience("urn:box-platform-api")
+            .scope("openid profile")
+            .start { result in
+                switch result {
+                case .success(let credentials):
+                    guard let accessToken = credentials.accessToken, let idToken = credentials.idToken else { return }
+                    SessionManager.shared.storeTokens(accessToken, idToken: idToken)
+                    SessionManager.shared.retrieveProfile { error in
+                        guard error == nil else {
+                            print("an error")
+                            return
+                        }
+                        DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: "ShowProfile", sender: nil)
+                        }
                     }
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: "ShowProfile", sender: nil)
-                    }
+                case .failure(let error):
+                    print(error)
                 }
-                
-            }
-            .present(from: self)
-    }
-    
-    fileprivate func checkAccessToken() {
-        let loadingAlert = UIAlertController.loadingAlert()
-        loadingAlert.presentInViewController(viewController: self)
-        SessionManager.shared.retrieveProfile { error in
-            loadingAlert.dismiss(animated: true) {
-                guard error == nil else {
-                    return self.showLock()
-                }
-                self.performSegue(withIdentifier: "ShowProfile", sender: nil)
-            }
         }
     }
     
     // MARK: - Private
-    
-    fileprivate var retrievedProfile: Profile!
     fileprivate var tokens: Credentials!
     
     fileprivate func showMissingProfileAlert() {

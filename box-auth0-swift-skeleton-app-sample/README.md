@@ -17,30 +17,14 @@ The remaining documentation describes how to switch the existing credentials to 
     * Switch to the open beta of the new Developer Console, if needed
 2. Select "Create New App"
     * Select "Custom App" and press "Next"
-    * Select "Server Authentication" and press "Next"
-        * *This sample demonstrates a server-to-server integration*
+    * Select "OAuth 2.0 with JWT (Server Authentication)" and press "Next"
     * Name the application "Box Auth0 Swift App - YOUR NAME"
         * *Application names must be unique across Box*
     * Press "Create App" and then "View Your App"
-    * Check the "Manage users" scope and press "Save Changes"
 
-##### Step 2. Generate your private and public keys
-*Note: You can skip this step if you generate your private and public keys through Box's Developer Console*
+##### Step 2. Generate your private and public key and download your Box app credentials
 1. Generate a private key and a public key to use with Server Authentication
-    * For example, you can use `openssl` if you are on a Unix based OS:
-    ```
-    openssl genrsa -aes256 -out private_key.pem 2048
-    openssl rsa -pubout -in private_key.pem -out public_key.pem
-    ```
-    You'll need the passphrase for your private key later
-2. Add the public key to the application
-    * Press "Add Public Key"
-        * You will need to set up 2-factor authentication, if you haven't already
-    * Copy the public key: `cat public_key.pem | pbcopy`
-    * Paste it into the "Public Key" field
-    * Press "Verify and Save"
-        * You will need to enter a 2-factor confirmation code
-    * You'll need the ID of your public key later
+2. Your Box application credentials will download in a JSON configuration file. You'll need this file when registering the Box Platform extension in Auth0.
 3. Your application is ready to go
 
 ##### Step 3. Authorize the application into your Box account
@@ -52,10 +36,6 @@ The remaining documentation describes how to switch the existing credentials to 
 4. Enter your "Client ID" from the developer console in the "API Key" field
     * Your application is now authorized to access your Box account
 
-##### Step 4. Download your Box application credentials 
-1. Navigate to your Box application in the Box Developer Console.
-2. You can download the credentials for your Box application in a JSON configuration file.
-
 #### Auth0 Configuration
 ##### Step 1. Sign up for a free Auth0 account and configure your first client.
 1. Sign up for a free trial account at [Auth0](https://auth0.com/).
@@ -66,7 +46,6 @@ The remaining documentation describes how to switch the existing credentials to 
     * Domain
     * Client ID
 6. You'll need to register a callback URL for Auth0's Lock library. Follow the steps outlined [here](https://auth0.com/docs/quickstart/native/ios-swift#configure-callback-urls)
-    * *Note: You can skip this step while testing.* 
 
 #### Step 2. Install the Box Platform Extension
 1. Within your Auth0 Dashboard, click the *Extensions* tab.
@@ -74,7 +53,7 @@ The remaining documentation describes how to switch the existing credentials to 
     * You will need to provide the JSON configuration file containing your Box application credentials from creating your Box application:
     * You can reference the documentation provided [here](https://github.com/auth0-extensions/auth0-box-platform-extension) or the documentation on the Extension page for more instructions.
 3. Once you've completed setup for the Box Platform Extension, be sure to retrieve your automatically generated Webtask URL.
-    * Your URL should follow this pattern: https://<YOUR_DOMAIN>.us.webtask.io/auth0-box-platform/api/token
+    * Your URL should follow this pattern: https://<YOUR_DOMAIN>.us.webtask.io/auth0-box-platform/delegation
 
 #### iOS Application Configuration
 ##### Step 1. Open the project
@@ -83,6 +62,7 @@ The remaining documentation describes how to switch the existing credentials to 
 ##### Step 2. Add environment variables to the iOS Swift App
 1. Change the environment variables in the `Auth0.plist` file to those from your Auth0 Client.
 2. Change the `refreshUrl` variable within `BoxAccessTokenDelegate.swift` to the Webtask URL generated for you when you installed the Box Platform Extension in Auth0.
+3. Change the CFBundleURLSchemes in the `Info.plist` file to reflect your Bundle Identifier as outlined [here](https://auth0.com/docs/quickstart/native/ios-swift/00-getting-started#configure-callback-urls)
 3. Build and run your app from Xcode.
 
 ### Next Steps

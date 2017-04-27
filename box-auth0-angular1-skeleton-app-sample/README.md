@@ -15,34 +15,19 @@ The remaining documentation describes how to switch the existing credentials to 
 #### Box Platform Configuration
 ##### Step 1. Create a Box application
 1. Log into the [Box Developer Console](https://developer.box.com)
-    * Switch to the open beta of the new Developer Console, if needed
+    * Switch to the open beta of the new Developer Console
 2. Select "Create New App"
     * Select "Custom App" and press "Next"
-    * Select "Server Authentication" and press "Next"
-        * *This sample demonstrates a server-to-server integration*
-    * Name the application "Box Auth0 Swift App - YOUR NAME"
+    * Select "OAuth 2.0 with JWT (Server Authentication)" and press "Next"
+    * Name the application "Box Auth0 Angular 1 App - YOUR NAME"
         * *Application names must be unique across Box*
     * Press "Create App" and then "View Your App"
-    * Check the "Manage users" scope and press "Save Changes"
-    * In the "CORS Allowed Origins" section, add `http://localhost:3000`.
+3. In the "CORS Allowed Origins" section, add `http://localhost:3000`.
+4. Click "Save Changes".
 
-##### Step 2. Generate your private and public keys
-*Note: You can skip this step if you generate your private and public keys through Box's Developer Console*
+##### Step 2. Generate your private and public key and download your Box app credentials
 1. Generate a private key and a public key to use with Server Authentication
-    * For example, you can use `openssl` if you are on a Unix based OS:
-    ```
-    openssl genrsa -aes256 -out private_key.pem 2048
-    openssl rsa -pubout -in private_key.pem -out public_key.pem
-    ```
-    You'll need the passphrase for your private key later
-2. Add the public key to the application
-    * Press "Add Public Key"
-        * You will need to set up 2-factor authentication, if you haven't already
-    * Copy the public key: `cat public_key.pem | pbcopy`
-    * Paste it into the "Public Key" field
-    * Press "Verify and Save"
-        * You will need to enter a 2-factor confirmation code
-    * You'll need the ID of your public key later
+2. Your Box application credentials will download in a JSON configuration file. You'll need this file when registering the Box Platform extension in Auth0.
 3. Your application is ready to go
 
 ##### Step 3. Authorize the application into your Box account
@@ -53,10 +38,6 @@ The remaining documentation describes how to switch the existing credentials to 
 3. Under "Custom Applications", press "Authorize New App"
 4. Enter your "Client ID" from the developer console in the "API Key" field
     * Your application is now authorized to access your Box account
-
-##### Step 4. Download your Box application credentials 
-1. Navigate to your Box application in the Box Developer Console.
-2. You can download the credentials for your Box application in a JSON configuration file.
 
 #### Auth0 Configuration
 ##### Step 1. Sign up for a free Auth0 account and configure your first client.
@@ -72,15 +53,17 @@ The remaining documentation describes how to switch the existing credentials to 
 #### Step 2. Install the Box Platform Extension
 1. Within your Auth0 Dashboard, click the *Extensions* tab.
 2. Locate and click on the Box Platform Extension. 
-    * You will need to provide the JSON configuration file containing your Box application credentials from creating your Box application:
+    * You will need to provide the JSON configuration file containing your Box application credentials from creating your Box application.
+    * Add http://localhost:3000 to the list of CORS approved domains for the Extension
     * You can reference the documentation provided [here](https://github.com/auth0-extensions/auth0-box-platform-extension) or the documentation on the Extension page for more instructions.
 3. Once you've completed setup for the Box Platform Extension, be sure to retrieve your automatically generated Webtask URL.
-    * Your URL should follow this pattern: https://<YOUR_DOMAIN>.us.webtask.io/auth0-box-platform/api/token
+    * Your URL should follow this pattern: https://<YOUR_DOMAIN>.us.webtask.io/auth0-box-platform/delegation
 
 #### Angular 1 Application Configuration
 ##### Step 1. Download the project dependencies
 1. Use `npm install` to download the needed depenedencies for this project.
-##### Step 2. Add environment variables to the Angular 2 App
+2. Navigate to `public > js` and use `npm install` to download the dependencies for the front end application.
+##### Step 2. Add environment variables to the Angular 1 App
 1. Navigate to `public > js` and change the `app-config.js` file to the `AUTH0_CLIENT_ID` and `AUTH0_DOMAIN` from your Auth0 Client.
 2. In the same `app-config.js` file, change `BOX_REFRESH_TOKEN_URL` to the Webtask URL generated for you when you installed the Box Platform Extension in Auth0.
 ##### Step 3. Run your app

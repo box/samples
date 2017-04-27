@@ -143,8 +143,14 @@ export function defaultFactory(http: Http, auth: AuthService, options: RequestOp
     const EXPIRES_IN = BOX_CONFIG.tokenExpirationPeriod;
 
     const DEFAULT_REFRESH_TOKEN_FUNCTION = () => {
-        let token = auth.retrieveIdToken();
-        return http.post(BOX_CONFIG.refreshTokenUrl, { token });
+        let token = auth.retrieveAccessToken();
+        let options = new RequestOptions();
+        options.headers = new Headers();
+        options.headers.set("Authorization", `Bearer ${token}`);
+        options.method = "GET";
+        options.url = BOX_CONFIG.refreshTokenUrl;
+        let req = new Request(options);
+        return http.request(req);
     };
 
     const DEFAULT_BOX_TOKEN_CACHE: IBoxTokenCache = {

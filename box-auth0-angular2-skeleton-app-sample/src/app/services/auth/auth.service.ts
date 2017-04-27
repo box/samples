@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AUTH_CONFIG } from '../../config/auth/auth.config';
 import { JwtHelper } from 'angular2-jwt';
+import { tokenNotExpired } from 'angular2-jwt';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { BOX_CONFIG } from '../../config/box/box.config';
 import { BoxHttp } from "../box/box-client.service";
 
 // Avoid name not found warnings
-declare var Auth0Lock: any;
+declare var auth0: any;
 
 const AUTH_ACCESS_TOKEN_STORAGE_KEY = 'auth_access_token';
 const AUTH_ID_TOKEN_STORAGE_KEY = 'auth_id_token';
@@ -18,39 +19,23 @@ const AUTH_REDIRECT_URL = 'auth_redirect_url';
 @Injectable()
 export class AuthService {
 
-  lock = new Auth0Lock(AUTH_CONFIG.clientID, AUTH_CONFIG.domain, {
-    autoclose: true,
-    auth: {
-      allowedConnections: ['Username-Password-Authentication'],
-      redirectUrl: AUTH_CONFIG.callbackUrl,
-      responseType: 'token id_token',
-      audience: `https://${AUTH_CONFIG.domain}/userinfo`,
-      params: {
-        
-      }
-    }
+  auth0 = new auth0.WebAuth({
+    domain: AUTH_CONFIG.domain,
+    clientID: AUTH_CONFIG.clientID
   });
 
   userProfile: any;
 
   constructor(public router: Router) {
-    this.userProfile = this.getProfile();
   }
 
   public login(): void {
-    this.lock.show();
-  }
-
-  public getProfile() {
-    let profile = localStorage.getItem(AUTH_PROFILE_STORAGE_KEY);
-    if (profile) {
-      try {
-        this.userProfile = JSON.parse(profile);
-      } catch (e) {
-        this.userProfile = null;
-      }
-    }
-    return this.userProfile;
+    this.auth0.authorize({
+      audience: 'urn:box-platform-api',
+      scope: 'openid name email get:token',
+      responseType: 'token id_token',
+      redirectUri: window.location.href
+    });
   }
 
   public getUserId() {
@@ -61,13 +46,16 @@ export class AuthService {
   // Call this method in app.component
   // if using path-based routing
   public handleAuthentication(): void {
-    this.lock.on('authenticated', (authResult) => {
-      console.log(authResult)
+    this.auth0.parseHash((err, authResult) => {
+      if (err) {
+        alert(`Error: ${err.errorDescription}`)
+      }
       if (authResult && authResult.accessToken && authResult.idToken) {
+        window.location.hash = '';
         this.setSession(authResult);
 
         this.router.events
-          .filter(event => event.url === '/callback')
+          .filter(event => event.url === '/')
           .subscribe(() => {
             let redirectUrl: string = localStorage.getItem(AUTH_REDIRECT_URL);
             if (redirectUrl != undefined) {
@@ -88,16 +76,6 @@ export class AuthService {
     localStorage.setItem(AUTH_ID_TOKEN_STORAGE_KEY, authResult.idToken);
     localStorage.setItem(AUTH_USER_ID_STORAGE_KEY, authResult.idTokenPayload.sub);
     console.log(authResult);
-    this.lock.getProfile(authResult.idToken, (error, profile) => {
-      if (error) {
-        // Handle error
-        alert(error);
-        return;
-      }
-
-      localStorage.setItem(AUTH_PROFILE_STORAGE_KEY, JSON.stringify(profile));
-      this.userProfile = profile;
-    });
   }
 
   public logout(): void {
@@ -107,7 +85,7 @@ export class AuthService {
     localStorage.removeItem(AUTH_PROFILE_STORAGE_KEY);
     localStorage.removeItem(AUTH_USER_ID_STORAGE_KEY);
     localStorage.removeItem(AUTH_REDIRECT_URL);
-    localStorage.removeItem(`${BOX_CONFIG.boxTokenStorageKey}.${this.getProfile().user_id}`);
+    localStorage.removeItem(`${BOX_CONFIG.boxTokenStorageKey}.${this.getUserId()}`);
     // Go back to the home route
     this.router.navigate(['/']);
   }
@@ -122,6 +100,10 @@ export class AuthService {
 
   public retrieveIdToken() {
     return localStorage.getItem(AUTH_ID_TOKEN_STORAGE_KEY);
+  }
+
+  public retrieveAccessToken() {
+    return localStorage.getItem(AUTH_ACCESS_TOKEN_STORAGE_KEY);
   }
 
   public isAdmin() {
