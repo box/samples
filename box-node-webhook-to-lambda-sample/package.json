@@ -1,7 +1,7 @@
 {
   "name": "box-node-webhook-to-lambda-sample",
-  "version": "1.3.0",
-  "description": "This sample shows how to connect a Box webhook to an AWS Lambda function via API Gateway. Each time an event occurs that triggers the webhook on Box, the Lambda function will be called with the details of the event. The messages are secured with a message signature that is validated in the Lambda function.",
+  "version": "1.4.0",
+  "description": "This sample shows how to connect a Box webhook to a Lambda function via API Gateway. Each time an event occurs that triggers the webhook on Box, the Lambda function will be called with the details of the event. The messages are secured with a message signature that is validated in the Lambda function.",
   "main": "index.js",
   "dependencies": {
     "box-node-sdk": "^1.3.0"
