@@ -14,7 +14,6 @@ This sample gives step-by-step instructions to set up an AWS Lambda function and
 
 #### Step 1. Create a Box application
 1. Log into the [Box Developer Console](https://developers.box.com) in your Box developer account
-    * *Switch to the open beta of the new Developer Console, if needed*
 2. Select "Create New App"
     * Select "Custom App" and press "Next"
     * Select "OAuth 2.0 with JWT (Server Authentication)" and press "Next"
@@ -35,8 +34,7 @@ This sample gives step-by-step instructions to set up an AWS Lambda function and
 1. Log into the [AWS Management Console](https://aws.amazon.com/console) and go to the Lambda Management Console
 2. Press "Create a Lambda function"
     * Search for "box" and choose the "box-node-webhook-to-lambda-sample" blueprint
-3. Configure a trigger for the Lambda function by clicking in the gray outlined area
-    * Choose API Gateway
+3. Configure the API Gateway trigger for the Lambda function
     * Leave the API name and Deployment stage with default values
     * Choose "Open" for Security.  This enables the Box webhook to call the API externally
     * Press Next

@@ -4,7 +4,6 @@ This sample demonstrates how to call Box APIs from a Lambda function using the [
 
 #### Step 1. Create a Box application
 1. Log into the [Box Developer Console](https://developers.box.com) in your Box developer account
-    * *Switch to the open beta of the new Developer Console, if needed*
 2. Select "Create New App"
     * Select "Custom App" and press "Next"
     * Select "OAuth 2.0 with JWT (Server Authentication)" and press "Next"
