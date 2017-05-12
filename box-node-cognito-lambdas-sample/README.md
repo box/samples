@@ -1,4 +1,4 @@
-# box-node-rekognition-lambdas-sample
+# box-node-cognito-lambdas-sample
 
 This sample shows how to integrate AWS Cognito with Box. Every user created in the Cognito pool is created as an app user in the Box enterprise.
 Using the Cognito JWT user token, the app user token can be generated from Box. Using Box's app user token, the user performs operations in Box.
@@ -113,7 +113,7 @@ Need to contact us directly? You can post to the
 Copyright and License
 ---------------------
 
-Copyright 2016 Box, Inc. All rights reserved.
+Copyright 2017 Box, Inc. All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

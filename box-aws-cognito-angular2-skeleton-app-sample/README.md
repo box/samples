@@ -95,15 +95,15 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ### Next Steps
 * [Box Platform Developer Documentation](https://developer.box.com/).
 * [Box Platform Blog](https://docs.box.com/blog/).
-* [Auth0 Developer Documentation](https://auth0.com/docs).
-* [Auth0 Blog](https://auth0.com/blog/).
+* [AWS Cognito Documentation](https://aws.amazon.com/documentation/cognito/).
+* [AWS Cognito](https://aws.amazon.com/cognito/).
+* [Box Platform on the AWS Marketplace](https://aws.amazon.com/marketplace/pp/B06XY1XHGV?ref_=%22hmpg_saas_featured%22_B06XY1XHGV_3).
 
 Support
 -------
 
 Need to contact us directly?
 * [Box Developer Forum](https://community.box.com/t5/Developer-Forum/bd-p/DeveloperForum).
-* [Auth0 Developer Documentation](https://auth0.com/forum/)
 
 Copyright and License
 ---------------------
