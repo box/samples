@@ -12,9 +12,7 @@ const BoxSDK = require('box-node-sdk');
 // Load the config from an environment variable for security and configuration management.
 const boxConfig = JSON.parse(process.env.BOX_CONFIG);
 
-boxConfig.boxAppSettings.appAuth.keyID = boxConfig.boxAppSettings.appAuth.publicKeyID;
-
-const sdk = new BoxSDK(boxConfig.boxAppSettings);
+const sdk = BoxSDK.getPreconfiguredInstance(boxConfig);
 
 /**
  * Create a service account client that performs actions in the context of the specified
@@ -25,7 +23,7 @@ const sdk = new BoxSDK(boxConfig.boxAppSettings);
  *
  * The client will automatically create and refresh the service account access token, as needed.
  */
-const client = sdk.getAppAuthClient('enterprise', boxConfig.enterpriseID);
+const client = sdk.getAppAuthClient('enterprise');
 
 /**
  *  YOUR CODE GOES HERE!!!

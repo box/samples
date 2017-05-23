@@ -25,7 +25,7 @@ This sample gives step-by-step instructions to set up an AWS Lambda function and
     * These are the keys that Box will use to sign events sent by your application's webhooks
     * The events are signed using two separate keys to make it easier to [rotate your signing keys](https://docs.box.com/reference#section-rotating-signatures)
 4. Return to the "Configuration" section and go to "Application Scopes"
-    * Check "Manage webhooks"
+    * Check "Manage webhooks" and press "Save Changes"
 5. Scroll down to "App Settings"
     * Press "Download as JSON"
     * Save the JSON config file, which contains your application's webhook signing keys

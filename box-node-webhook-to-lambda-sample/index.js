@@ -12,6 +12,8 @@ const BoxSDK = require('box-node-sdk');
 // Load the config from an environment variable for security and configuration management.
 const boxConfig = JSON.parse(process.env.BOX_CONFIG);
 
+BoxSDK.getPreconfiguredInstance(boxConfig);
+
 /**
  *  YOUR CODE GOES HERE!!!
  *
@@ -45,8 +47,7 @@ function handleWebhookEvent(webhookEvent) {
 exports.handler = (event, context, callback) => {
     console.log(`Event: ${JSON.stringify(event, null, 2)}`);
 
-    if (!BoxSDK.validateWebhookMessage(event.body, event.headers,
-            boxConfig.webhooks.primaryKey, boxConfig.webhooks.secondaryKey)) {
+    if (!BoxSDK.validateWebhookMessage(event.body, event.headers)) {
         const response = { statusCode: 403, body: 'Message authenticity not verified' };
         console.log(`Response: ${JSON.stringify(response, null, 2)}`);
         callback(null, response);
