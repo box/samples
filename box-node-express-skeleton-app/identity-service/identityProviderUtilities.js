@@ -26,8 +26,8 @@ class IdentityProviderUtilities {
         body:
         {
           grant_type: 'client_credentials',
-          client_id: Auth0Config.clientId,
-          client_secret: Auth0Config.clientSecret,
+          client_id: Auth0Config.managementAPIClientId,
+          client_secret: Auth0Config.managementAPIClientSecret,
           audience: `https://${Auth0Config.domain}/api/v2/`
         },
         json: true

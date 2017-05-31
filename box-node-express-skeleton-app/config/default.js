@@ -26,7 +26,9 @@ module.exports = {
 		clientSecret: "",
 		callbackUrl: "http://localhost:3000/callback",
 		sessionSecret: "securepassword",
-		inMemoryStoreSize: "100"
+		inMemoryStoreSize: "100",
+		managementAPIClientId: "",
+		managementAPIClientSecret: ""
 	},
 
 	RedisConfig: {
