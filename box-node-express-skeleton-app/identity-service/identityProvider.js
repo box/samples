@@ -25,8 +25,9 @@ class IdentityProvider {
 	getUserManagementClient() {
 		let self = this;
 		return asyncFunc(function* () {
+			let token = yield self.generateManagementToken();
 			return new ManagementClient({
-				token: yield self.generateManagementToken(),
+				token: token,
 				domain: Auth0Config.domain
 			});
 		})();

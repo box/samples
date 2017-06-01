@@ -14,7 +14,7 @@ module.exports.main = asyncFunc(function* (req, res, next) {
 	}
 	let fileId = req.params.id;
 	let appUserClient = yield BoxService.getUserClient(boxAppUserId);
-	let file = yield appUserClient.files.getAsync(fileId, null);
+	let file = yield appUserClient.files.get(fileId, null);
 	res.render('pages/box/file-detail', {
 		file,
 		domain: AppConfig.domain
@@ -29,7 +29,7 @@ module.exports.thumbnail = asyncFunc(function* (req, res, next) {
 	let fileId = req.params.id;
 	let appUserClient = yield BoxService.getUserClient(boxAppUserId);
 	try {
-		let data = yield appUserClient.files.getThumbnailAsync(fileId, { min_height: "256", min_width: "256" });
+		let data = yield appUserClient.files.getThumbnail(fileId, { min_height: "256", min_width: "256" });
 		if (data.file) {
 			// We got the thumbnail file, so send the image bytes back
 			res.send(data.file);
@@ -55,13 +55,10 @@ module.exports.preview = asyncFunc(function* (req, res, next) {
 		res.redirect('/login');
 	}
 	let fileId = req.params.id;
-	let appUserClient = yield BoxService.getUserClient(boxAppUserId);
-	try {
-		let file = yield appUserClient.files.getAsync(fileId, { fields: 'expiring_embed_link' });
-		res.render('pages/box/file-preview', {
-			file
-		});
-	} catch (e) {
-		res.redirect(`/files/${fileId}`);
-	}
+	let userToken = yield BoxService.generateUserToken(boxAppUserId);
+	let accessToken = userToken.accessToken;
+	res.render('pages/box/file-preview', {
+		fileId,
+		accessToken
+	});
 });

@@ -13,7 +13,7 @@ module.exports.main = asyncFunc(function* (req, res, next) {
 	}
 	let rootFolder = req.params.id || '0';
 	let appUserClient = yield BoxService.getUserClient(boxAppUserId);
-	let folder = yield appUserClient.folders.getAsync(rootFolder, null);
+	let folder = yield appUserClient.folders.get(rootFolder, null);
 	let path = trackFolderPath(folder);
 	let foldersAndFiles = splitFilesAndFolders(folder);
 	let accessToken = yield BoxService.generateUserToken(boxAppUserId);
@@ -38,7 +38,7 @@ module.exports.addFolder = asyncFunc(function* (req, res, next) {
 	let folderName = req.body.folderName;
 	let rootFolder = req.params.id || '0';
 	try {
-		yield appUserClient.folders.createAsync(rootFolder, folderName);
+		yield appUserClient.folders.create(rootFolder, folderName);
 		res.redirect(`/user/${rootFolder}`);
 	} catch (e) {
 		if (e.response.body) {

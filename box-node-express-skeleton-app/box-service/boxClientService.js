@@ -3,7 +3,6 @@ const config = require('config');
 const Box = require('box-node-sdk');
 const BoxSDKConfig = config.get('BoxSDKConfig');
 const BoxOptions = config.get('BoxOptions');
-const BoxUtilityServices = require('./boxUtilityServices');
 const BoxCache = require('./boxTokenCache');
 const _ = require('lodash');
 const Promise = require('bluebird');
@@ -30,23 +29,23 @@ class BoxClientService {
 		let self = this;
 		return asyncFunc(function* () {
 			let client = yield self.getServiceAccountClient();
-			return client.enterprise.addUserAsync(null, displayName, { is_platform_access_only: true });
+			return client.enterprise.addUser(null, displayName, { is_platform_access_only: true });
 		})();
 	}
 
 	getLongRunningServiceAccountClient() {
-		return BoxUtilityServices.promisifyClient(this.BoxSdk.getAppAuthClient(BOX_ENTERPRISE, BoxSDKConfig.boxEnterpriseId));
+		return this.BoxSdk.getAppAuthClient(BOX_ENTERPRISE, BoxSDKConfig.boxEnterpriseId);
 	}
 
 	getLongRunningUserClient(boxId) {
-		return BoxUtilityServices.promisifyClient(this.BoxSdk.getAppAuthClient(BOX_USER, boxId));
+		return this.BoxSdk.getAppAuthClient(BOX_USER, boxId);
 	}
 
 	getServiceAccountClient() {
 		let self = this;
 		return asyncFunc(function* () {
 			let token = yield self.generateEnterpriseToken();
-			return BoxUtilityServices.promisifyClient(self.BoxSdk.getBasicClient(token.accessToken));
+			return self.BoxSdk.getBasicClient(token.accessToken);
 		})();
 	}
 
@@ -54,7 +53,7 @@ class BoxClientService {
 		let self = this;
 		return asyncFunc(function* () {
 			let token = yield self.generateUserToken(boxId);
-			return BoxUtilityServices.promisifyClient(self.BoxSdk.getBasicClient(token.accessToken));
+			return self.BoxSdk.getBasicClient(token.accessToken);
 		})();
 	}
 
