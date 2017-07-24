@@ -19,26 +19,12 @@
         * *Application names must be unique across Box*
     * Press "Create App" and then "View Your App"
     * Check the "Manage users" scope and press "Save Changes"
-        * You'll need your "Client ID" and "Client Secret" later
-    * In the "CORS Allowed Origins" section, add `http://localhost:3000` to use the clientside upload demo.
+    * In the "CORS Allowed Origins" section, add `http://localhost:3000` to use the UI Elements.
 
-##### Step 2. Generate your private and public keys
-1. Generate a private key and a public key to use with Server Authentication
-    * In the `box-node-express-skeleton-app` directory, run the following commands:
-    ```
-    openssl genrsa -aes256 -out private_key.pem 2048
-    openssl rsa -pubout -in private_key.pem -out public_key.pem
-    ```
-    You'll need the passphrase for your private key later
-2. Add the public key to the application
-    * Press "Add Public Key"
-        * You will need to set up 2-factor authentication, if you haven't already
-    * Copy the public key: `cat public_key.pem | pbcopy`
-    * Paste it into the "Public Key" field
-    * Press "Verify and Save"
-        * You will need to enter a 2-factor confirmation code
-    * You'll need the ID of your public key later
-3. Your application is ready to go
+##### Step 2. Generate your Box Config file
+1. Follow the steps outlined here:
+    [Box App Creation Guide](https://developer.box.com/docs/configuring-service-accounts#section-6-generate-a-publicprivate-keypair)
+
 
 ##### Step 3. Authorize the application into your Box account
 1. In a new tab, log into your Box account as an admin and go to the Admin Console
@@ -51,18 +37,12 @@
     * Your application is now authorized to access your Box account
 
 ##### Step 4. Add environment variables to the Node Express App
-1. Navigate to `box-node-express-skeleton-app` > `config.js`.
-2. Add the environment variables from your Box application to the `config.js` file:
-    * You can find each required value within Box's Developer Console and your Enterprise. For more information, you can reference our Quickstart guide:
-    * [Box Platform Quickstart](https://docs.box.com/docs/getting-started-box-platform)
-    * Under `module.exports.BoxConfig`:
+1. Navigate to `box-node-express-skeleton-app` > `app` > `config` > `default.js`.
+2. Add your own Box Config to the `app` directory under `box-node-express-skeleton-app` > `app`.
+3. Add the environment variables from your Box application to the `default.js` file:
+    * Under `module.exports.BoxSDKConfig`:
     ```
-    boxClientId = Your Client ID
-    boxClientSecret = Your Client Secret
-    boxPrivateKey = Your private key, stored in the root of `box-aspnet-mvc-skeleton-app`
-    boxPublicKeyId = Your Public Key ID
-    boxPrivateKeyPassword = Your Private Key Passphrase
-    boxEnterpriseId = Your Enterprise ID
+    boxConfigFilePath: Path to your Box Config file generated when creating a new Box App.
     ```
 
 #### Auth0 Configuration
@@ -92,8 +72,8 @@ For that reason, we've included the needed code and setup for an identity servic
     * update:users_app_metadata
 
 #### Step 3. Add Auth0 configuration values to the Node Express application.
-1. Navigate to `box-node-express-skeleton-app` > `config.js`
-2. In the `config.js` file, replace these values with those from your Auth0 client:
+1. Navigate to `box-node-express-skeleton-app` > `config` > `default.js`
+2. In the `default.js` file, replace these values with those from your Auth0 client:
     * Under `module.exports.Auth0Config`
     * `clientId`
     * `clientSecret`
@@ -102,19 +82,16 @@ For that reason, we've included the needed code and setup for an identity servic
 
 ### Build and Run
 
-For convenience, we've included a `docker-compose.yml` file for running Redis. Redis is used in caching tokens and improving performance.
+For convenience, we've included a `docker-compose.yml` file for running Redis and this application. Redis is used in caching tokens and improving performance.
 
-Make sure you have Docker and Docker Compose installed and use the command `docker-compose up` to start Redis.
+Make sure you have Docker and Docker Compose installed and use the command `docker-compose up` to start this application.
+* Download Docker here:
+* [Docker Community Edition](https://www.docker.com/community-edition) 
 
-If you need to bring Redis down, run `docker-compose down`.
+If you need to bring the application down, run `docker-compose down`.
 
-The following ports must be available on your machine:
-- `6379`
+The following port must be available on your machine:
 - `3000`
-
-Run `npm install` to download all needed dependencies for this project. There are two ways to start the server:
-1. Use `npm start` to run the server. The server will run until you end the process.
-2. If you want to make changes and have the server restart automatically, use `npm run dev-start`.
 
 Once the server is running, navigate to [http://localhost:3000](http://localhost:3000). 
 
