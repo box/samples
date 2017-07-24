@@ -1,0 +1,16 @@
+<% include ../partials/common/header %>
+<% include ../partials/common/display-header %>
+<% include ../partials/box/box-ui-selectors %>
+<div id="box-tree" class="container-fluid">
+</div>
+<% include ../partials/box/box-ui-scripts %>
+<script type="text/javascript">
+  var accessToken = "<%= accessToken %>"; 
+  var folderId = "<%= rootFolder %>";
+  var fileTree = new Box.ContentTree();
+  fileTree.show(folderId, accessToken, {
+    container: '#box-tree'
+});
+</script>
+
+<% include ../partials/common/footer %>

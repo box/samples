@@ -1,0 +1,16 @@
+<% include ../partials/common/header %>
+<% include ../partials/common/display-header %>
+<% include ../partials/box/box-ui-selectors %>
+<div id="box-explorer" class="container-fluid" min-height="2050px">
+</div>
+<% include ../partials/box/box-ui-scripts %>
+<script type="text/javascript">
+  var accessToken = "<%= accessToken %>"; 
+  var folderId = "<%= rootFolder %>";
+  var contentExplorer = new Box.ContentExplorer();
+  contentExplorer.show(folderId, accessToken, {
+      container: '#box-explorer'
+  });
+</script>
+
+<% include ../partials/common/footer %>

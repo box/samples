@@ -1,0 +1,16 @@
+<% include ../partials/common/header %>
+<% include ../partials/common/display-header %>
+<% include ../partials/box/box-ui-selectors %>
+<div id="box-uploader" class="container-fluid">
+</div>
+<% include ../partials/box/box-ui-scripts %>
+<script type="text/javascript">
+  var accessToken = "<%= accessToken %>"; 
+  var folderId = "<%= rootFolder %>";
+  var uploader = new Box.ContentUploader();
+  uploader.show(folderId, accessToken, {
+    container: '#box-uploader'
+  });
+</script>
+
+<% include ../partials/common/footer %>

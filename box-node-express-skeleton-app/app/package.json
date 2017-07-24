@@ -1,0 +1,41 @@
+{
+  "name": "box-node-express-skeleton-app",
+  "version": "1.0.0",
+  "description": "A skeleton Express app with authentication and Box Platform App Users",
+  "main": "bin/www",
+  "private": true,
+  "scripts": {
+    "prestart": "npm run test",
+    "lint": "./node_modules/.bin/gulp lint",
+    "start": "node ./bin/www"
+  },
+  "author": "Box oss@box.com",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "auth0": "^2.6.0",
+    "bluebird": "^3.4.7",
+    "body-parser": "^1.16.1",
+    "box-node-sdk": "^1.7.0",
+    "config": "^1.25.1",
+    "connect-ensure-login": "^0.1.1",
+    "connect-redis": "^3.2.0",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.6.1",
+    "ejs": "^2.5.5",
+    "express": "^4.14.1",
+    "express-jwt": "^5.1.0",
+    "express-session": "^1.15.1",
+    "ioredis": "^2.5.0",
+    "lodash": "^4.17.4",
+    "morgan": "^1.8.1",
+    "passport": "^0.3.2",
+    "passport-auth0": "^0.6.0",
+    "request": "^2.79.0",
+    "serve-favicon": "^2.3.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-nodemon": "^2.2.1"
+  }
+}

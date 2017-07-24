@@ -1,7 +1,8 @@
 build/
 coverage/
 npm-debug.log
-box-node-express-skeleton-app/config/local.js
+box-node-express-skeleton-app/app/config/local.js
+box-node-express-skeleton-app/app/*_config.json
 
 node_modules/
 .DS_Store
