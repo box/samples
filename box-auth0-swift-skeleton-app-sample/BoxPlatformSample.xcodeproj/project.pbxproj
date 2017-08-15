@@ -7,6 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18DC38DB1F43758C00892082 /* Auth0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38DA1F43758C00892082 /* Auth0.framework */; };
+		18DC38DC1F43758C00892082 /* Auth0.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38DA1F43758C00892082 /* Auth0.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18DC38DF1F43759300892082 /* BoxBrowseSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38DE1F43759300892082 /* BoxBrowseSDK.framework */; };
+		18DC38E01F43759300892082 /* BoxBrowseSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38DE1F43759300892082 /* BoxBrowseSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18DC38E21F4375CE00892082 /* BoxContentSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38E11F4375CE00892082 /* BoxContentSDK.framework */; };
+		18DC38E31F4375CE00892082 /* BoxContentSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38E11F4375CE00892082 /* BoxContentSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18DC38E51F4375D500892082 /* BoxPreviewSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38E41F4375D500892082 /* BoxPreviewSDK.framework */; };
+		18DC38E61F4375D500892082 /* BoxPreviewSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38E41F4375D500892082 /* BoxPreviewSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18DC38E81F4375DC00892082 /* Masonry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38E71F4375DC00892082 /* Masonry.framework */; };
+		18DC38E91F4375DC00892082 /* Masonry.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38E71F4375DC00892082 /* Masonry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18DC38EB1F4375E700892082 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38EA1F4375E700892082 /* MBProgressHUD.framework */; };
+		18DC38EC1F4375E700892082 /* MBProgressHUD.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38EA1F4375E700892082 /* MBProgressHUD.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18DC38EE1F4375EC00892082 /* PSPDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38ED1F4375EC00892082 /* PSPDFKit.framework */; };
+		18DC38EF1F4375EC00892082 /* PSPDFKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38ED1F4375EC00892082 /* PSPDFKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18DC38F11F4375F200892082 /* SimpleKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38F01F4375F200892082 /* SimpleKeychain.framework */; };
+		18DC38F21F4375F200892082 /* SimpleKeychain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18DC38F01F4375F200892082 /* SimpleKeychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2928AC1F1E242FB2006DCB7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928AC1E1E242FB2006DCB7F /* AppDelegate.swift */; };
 		2928AC241E242FB2006DCB7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2928AC221E242FB2006DCB7F /* Main.storyboard */; };
 		2928AC261E242FB2006DCB7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2928AC251E242FB2006DCB7F /* Assets.xcassets */; };
@@ -19,9 +35,6 @@
 		2928AC531E243B23006DCB7F /* BoxAccessTokenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928AC521E243B23006DCB7F /* BoxAccessTokenDelegate.swift */; };
 		293363B91E9E8148001305ED /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293363B81E9E8148001305ED /* SessionManager.swift */; };
 		293363BB1E9E8C8E001305ED /* UIAlertControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293363BA1E9E8C8E001305ED /* UIAlertControllerExtension.swift */; };
-		3C806A62AEB844BCD0B9C9CE /* Pods_BoxPlatformSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A3DD901030602327472C4E /* Pods_BoxPlatformSampleTests.framework */; };
-		7BBEF23F2155690EEFA24368 /* Pods_BoxPlatformSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF14460D270B6816000B18B /* Pods_BoxPlatformSample.framework */; };
-		C10DB4D32EFC7E6914F8B0FA /* Pods_BoxPlatformSampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F42A9F668B4C51B9965EA696 /* Pods_BoxPlatformSampleUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +54,42 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		18DC38DD1F43758C00892082 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				18DC38EF1F4375EC00892082 /* PSPDFKit.framework in Embed Frameworks */,
+				18DC38E61F4375D500892082 /* BoxPreviewSDK.framework in Embed Frameworks */,
+				18DC38F21F4375F200892082 /* SimpleKeychain.framework in Embed Frameworks */,
+				18DC38E31F4375CE00892082 /* BoxContentSDK.framework in Embed Frameworks */,
+				18DC38EC1F4375E700892082 /* MBProgressHUD.framework in Embed Frameworks */,
+				18DC38E91F4375DC00892082 /* Masonry.framework in Embed Frameworks */,
+				18DC38DC1F43758C00892082 /* Auth0.framework in Embed Frameworks */,
+				18DC38E01F43759300892082 /* BoxBrowseSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		18DC38DA1F43758C00892082 /* Auth0.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Auth0.framework; path = Carthage/Build/iOS/Auth0.framework; sourceTree = "<group>"; };
+		18DC38DE1F43759300892082 /* BoxBrowseSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BoxBrowseSDK.framework; path = Carthage/Build/iOS/BoxBrowseSDK.framework; sourceTree = "<group>"; };
+		18DC38E11F4375CE00892082 /* BoxContentSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BoxContentSDK.framework; path = Carthage/Build/iOS/BoxContentSDK.framework; sourceTree = "<group>"; };
+		18DC38E41F4375D500892082 /* BoxPreviewSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BoxPreviewSDK.framework; path = Carthage/Build/iOS/BoxPreviewSDK.framework; sourceTree = "<group>"; };
+		18DC38E71F4375DC00892082 /* Masonry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Masonry.framework; path = Carthage/Build/iOS/Masonry.framework; sourceTree = "<group>"; };
+		18DC38EA1F4375E700892082 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
+		18DC38ED1F4375EC00892082 /* PSPDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PSPDFKit.framework; path = Carthage/Build/iOS/PSPDFKit.framework; sourceTree = "<group>"; };
+		18DC38F01F4375F200892082 /* SimpleKeychain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleKeychain.framework; path = Carthage/Build/iOS/SimpleKeychain.framework; sourceTree = "<group>"; };
+		18DC38F41F43762400892082 /* Auth0.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Auth0.framework.dSYM; path = Carthage/Build/iOS/Auth0.framework.dSYM; sourceTree = "<group>"; };
+		18DC38F61F43763000892082 /* BoxBrowseSDK.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = BoxBrowseSDK.framework.dSYM; path = Carthage/Build/iOS/BoxBrowseSDK.framework.dSYM; sourceTree = "<group>"; };
+		18DC38F81F43763D00892082 /* BoxContentSDK.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = BoxContentSDK.framework.dSYM; path = Carthage/Build/iOS/BoxContentSDK.framework.dSYM; sourceTree = "<group>"; };
+		18DC38FA1F43765600892082 /* Masonry.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Masonry.framework.dSYM; path = Carthage/Build/iOS/Masonry.framework.dSYM; sourceTree = "<group>"; };
+		18DC38FC1F43765D00892082 /* MBProgressHUD.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = MBProgressHUD.framework.dSYM; path = Carthage/Build/iOS/MBProgressHUD.framework.dSYM; sourceTree = "<group>"; };
+		18DC38FE1F43766400892082 /* SimpleKeychain.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SimpleKeychain.framework.dSYM; path = Carthage/Build/iOS/SimpleKeychain.framework.dSYM; sourceTree = "<group>"; };
 		2928AC1B1E242FB2006DCB7F /* BoxPlatformSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoxPlatformSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2928AC1E1E242FB2006DCB7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2928AC231E242FB2006DCB7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -60,15 +108,6 @@
 		2928AC521E243B23006DCB7F /* BoxAccessTokenDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxAccessTokenDelegate.swift; sourceTree = "<group>"; };
 		293363B81E9E8148001305ED /* SessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		293363BA1E9E8C8E001305ED /* UIAlertControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIAlertControllerExtension.swift; sourceTree = "<group>"; };
-		48259027B861B6E850436B12 /* Pods-BoxPlatformSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoxPlatformSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-BoxPlatformSample/Pods-BoxPlatformSample.release.xcconfig"; sourceTree = "<group>"; };
-		58EAFB24F06D182B8E397D60 /* Pods-BoxPlatformSampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoxPlatformSampleUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BoxPlatformSampleUITests/Pods-BoxPlatformSampleUITests.release.xcconfig"; sourceTree = "<group>"; };
-		615086118715F1F27645C9DE /* Pods-BoxPlatformSampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoxPlatformSampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BoxPlatformSampleTests/Pods-BoxPlatformSampleTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9DF14460D270B6816000B18B /* Pods_BoxPlatformSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoxPlatformSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9AC483B00AD582EBCB33687 /* Pods-BoxPlatformSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoxPlatformSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BoxPlatformSample/Pods-BoxPlatformSample.debug.xcconfig"; sourceTree = "<group>"; };
-		D07C8FA0417C542E6DF5B514 /* Pods-BoxPlatformSampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoxPlatformSampleUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BoxPlatformSampleUITests/Pods-BoxPlatformSampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		D8A3DD901030602327472C4E /* Pods_BoxPlatformSampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoxPlatformSampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB475463E6C6D0DF50E75076 /* Pods-BoxPlatformSampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoxPlatformSampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BoxPlatformSampleTests/Pods-BoxPlatformSampleTests.release.xcconfig"; sourceTree = "<group>"; };
-		F42A9F668B4C51B9965EA696 /* Pods_BoxPlatformSampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoxPlatformSampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +115,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BBEF23F2155690EEFA24368 /* Pods_BoxPlatformSample.framework in Frameworks */,
+				18DC38DF1F43759300892082 /* BoxBrowseSDK.framework in Frameworks */,
+				18DC38EB1F4375E700892082 /* MBProgressHUD.framework in Frameworks */,
+				18DC38E51F4375D500892082 /* BoxPreviewSDK.framework in Frameworks */,
+				18DC38EE1F4375EC00892082 /* PSPDFKit.framework in Frameworks */,
+				18DC38E81F4375DC00892082 /* Masonry.framework in Frameworks */,
+				18DC38F11F4375F200892082 /* SimpleKeychain.framework in Frameworks */,
+				18DC38E21F4375CE00892082 /* BoxContentSDK.framework in Frameworks */,
+				18DC38DB1F43758C00892082 /* Auth0.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,7 +130,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C806A62AEB844BCD0B9C9CE /* Pods_BoxPlatformSampleTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,7 +137,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C10DB4D32EFC7E6914F8B0FA /* Pods_BoxPlatformSampleUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,12 +146,24 @@
 		2928AC121E242FB2006DCB7F = {
 			isa = PBXGroup;
 			children = (
+				18DC38FE1F43766400892082 /* SimpleKeychain.framework.dSYM */,
+				18DC38FC1F43765D00892082 /* MBProgressHUD.framework.dSYM */,
+				18DC38FA1F43765600892082 /* Masonry.framework.dSYM */,
+				18DC38F81F43763D00892082 /* BoxContentSDK.framework.dSYM */,
+				18DC38F61F43763000892082 /* BoxBrowseSDK.framework.dSYM */,
+				18DC38F41F43762400892082 /* Auth0.framework.dSYM */,
+				18DC38F01F4375F200892082 /* SimpleKeychain.framework */,
+				18DC38ED1F4375EC00892082 /* PSPDFKit.framework */,
+				18DC38EA1F4375E700892082 /* MBProgressHUD.framework */,
+				18DC38E71F4375DC00892082 /* Masonry.framework */,
+				18DC38E41F4375D500892082 /* BoxPreviewSDK.framework */,
+				18DC38E11F4375CE00892082 /* BoxContentSDK.framework */,
+				18DC38DE1F43759300892082 /* BoxBrowseSDK.framework */,
+				18DC38DA1F43758C00892082 /* Auth0.framework */,
 				2928AC1D1E242FB2006DCB7F /* BoxPlatformSample */,
 				2928AC321E242FB2006DCB7F /* BoxPlatformSampleTests */,
 				2928AC3D1E242FB2006DCB7F /* BoxPlatformSampleUITests */,
 				2928AC1C1E242FB2006DCB7F /* Products */,
-				909BBFE6FC43A216B0E7840D /* Pods */,
-				E0B3975C879C852C74741F2D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -157,29 +213,6 @@
 			path = BoxPlatformSampleUITests;
 			sourceTree = "<group>";
 		};
-		909BBFE6FC43A216B0E7840D /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C9AC483B00AD582EBCB33687 /* Pods-BoxPlatformSample.debug.xcconfig */,
-				48259027B861B6E850436B12 /* Pods-BoxPlatformSample.release.xcconfig */,
-				615086118715F1F27645C9DE /* Pods-BoxPlatformSampleTests.debug.xcconfig */,
-				EB475463E6C6D0DF50E75076 /* Pods-BoxPlatformSampleTests.release.xcconfig */,
-				D07C8FA0417C542E6DF5B514 /* Pods-BoxPlatformSampleUITests.debug.xcconfig */,
-				58EAFB24F06D182B8E397D60 /* Pods-BoxPlatformSampleUITests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		E0B3975C879C852C74741F2D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9DF14460D270B6816000B18B /* Pods_BoxPlatformSample.framework */,
-				D8A3DD901030602327472C4E /* Pods_BoxPlatformSampleTests.framework */,
-				F42A9F668B4C51B9965EA696 /* Pods_BoxPlatformSampleUITests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -187,12 +220,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2928AC431E242FB2006DCB7F /* Build configuration list for PBXNativeTarget "BoxPlatformSample" */;
 			buildPhases = (
-				50963A353055032FF09AEF8A /* [CP] Check Pods Manifest.lock */,
 				2928AC171E242FB2006DCB7F /* Sources */,
 				2928AC181E242FB2006DCB7F /* Frameworks */,
 				2928AC191E242FB2006DCB7F /* Resources */,
-				9F7187B010106950243570FD /* [CP] Embed Pods Frameworks */,
-				D2D1D93E9E1EE77C86365C2E /* [CP] Copy Pods Resources */,
+				18DC38DD1F43758C00892082 /* Embed Frameworks */,
+				18DC39001F43769700892082 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -207,12 +239,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2928AC461E242FB2006DCB7F /* Build configuration list for PBXNativeTarget "BoxPlatformSampleTests" */;
 			buildPhases = (
-				8EE9A3EC6A46A02723EF8EB6 /* [CP] Check Pods Manifest.lock */,
 				2928AC2B1E242FB2006DCB7F /* Sources */,
 				2928AC2C1E242FB2006DCB7F /* Frameworks */,
 				2928AC2D1E242FB2006DCB7F /* Resources */,
-				365740C26B51417E5E1D1532 /* [CP] Embed Pods Frameworks */,
-				D0A5958156B1F145F585DC18 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -228,12 +257,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2928AC491E242FB2006DCB7F /* Build configuration list for PBXNativeTarget "BoxPlatformSampleUITests" */;
 			buildPhases = (
-				E6AA90FB328BBEB3A2AEF28B /* [CP] Check Pods Manifest.lock */,
 				2928AC361E242FB2006DCB7F /* Sources */,
 				2928AC371E242FB2006DCB7F /* Frameworks */,
 				2928AC381E242FB2006DCB7F /* Resources */,
-				5F07A886B5B2E1EC2CF37ABF /* [CP] Copy Pods Resources */,
-				193A2191965B3091D3568734 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -320,140 +346,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		193A2191965B3091D3568734 /* [CP] Embed Pods Frameworks */ = {
+		18DC39001F43769700892082 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Masonry.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/MBProgressHUD.framework",
 			);
-			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BoxPlatformSampleUITests/Pods-BoxPlatformSampleUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		365740C26B51417E5E1D1532 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BoxPlatformSampleTests/Pods-BoxPlatformSampleTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		50963A353055032FF09AEF8A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		5F07A886B5B2E1EC2CF37ABF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BoxPlatformSampleUITests/Pods-BoxPlatformSampleUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8EE9A3EC6A46A02723EF8EB6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		9F7187B010106950243570FD /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BoxPlatformSample/Pods-BoxPlatformSample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D0A5958156B1F145F585DC18 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BoxPlatformSampleTests/Pods-BoxPlatformSampleTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D2D1D93E9E1EE77C86365C2E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BoxPlatformSample/Pods-BoxPlatformSample-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E6AA90FB328BBEB3A2AEF28B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -617,12 +523,15 @@
 		};
 		2928AC441E242FB2006DCB7F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C9AC483B00AD582EBCB33687 /* Pods-BoxPlatformSample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = BoxPlatformSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = AMSXBG.BoxPlatformSample;
+				PRODUCT_BUNDLE_IDENTIFIER = demoeng.BoxPlatformSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -630,12 +539,15 @@
 		};
 		2928AC451E242FB2006DCB7F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 48259027B861B6E850436B12 /* Pods-BoxPlatformSample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = BoxPlatformSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = AMSXBG.BoxPlatformSample;
+				PRODUCT_BUNDLE_IDENTIFIER = demoeng.BoxPlatformSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -643,13 +555,12 @@
 		};
 		2928AC471E242FB2006DCB7F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 615086118715F1F27645C9DE /* Pods-BoxPlatformSampleTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = BoxPlatformSampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = AMSXBG.BoxPlatformSampleTests;
+				PRODUCT_BUNDLE_IDENTIFIER = demoeng.BoxPlatformSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BoxPlatformSample.app/BoxPlatformSample";
@@ -658,13 +569,12 @@
 		};
 		2928AC481E242FB2006DCB7F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EB475463E6C6D0DF50E75076 /* Pods-BoxPlatformSampleTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = BoxPlatformSampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = AMSXBG.BoxPlatformSampleTests;
+				PRODUCT_BUNDLE_IDENTIFIER = demoeng.BoxPlatformSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BoxPlatformSample.app/BoxPlatformSample";
@@ -673,12 +583,11 @@
 		};
 		2928AC4A1E242FB2006DCB7F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D07C8FA0417C542E6DF5B514 /* Pods-BoxPlatformSampleUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = BoxPlatformSampleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = AMSXBG.BoxPlatformSampleUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = demoeng.BoxPlatformSampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = BoxPlatformSample;
@@ -687,12 +596,11 @@
 		};
 		2928AC4B1E242FB2006DCB7F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 58EAFB24F06D182B8E397D60 /* Pods-BoxPlatformSampleUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = BoxPlatformSampleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = AMSXBG.BoxPlatformSampleUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = demoeng.BoxPlatformSampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = BoxPlatformSample;

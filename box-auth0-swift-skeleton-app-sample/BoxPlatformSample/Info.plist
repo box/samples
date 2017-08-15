@@ -52,7 +52,7 @@
 			<string>auth0</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>AMSXBG.BoxPlatformSample</string>
+				<string>demoeng.BoxPlatformSample</string>
 			</array>
 		</dict>
 	</array>

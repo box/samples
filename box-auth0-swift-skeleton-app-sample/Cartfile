@@ -1,0 +1,13 @@
+# auth0 SDK
+git "https://github.com/auth0/Auth0.swift.git" "master"
+github "auth0/Lock.swift" ~> 2.3
+
+# Box SDKs
+git "git@github.com:box/box-ios-sdk.git" "master"
+git "git@github.com:box/box-ios-browse-sdk.git" "master"
+
+binary "https://github.com/box/box-ios-preview-sdk/releases/download/v1.1.1/previewSDK.json" ==  1.1.1
+
+# 3rd Party SDKs
+github "SnapKit/Masonry" ~> 1.0.1
+github "jdg/MBProgressHUD" ~> 1.0.0
