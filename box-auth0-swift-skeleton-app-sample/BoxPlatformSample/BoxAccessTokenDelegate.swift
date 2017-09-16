@@ -12,7 +12,7 @@ class BoxAccessTokenDelegate {
     
     static func retrieveBoxAccessToken(auth0AccessToken: String, completion: ((String?, Date?, Error?) -> Void)!) {
         //Change this value to your own webtask
-        let refreshUrl: String = "https://allenmsxbg.us.webtask.io/auth0-box-platform/delegation"
+        let refreshUrl: String = "https://chloe.us.webtask.io/auth0-box-platform/delegation"
         
         guard let url = URL(string: refreshUrl) else {
             print("Error: cannot create URL")

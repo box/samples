@@ -10,8 +10,10 @@ import UIKit
 import Lock
 import Auth0
 import BoxContentSDK
+import BoxPreviewSDK
+import BoxBrowseSDK
 
-class ProfileViewController : UIViewController {
+class ProfileViewController : UIViewController, BOXFolderViewControllerDelegate {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var boxIdLabel: UILabel!
@@ -21,6 +23,21 @@ class ProfileViewController : UIViewController {
     var profile: Profile!
     var idToken: String!
     var accessToken: String!
+    
+    // Implement Content SDK
+    var boxClient: BOXContentClient {
+        let client = BOXContentClient.forNewSession()
+        client!.accessTokenDelegate = self
+        return client!
+    }
+    
+    @IBAction func viewFilesButtonPressed(_ sender: Any) {
+        // Implement Browse SDK
+        let folderViewController = BOXFolderViewController(contentClient: boxClient)
+        folderViewController?.delegate = self
+        let navigationController = UINavigationController(rootViewController: folderViewController!)
+        present(navigationController, animated: true) { _ in }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,10 +62,8 @@ class ProfileViewController : UIViewController {
                 self.avatarImageView.image = UIImage(data: data)
             }
         }).resume()
-        
-        let boxClient = BOXContentClient.forNewSession()
-        boxClient!.accessTokenDelegate = self
-        boxClient!.authenticate { (user, error) in
+
+        self.boxClient.authenticate { (user, error) in
             if(error != nil) {
                 print(error!)
                 return
@@ -56,16 +71,15 @@ class ProfileViewController : UIViewController {
             print("App User:")
             print(user!.name)
         }
-        let folderRequest = boxClient!.folderInfoRequest(withID: "0")
-        
-        folderRequest!.perform(completion: { (folder, error) in
-            print("Folder request")
-            print(folder!.description)
-            self.folderName.text = self.folderName.text! + " \(folder!.name!)"
-        })
         
     }
     
+    // Implement Preview SDK
+    func itemsViewController(_ itemsViewController: BOXItemsViewController, didTap file: BOXFile, inItems items: [Any]) {
+        print("inside itemsViewController")
+        let filePreviewController = BOXFilePreviewController(contentClient: self.boxClient, file: file, inItems: items)
+        itemsViewController.navigationController?.pushViewController(filePreviewController!, animated: true)
+    }
     
     @IBAction func logout(_ sender: Any) {
         SessionManager.shared.logout()
