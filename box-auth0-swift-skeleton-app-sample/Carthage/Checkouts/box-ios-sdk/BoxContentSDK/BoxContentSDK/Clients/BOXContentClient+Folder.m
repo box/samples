@@ -82,6 +82,17 @@
     return request;
 }
 
+- (BOXFolderUpdateRequest *)folderUpdateRequestWithID:(NSString *)folderID
+                                          associateID:(NSString *)associateID
+{
+    BOXFolderUpdateRequest *request = [[BOXFolderUpdateRequest alloc] initWithFolderID:folderID];
+    request.associateId = associateID;
+    request.requestDirectoryPath = self.tempCacheDir;
+    [self prepareRequest:request];
+    
+    return request;
+}
+
 - (BOXFolderUpdateRequest *)folderMoveRequestWithID:(NSString *)folderID
                                 destinationFolderID:(NSString *)destinationFolderID
 {
@@ -105,6 +116,18 @@
 {
     BOXFolderDeleteRequest *request = nil;
     request = [[BOXFolderDeleteRequest alloc] initWithFolderID:folderID];
+    [self prepareRequest:request];
+    
+    return request;
+}
+
+- (BOXFolderDeleteRequest *)folderDeleteRequestWithID:(NSString *)folderID
+                                          associateId:(NSString *)associateId;
+{
+    BOXFolderDeleteRequest *request = nil;
+    request = [[BOXFolderDeleteRequest alloc] initWithFolderID:folderID];
+    request.requestDirectoryPath = self.tempCacheDir;
+    request.associateId = associateId;
     [self prepareRequest:request];
     
     return request;
@@ -141,6 +164,18 @@
 {
     BOXFolderDeleteRequest *request = [[BOXFolderDeleteRequest alloc] initWithFolderID:folderID
                                                                              isTrashed:YES];
+    [self prepareRequest:request];
+    
+    return request;
+}
+
+- (BOXFolderDeleteRequest *)trashedFolderDeleteFromTrashRequestWithID:(NSString *)folderID
+                                                          associateId:(NSString *)associateId;
+{
+    BOXFolderDeleteRequest *request = [[BOXFolderDeleteRequest alloc] initWithFolderID:folderID
+                                                                             isTrashed:YES];
+    request.associateId = associateId;
+    request.requestDirectoryPath = self.tempCacheDir;
     [self prepareRequest:request];
     
     return request;

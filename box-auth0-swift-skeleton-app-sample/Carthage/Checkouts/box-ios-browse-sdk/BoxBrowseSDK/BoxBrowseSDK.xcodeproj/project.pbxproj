@@ -31,7 +31,6 @@
 		591805FA1E4E6C5F004E1B28 /* BoxBrowseSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 15146EB31AC20B77000BA380 /* BoxBrowseSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		591805FB1E4E6C80004E1B28 /* BOXItem+BOXBrowseSDKAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 11B5CF941C5A88DD00FDBE0F /* BOXItem+BOXBrowseSDKAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		591805FC1E4E6C80004E1B28 /* BOXBrowseSDKFileTypeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = C5DB7DCA1E1BAF40000E91A2 /* BOXBrowseSDKFileTypeHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5918060C1E53BC09004E1B28 /* BoxContentSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 591806021E52A837004E1B28 /* BoxContentSDK.framework */; };
 		5918060D1E53BC09004E1B28 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 591806031E52A837004E1B28 /* MBProgressHUD.framework */; };
 		5918060E1E53BC80004E1B28 /* BOXThumbnailCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 1564A6D71ACB3C9E005DD04F /* BOXThumbnailCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5918060F1E53BC80004E1B28 /* DummyStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = 15CE0A051ACD15BA006B8614 /* DummyStrings.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -188,6 +187,7 @@
 		59F26D0F1E72200900B95BC1 /* zip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 59F26C7E1E721FEF00B95BC1 /* zip@2x.png */; };
 		59F26D101E72200900B95BC1 /* zip@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 59F26C7F1E721FEF00B95BC1 /* zip@3x.png */; };
 		59FBD1671E70C1D4008589E4 /* BOXBrowseSDKConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 1501083F1AE5E6B100E1FD4C /* BOXBrowseSDKConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A53C4E981F7B0659009F1AB9 /* BoxContentSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A53C4E971F7B0659009F1AB9 /* BoxContentSDK.framework */; };
 		C5BB0F5D1EA56BB40037CAF1 /* Masonry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5BB0F5C1EA56BB40037CAF1 /* Masonry.framework */; };
 		C5DB7DCE1E1BAF40000E91A2 /* BOXBrowseSDKFileTypeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DB7DCB1E1BAF40000E91A2 /* BOXBrowseSDKFileTypeHelper.m */; };
 /* End PBXBuildFile section */
@@ -367,6 +367,7 @@
 		59F26C7E1E721FEF00B95BC1 /* zip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zip@2x.png"; sourceTree = "<group>"; };
 		59F26C7F1E721FEF00B95BC1 /* zip@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zip@3x.png"; sourceTree = "<group>"; };
 		59F26C801E721FEF00B95BC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A53C4E971F7B0659009F1AB9 /* BoxContentSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BoxContentSDK.framework; path = ../BoxBrowseSDKSampleApp/Carthage/Build/iOS/BoxContentSDK.framework; sourceTree = "<group>"; };
 		C5BB0F5C1EA56BB40037CAF1 /* Masonry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Masonry.framework; path = ../Carthage/Build/iOS/Masonry.framework; sourceTree = "<group>"; };
 		C5DB7DCA1E1BAF40000E91A2 /* BOXBrowseSDKFileTypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOXBrowseSDKFileTypeHelper.h; path = Helpers/BOXBrowseSDKFileTypeHelper.h; sourceTree = "<group>"; };
 		C5DB7DCB1E1BAF40000E91A2 /* BOXBrowseSDKFileTypeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOXBrowseSDKFileTypeHelper.m; path = Helpers/BOXBrowseSDKFileTypeHelper.m; sourceTree = "<group>"; };
@@ -384,9 +385,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5918060C1E53BC09004E1B28 /* BoxContentSDK.framework in Frameworks */,
 				5918060D1E53BC09004E1B28 /* MBProgressHUD.framework in Frameworks */,
 				C5BB0F5D1EA56BB40037CAF1 /* Masonry.framework in Frameworks */,
+				A53C4E981F7B0659009F1AB9 /* BoxContentSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +506,7 @@
 		591805FD1E525C19004E1B28 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A53C4E971F7B0659009F1AB9 /* BoxContentSDK.framework */,
 				C5BB0F5C1EA56BB40037CAF1 /* Masonry.framework */,
 				591806021E52A837004E1B28 /* BoxContentSDK.framework */,
 				591806031E52A837004E1B28 /* MBProgressHUD.framework */,
@@ -1135,6 +1137,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../Carthage/Build/iOS",
+					"$(PROJECT_DIR)SampleApp/Carthage/Build/iOS",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = BoxBrowseSDKFramework/Info.plist;
@@ -1166,6 +1169,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../Carthage/Build/iOS",
+					"$(PROJECT_DIR)SampleApp/Carthage/Build/iOS",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = BoxBrowseSDKFramework/Info.plist;

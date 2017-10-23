@@ -6,7 +6,7 @@
 //  Copyright © 2016 BOX. All rights reserved.
 //
 
-#import <BoxContentSDK/BOXItem.h>
+@import BoxContentSDK;
 
 @interface BOXItem (BOXBrowseSDKAdditions)
 

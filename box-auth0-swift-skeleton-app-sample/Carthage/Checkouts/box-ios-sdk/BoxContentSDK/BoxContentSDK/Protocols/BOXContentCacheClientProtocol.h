@@ -49,6 +49,7 @@
 @class BOXSharedItemRequest;
 
 @class BOXUserRequest;
+@class BOXUserAvatarRequest;
 
 @class BOXCollaborationRequest;
 @class BOXCollaborationCreateRequest;
@@ -77,6 +78,13 @@
 
 - (void)retrieveCacheForUserRequest:(BOXUserRequest *)request
                          completion:(BOXUserBlock)completionRequest;
+
+- (void)cacheUserAvatarRequest:(BOXUserAvatarRequest *)request
+                    withAvatar:(UIImage *)avatar
+                         error:(NSError *)error;
+
+- (void)retrieveCacheForUserAvatarRequest:(BOXUserAvatarRequest *)request
+                               completion:(BOXImageBlock)completionBlock;
 
 #pragma mark - Shared Item
 
@@ -195,6 +203,7 @@
 
 - (void)cacheFolderPaginatedItemsRequest:(BOXFolderPaginatedItemsRequest *)request
                                withItems:(NSArray *)items
+                              totalCount:(NSUInteger)totalCount
                                    limit:(NSUInteger)limit
                                   offset:(NSUInteger)offset
                                    error:(NSError *)error;
@@ -212,6 +221,8 @@
 - (void)cacheTrashedFolderRestoreRequest:(BOXTrashedFolderRestoreRequest *)request
                               withFolder:(BOXFolder *)folder
                                    error:(NSError *)error;
+
+- (void)hasFinishedFolderItemsRequest:(BOXFolderItemsRequest *)request;
 
 #pragma mark - Comments
 

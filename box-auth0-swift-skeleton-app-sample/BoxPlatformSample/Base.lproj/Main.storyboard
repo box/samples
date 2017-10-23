@@ -99,7 +99,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VM3-57-eYc">
-                                <rect key="frame" x="156" y="491" width="69" height="30"/>
+                                <rect key="frame" x="150" y="491" width="75" height="30"/>
                                 <state key="normal" title="View Files"/>
                                 <connections>
                                     <action selector="viewFilesButtonPressed:" destination="Hjc-cF-Dig" eventType="touchUpInside" id="m5B-y9-sPI"/>
@@ -110,6 +110,14 @@
                                 <state key="normal" title="Log out"/>
                                 <connections>
                                     <action selector="logout:" destination="Hjc-cF-Dig" eventType="touchUpInside" id="hkU-0Q-WN3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oFW-EN-Blb">
+                                <rect key="frame" x="143" y="537" width="94" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Upload Photo"/>
+                                <connections>
+                                    <action selector="selectPhoto:" destination="Hjc-cF-Dig" eventType="touchUpInside" id="KP6-jE-8EI"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -123,7 +131,7 @@
                             <constraint firstItem="FQX-22-cfF" firstAttribute="centerX" secondItem="bMK-wc-493" secondAttribute="centerX" id="NCz-Cw-aIt"/>
                             <constraint firstItem="aBA-Oq-cQ2" firstAttribute="top" secondItem="FQX-22-cfF" secondAttribute="bottom" constant="8" id="SEO-iY-320"/>
                             <constraint firstItem="ph4-I5-W50" firstAttribute="top" secondItem="VM3-57-eYc" secondAttribute="bottom" constant="108" id="Uct-zR-0ZL"/>
-                            <constraint firstItem="VM3-57-eYc" firstAttribute="leading" secondItem="bMK-wc-493" secondAttribute="leadingMargin" constant="140" id="YaW-gE-oI7"/>
+                            <constraint firstItem="VM3-57-eYc" firstAttribute="leading" secondItem="bMK-wc-493" secondAttribute="leadingMargin" constant="134" id="YaW-gE-oI7"/>
                             <constraint firstItem="aBA-Oq-cQ2" firstAttribute="centerX" secondItem="bMK-wc-493" secondAttribute="centerX" id="dCf-fb-eRT"/>
                             <constraint firstAttribute="trailingMargin" secondItem="VM3-57-eYc" secondAttribute="trailing" constant="134" id="hhR-rI-UDT"/>
                             <constraint firstItem="2TK-7J-wrl" firstAttribute="centerX" secondItem="bMK-wc-493" secondAttribute="centerX" id="kKh-cc-2I1"/>

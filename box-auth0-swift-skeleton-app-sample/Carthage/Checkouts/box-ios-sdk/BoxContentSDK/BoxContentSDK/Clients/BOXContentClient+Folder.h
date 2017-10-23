@@ -78,7 +78,7 @@
                                               newName:(NSString *)newName;
 
 /**
- *  Generate a request to update properties of a folder. Configure proprties of the BOXFolderUpdateRequest
+ *  Generate a request to update properties of a folder. Configure properties of the BOXFolderUpdateRequest
  *  before executing it.
  *
  *  @param folderID Folder ID.
@@ -86,6 +86,18 @@
  *  @return A request that can be customized and then executed.
  */
 - (BOXFolderUpdateRequest *)folderUpdateRequestWithID:(NSString *)folderID;
+
+/**
+ *  Generate a request to update properties of a folder. Configure properties of the BOXFolderUpdateRequest
+ *  before executing it.
+ *
+ *  @param folderID Folder ID.
+ *  @param associateID Unique ID to associate with the operation to manage when in the background queue.
+ *
+ *  @return A request that can be customized and then executed.
+ */
+- (BOXFolderUpdateRequest *)folderUpdateRequestWithID:(NSString *)folderID
+                                          associateID:(NSString *)associateID;
 
 /**
  *  Generate a request to move a folder into another folder.
@@ -119,6 +131,18 @@
 - (BOXFolderDeleteRequest *)folderDeleteRequestWithID:(NSString *)folderID;
 
 /**
+ *  Generate a request to delete a folder.
+ *
+ *  @param folderID Folder ID.
+ *  @param associateId   A unique ID used to recover background tasks. Providing an ID associated with a running background
+ *  task will cause the request to reconnect to that task, rather than making a new one.
+ *
+ *  @return A request that can be customized and then executed.
+ */
+- (BOXFolderDeleteRequest *)folderDeleteRequestWithID:(NSString *)folderID
+                                          associateId:(NSString *)associateId;
+
+/**
  *  Generate a request to permanently delete a folder in the trash.
  *
  *  @param folderID Folder ID.
@@ -126,6 +150,18 @@
  *  @return A request that can be customized and then executed.
  */
 - (BOXFolderDeleteRequest *)trashedFolderDeleteFromTrashRequestWithID:(NSString *)folderID;
+
+/**
+ *  Generate a request to permanently delete a folder in the trash.
+ *
+ *  @param folderID Folder ID.
+ *  @param associateId   A unique ID used to recover background tasks. Providing an ID associated with a running background
+ *  task will cause the request to reconnect to that task, rather than making a new one.
+ *
+ *  @return A request that can be customized and then executed.
+ */
+- (BOXFolderDeleteRequest *)trashedFolderDeleteFromTrashRequestWithID:(NSString *)folderID
+                                                          associateId:(NSString *)associateId;
 
 /**
  *  Generate a request to restore a folder from the trash.
@@ -155,7 +191,6 @@
  */
 - (BOXFolderPaginatedItemsRequest *)folderPaginatedItemsRequestWithID:(NSString *)folderID
                                                               inRange:(NSRange)range;
-
 
 /**
  *  Generate a request to retrieve the items in a folder in the trash.

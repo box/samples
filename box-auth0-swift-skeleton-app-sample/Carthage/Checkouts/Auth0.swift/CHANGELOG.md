@@ -1,5 +1,35 @@
 # Change Log
 
+## [1.9.1](https://github.com/auth0/Auth0.swift/tree/1.9.1) (2017-10-20)
+[Full Changelog](https://github.com/auth0/Auth0.swift/compare/1.9.0...1.9.1)
+
+**Fixed**
+- Fixed callback error in Swift 4.0 [\#167](https://github.com/auth0/Auth0.swift/pull/167) ([cocojoe](https://github.com/cocojoe))
+
+## [1.9.0](https://github.com/auth0/Auth0.swift/tree/1.9.0) (2017-10-19)
+[Full Changelog](https://github.com/auth0/Auth0.swift/compare/1.8.0...1.9.0)
+
+**Added**
+- Added SFAuthenticationSession support in iOS 11 [\#154](https://github.com/auth0/Auth0.swift/pull/154) ([cocojoe](https://github.com/cocojoe))
+
+## [1.8.0](https://github.com/auth0/Auth0.swift/tree/1.8.0) (2017-09-15)
+[Full Changelog](https://github.com/auth0/Auth0.swift/compare/1.7.2...1.8.0)
+
+**Changed**
+- Updated Xcode 9 / Swift 3.2, Clean up for Swift 4 migration. [\#149](https://github.com/auth0/Auth0.swift/pull/149) ([cocojoe](https://github.com/cocojoe))
+
+**Fixed**
+- Disabled Code coverage Xcode 9 [\#151](https://github.com/auth0/Auth0.swift/pull/151) ([cocojoe](https://github.com/cocojoe))
+
+## [1.7.2](https://github.com/auth0/Auth0.swift/tree/1.7.2) (2017-09-11)
+[Full Changelog](https://github.com/auth0/Auth0.swift/compare/1.7.1...1.7.2)
+
+**Added**
+- Added invalid_credentials check for /oauth/token [\#147](https://github.com/auth0/Auth0.swift/pull/147) ([cocojoe](https://github.com/cocojoe))
+
+**Fixed**
+- Fixed - Ensure existing refreshToken returned in Credentials Manager [\#146](https://github.com/auth0/Auth0.swift/pull/146) ([cocojoe](https://github.com/cocojoe))
+
 ## [1.7.1](https://github.com/auth0/Auth0.swift/tree/1.7.1) (2017-07-11)
 [Full Changelog](https://github.com/auth0/Auth0.swift/compare/1.7.0...1.7.1)
 

@@ -13,7 +13,7 @@ import BoxContentSDK
 import BoxPreviewSDK
 import BoxBrowseSDK
 
-class ProfileViewController : UIViewController, BOXFolderViewControllerDelegate {
+class ProfileViewController : UIViewController, BOXFolderViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var boxIdLabel: UILabel!
@@ -88,6 +88,74 @@ class ProfileViewController : UIViewController, BOXFolderViewControllerDelegate 
     
     private func showErrorRetrievingAppUserIdAlert() {
         let alert = UIAlertController.alert(title: "Error", message: "Could not retrieve app user ID from server", includeDoneButton: true)
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    // Select file from library or take photo from camera
+    @IBAction func selectPhoto(_ sender: UIButton) {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        
+        
+        let actionSheet = UIAlertController(title: "Photos", message: "Select a photo", preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action:UIAlertAction) in
+            // check if camera source type is available (will not be available in simulator)
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                imagePickerController.sourceType = .camera
+                self.present(imagePickerController, animated: true, completion: nil)
+            } else {
+                print("Camera not available")
+            }
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action:UIAlertAction) in
+            imagePickerController.sourceType = .photoLibrary
+            self.present(imagePickerController, animated: true, completion: nil)
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    // Dismiss image picker
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // Handle image picker and upload file to Box
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        guard let selectedFile = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
+        }
+        
+        let toUploadImage = UIImageJPEGRepresentation(selectedFile, 1.0)
+        let currentTimeStamp = String(Int(NSDate().timeIntervalSince1970))
+        let fileName = "uploadedImage_\(currentTimeStamp).jpg"
+        
+        // new content client for upload
+        let boxUploadClient = BOXContentClient.forNewSession()
+        boxUploadClient!.accessTokenDelegate = self
+        
+        // Authenticate app user
+        boxUploadClient!.authenticate { (user, error) in
+            if(error != nil) {
+                print(error!)
+                return
+            }
+        }
+        // upload file to Box
+        let uploadRequest  : BOXFileUploadRequest = boxUploadClient!.fileUploadRequestToFolder(withID: BOXAPIFolderIDRoot, from: toUploadImage, fileName: fileName)
+        uploadRequest.perform()
+        
+        let alert = UIAlertController(title: "Successfully uploaded file!", message: "View uploaded photo by selecting \"View Files\"", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        dismiss(animated: true, completion: nil)
         self.present(alert, animated: true, completion: nil)
     }
 }

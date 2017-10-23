@@ -15,7 +15,7 @@
     static NSSet *extensions = nil;
     
     if (extensions == nil) {
-        extensions = [NSSet setWithObjects:@"aac", @"aiff", @"m3u", @"m4a", @"mid", @"mp3", @"wav", @"wpl", @"wma", @"amr", @"3gp", nil];
+        extensions = [NSSet setWithObjects:@"aac", @"aiff", @"m3u", @"m4a", @"mid", @"mp3", @"wav", @"wpl", @"wma", @"amr", @"3gp", @"alac", @"flac", @"m4r", nil];
     }
     
     return extensions;
@@ -48,7 +48,7 @@
     static NSSet *extensions = nil;
     
     if (extensions == nil) {
-        extensions = [NSSet setWithObjects:@"avi", @"flv", @"m4v", @"mov", @"mp4", @"mpeg", @"mpg", @"qt", @"wmv", @"mts", nil];
+        extensions = [NSSet setWithObjects:@"avi", @"flv", @"m4v", @"mov", @"mp4", @"mpeg", @"mpg", @"qt", @"wmv", @"mts", @"ogg", nil];
     }
     
     return extensions;

@@ -67,6 +67,18 @@
 - (BOXFileUpdateRequest *)fileUpdateRequestWithID:(NSString *)fileID;
 
 /**
+ *  Generate a request to update properties of a file. Set properties on the BOXFileUpdateRequest
+ *  before executing it.
+ *
+ *  @param fileID File ID.
+ *  @param associateId   an Id to associate with this background upload task to reconnect to if needed
+ *
+ *  @return A request that can be customized and then executed.
+ */
+- (BOXFileUpdateRequest *)fileUpdateRequestWithID:(NSString *)fileID
+                                      associateID:(NSString *)associateID;
+
+/**
  *  Generate a request to move a file to a folder.
  *
  *  @param fileID              File ID.
@@ -96,6 +108,18 @@
  *  @return A request that can be customized and then executed.
  */
 - (BOXFileDeleteRequest *)fileDeleteRequestWithID:(NSString *)fileID;
+
+/**
+ *  Generate a background request to delete a file.
+ *
+ *  @param fileID File ID.
+ *  @param associateID   A unique ID used to recover background tasks. Providing an ID associated with a running background
+ *  task will cause the request to reconnect to that task, rather than making a new one.
+ *
+ *  @return A request that can be customized and then executed.
+ */
+- (BOXFileDeleteRequest *)fileDeleteRequestWithID:(NSString *)fileID
+                                      associateID:(NSString *)associateID;
 
 /**
  *  Generate a request to upload a local file to Box.
@@ -260,6 +284,18 @@
  *  @return A request that can be customized and then executed.
  */
 - (BOXFileDeleteRequest *)trashedFileDeleteFromTrashRequestWithID:(NSString *)fileID;
+
+/**
+ *  Generate a background to permanently delete a file in the trash.
+ *
+ *  @param fileID File ID.
+ *  @param associateID A unique ID used to recover background tasks. Providing an ID associated with a running background
+ *  task will cause the request to reconnect to that task, rather than making a new one.
+ *
+ *  @return A request that can be customized and then executed.
+ */
+- (BOXFileDeleteRequest *)trashedFileDeleteFromTrashRequestWithID:(NSString *)fileID
+                                                      associateID:(NSString *)associateID;
 
 /**
  *  Generate a request to restore a file in the trash.

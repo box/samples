@@ -265,6 +265,7 @@ extern NSString *const BOXAPIObjectKeyCanSetShareAccess;
 extern NSString *const BOXAPIObjectKeyCanInviteCollaborator;
 
 extern NSString *const BOXAPIObjectKeyID;
+extern NSString *const BOXAPIObjectKeyRank;
 extern NSString *const BOXAPIObjectKeyKey;
 extern NSString *const BOXAPIObjectKeyDisplayName;
 extern NSString *const BOXAPIObjectKeyOptions;
@@ -328,6 +329,8 @@ extern NSString *const BOXAPIObjectKeyExtension;
 extern NSString *const BOXAPIObjectKeyIsPackage;
 extern NSString *const BOXAPIObjectKeyAllowedSharedLinkAccessLevels;
 extern NSString *const BOXAPIObjectKeyCollections;
+extern NSString *const BOXAPIObjectKeyCollection;
+extern NSString *const BOXAPIObjectKeyCollectionMemberships;
 extern NSString *const BOXAPIObjectKeyHasCollaborations;
 extern NSString *const BOXAPIObjectKeyIsExternallyOwned;
 extern NSString *const BOXAPIObjectKeyCanNonOwnersInvite;
@@ -339,6 +342,7 @@ extern NSString *const BOXAPIObjectKeyEnterprise;
 extern NSString *const BOXAPIObjectKeyIsDownloadPrevented;
 extern NSString *const BOXAPIObjectKeySharedLinkPassword;
 extern NSString *const BOXAPIObjectKeyCollectionType;
+extern NSString *const BOXAPIObjectKeyCollectionRank;
 extern NSString *const BOXAPIObjectKeyEventID;
 extern NSString *const BOXAPIObjectKeyEventType;
 extern NSString *const BOXAPIObjectKeyInteractionSharedLink;
@@ -488,7 +492,6 @@ typedef NS_ENUM(NSUInteger, BOXThumbnailSize) {
 typedef NS_ENUM(NSUInteger, BOXAvatarType) {
     BOXAvatarTypeUnspecified = 0,
     BOXAvatarTypeSmall,
-    BOXAvatarTypeLarge,
-    BOXAvatarTypeProfile
+    BOXAvatarTypeLarge
 };
 
