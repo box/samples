@@ -1,9 +1,7 @@
 swagger: "2.0"
 info:
   version: "2017-01-27T16:48:55Z"
-  title: AWS Cognito and Box Platform Token Exchange
-host: "<host>"
-basePath: "/prototype"
+  title: box-node-cognito-token-exchange-api
 schemes:
   - https
 consumes:
@@ -11,44 +9,29 @@ consumes:
 produces:
   - application/json
 paths:
-  /api/token:
-    post:
-      description: |
-        Exchanges an AWS Cognito user access token for a Box App User access token.
+  /token:
+    get:
+      description: Exchanges an AWS Cognito user ID token for a Box App User access token.
       operationId: tokenExchange
       produces:
         - application/json
-      parameters:
-        - name: token
-          in: body
-          description: AWS Cognito user access token
-          required: true
-          schema:
-            title: token
-            type: string
+      security: 
+        - box-cognito-integration-authorizer: []
       responses:
         200:
           description: "Success"
           schema:
-            $ref: "#/definitions/token"
-        401:
-          description: "Unauthorized"
-          schema:
-            $ref: "#/definitions/error"
+            $ref: "#/definitions/boxToken"
         500:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/error"
-        default:
-          description: unexpected error
-          schema:
-            $ref: "#/definitions/error"
-            
       x-amazon-apigateway-integration:
+        credentials: arn:aws:iam::{account_id}:role/box-node-cognito-token-exchange-api-role
         responses:
           default:
             statusCode: "200"
-        uri: "<uri>"
+        uri: arn:aws:apigateway:{region}:lambda:path/2015-03-31/functions/arn:aws:lambda:{region}:{account_id}:function:box-node-cognito-token-exchange-lambda/invocations
         passthroughBehavior: "when_no_match"
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
@@ -75,15 +58,25 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Methods: "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'"
               method.response.header.Access-Control-Allow-Origin: "'*'"
         requestTemplates:
           application/json: "{\"statusCode\": 200}"
         passthroughBehavior: "when_no_match"
         type: "mock"
+securityDefinitions: 
+  box-cognito-integration-authorizer: 
+    type: apiKey
+    name: Authorization
+    in: header
+    x-amazon-apigateway-authtype: cognito_user_pools
+    x-amazon-apigateway-authorizer:
+      type: cognito_user_pools
+      providerARNs:
+        - arn:aws:cognito-idp:{region}:{account_id}:userpool/{user_pool_id}
 definitions:
-  token: 
+  boxToken: 
     title: BoxAccessToken
     type: object
     properties:

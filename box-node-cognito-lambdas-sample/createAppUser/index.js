@@ -1,30 +1,20 @@
 "use strict";
-let cognitoManager = require('./cognito-manager');
-let boxManager = require('./box-manager');
+let boxManager = require('./boxManager');
 
-exports.handler = function (event, context) {
+exports.handler = (event, context) => {
     console.log('Calling create app user');
-    
-    //Get the Cognito user using the event details
-    cognitoManager.adminGetUser(event)
-        .then(function(cognitoResponse) {
-            let boxAppUserId = cognitoManager.getAppUserProperty(cognitoResponse.UserAttributes);
-            if (boxAppUserId !== null) {
-                //User already exists in Box.
+    if (event && event.userName && event.request && event.request.userAttributes && event.request.userAttributes.sub) {
+        //Get the Cognito user using the event details
+        return boxManager.createAppUser(event.userName, event.request.userAttributes.sub)
+            .then(function (updatedInfo) {
+                //Send event as the response
                 context.done(null, event);
-            } else {
-                //If the box box user id custom attribute is not present in Cognito,
-                //then create the user in Box.
-                return boxManager.createAppUser(event.userName);    
-            }
-        }).then(function(appUser) {
-            //Update the box app user attribute in Cognito user.
-            return cognitoManager.updateUserAttribute(event.userPoolId, event.userName, appUser.id);
-        }).then(function(updatedInfo) {
-            //Send event as the response
-            context.done(null, event);        
-        }).catch(function(error) {
-            //Send the error response
-            context.done(error);
-        });
+            }).catch(function (error) {
+                //Send the error response
+                context.done(error);
+            });
+    } else {
+        console.log("Couldn't create app user for this user.");
+        context.done(null, event);
+    }
 };

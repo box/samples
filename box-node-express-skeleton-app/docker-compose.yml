@@ -6,11 +6,10 @@ services:
       ports:
         - '6379:6379'
   app:
-    image: keymetrics/pm2-docker-alpine
+    build: ./app
     volumes:
       - "./app:/app"
     ports:
       - "3000:3000"
     links:
       - "redis"
-    command: "pm2 start ./processes.json --no-daemon"

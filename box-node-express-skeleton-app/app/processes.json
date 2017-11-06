@@ -6,6 +6,7 @@
             "merge_logs": true,
             "max_restarts": 20,
             "instances": 4,
+            "instance_var": "INSTANCE_ID",
             "max_memory_restart": "200M",
             "env": {
                 "PORT": 3000,

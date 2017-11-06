@@ -4,27 +4,56 @@ const Box = require('box-node-sdk');
 const BoxSDKConfig = config.get('BoxSDKConfig');
 const BoxOptions = config.get('BoxOptions');
 const BoxCache = require('./boxTokenCache');
+const BoxConfig = require('./boxConfig');
 const _ = require('lodash');
 const fs = require('fs');
-const Promise = require('bluebird');
-const asyncFunc = Promise.coroutine;
 
 const BOX_ENTERPRISE = "enterprise";
 const BOX_USER = "user";
+const BOX_REVOKE_URL = "https://api.box.com/oauth2/revoke";
 
 class BoxClientService {
 	constructor() {
-		let configFile = JSON.parse(fs.readFileSync(BoxSDKConfig.boxConfigFilePath));
-		this.BoxSdk = Box.getPreconfiguredInstance(configFile);
+		this.BoxConfig = new BoxConfig(BoxSDKConfig, BoxSDKConfig.boxConfigFilePath);
+		this.BoxSdk = Box.getPreconfiguredInstance(this.BoxConfig.getConfig());
 		this.BoxCache = BoxCache;
 	}
 
-	createAppUser(displayName) {
-		let self = this;
-		return asyncFunc(function* () {
-			let client = yield self.getServiceAccountClient();
-			return client.enterprise.addUser(null, displayName, { is_platform_access_only: true });
-		})();
+	async createAppUser(displayName, externalId) {
+		let client = await this.getServiceAccountClient();
+		return client.enterprise.addAppUser(displayName, {
+			external_app_user_id: externalId
+		});
+	}
+
+
+	async checkForExistingUserByExternalId(externalId) {
+		let client = await this.getServiceAccountClient();
+		let usersList = await client.enterprise.getUsers({ external_app_user_id: externalId });
+		let userId = "";
+		if (usersList && _.isArray(usersList.entries) && usersList.entries.length > 0) {
+			userId = _.first(usersList.entries).id;
+		}
+		return userId;
+	}
+
+	async revokeUserToken(token, boxUserId) {
+		let key = `${this.BoxCache.cacheKeyPrefixUserToken}|${boxUserId}`;
+		await this.BoxCache.removeBoxToken(key);
+
+		let client = new Box({
+			clientID: '',
+			clientSecret: ''
+		}).getBasicClient();
+		let config = this.BoxConfig.getConfig();
+		let params = {
+			form: {
+				client_id: config.boxAppSettings.clientID,
+				client_secret: config.boxAppSettings.clientSecret,
+				token
+			}
+		};
+		await client.post(BOX_REVOKE_URL, params);
 	}
 
 	getLongRunningServiceAccountClient() {
@@ -35,62 +64,50 @@ class BoxClientService {
 		return this.BoxSdk.getAppAuthClient(BOX_USER, boxId);
 	}
 
-	getServiceAccountClient() {
-		let self = this;
-		return asyncFunc(function* () {
-			let token = yield self.generateEnterpriseToken();
-			return self.BoxSdk.getBasicClient(token.accessToken);
-		})();
+	async getServiceAccountClient() {
+		let token = await this.generateEnterpriseToken();
+		return this.BoxSdk.getBasicClient(token.accessToken);
 	}
 
-	getUserClient(boxId) {
-		let self = this;
-		return asyncFunc(function* () {
-			let token = yield self.generateUserToken(boxId);
-			return self.BoxSdk.getBasicClient(token.accessToken);
-		})();
+	async getUserClient(boxId) {
+		let token = await this.generateUserToken(boxId);
+		return this.BoxSdk.getBasicClient(token.accessToken);
 	}
 
-	generateEnterpriseToken() {
-		let self = this;
+	async generateEnterpriseToken() {
 		let key = this.BoxCache.cacheKeyPrefixEnterpriseToken;
-		return asyncFunc(function* () {
-			let enterpriseToken = yield self.BoxCache.getBoxToken(key);
-			if (enterpriseToken && enterpriseToken[BoxOptions.expiresAtFieldName] && enterpriseToken[BoxOptions.expiresAtFieldName] > Date.now()) {
-				return enterpriseToken;
-			} else {
-				return new Promise((resolve, reject) => {
-					self.BoxSdk.getEnterpriseAppAuthTokens(BoxSDKConfig.boxEnterpriseId, asyncFunc(function* (err, enterpriseToken) {
-						if (err) { reject(err); }
-						enterpriseToken = createExpiresAtProp(enterpriseToken);
-						let expiryTimeInSeconds = getExpirationTimeForCache(enterpriseToken);
-						yield self.BoxCache.setBoxToken(key, enterpriseToken, expiryTimeInSeconds);
-						resolve(enterpriseToken);
-					}));
+		let enterpriseToken = await this.BoxCache.getBoxToken(key);
+		if (enterpriseToken && enterpriseToken[BoxOptions.expiresAtFieldName] && enterpriseToken[BoxOptions.expiresAtFieldName] > Date.now()) {
+			return enterpriseToken;
+		} else {
+			return await new Promise((resolve, reject) => {
+				this.BoxSdk.getEnterpriseAppAuthTokens(BoxSDKConfig.boxEnterpriseId, async (err, enterpriseToken) => {
+					if (err) { reject(err); }
+					enterpriseToken = createExpiresAtProp(enterpriseToken);
+					let expiryTimeInSeconds = getExpirationTimeForCache(enterpriseToken);
+					await this.BoxCache.setBoxToken(key, enterpriseToken, expiryTimeInSeconds);
+					resolve(enterpriseToken);
 				});
-			}
-		})();
+			});
+		}
 	}
 
-	generateUserToken(boxId) {
-		let self = this;
+	async generateUserToken(boxId) {
 		let key = `${this.BoxCache.cacheKeyPrefixUserToken}|${boxId}`;
-		return asyncFunc(function* () {
-			let accessTokenFromStorage = yield self.BoxCache.getBoxToken(key);
-			if (accessTokenFromStorage && accessTokenFromStorage[BoxOptions.expiresAtFieldName] && accessTokenFromStorage[BoxOptions.expiresAtFieldName] > Date.now()) {
-				return accessTokenFromStorage;
-			} else {
-				return new Promise((resolve, reject) => {
-					self.BoxSdk.getAppUserTokens(boxId, asyncFunc(function* (err, accessTokenInfo) {
-						if (err) { reject(err); }
-						accessTokenInfo = createExpiresAtProp(accessTokenInfo);
-						let expiryTimeInSeconds = getExpirationTimeForCache(accessTokenInfo);
-						yield BoxCache.setBoxToken(key, accessTokenInfo, expiryTimeInSeconds);
-						resolve(accessTokenInfo);
-					}));
+		let accessTokenFromStorage = await this.BoxCache.getBoxToken(key);
+		if (accessTokenFromStorage && accessTokenFromStorage[BoxOptions.expiresAtFieldName] && accessTokenFromStorage[BoxOptions.expiresAtFieldName] > Date.now()) {
+			return accessTokenFromStorage;
+		} else {
+			return await new Promise((resolve, reject) => {
+				this.BoxSdk.getAppUserTokens(boxId, async (err, accessTokenInfo) => {
+					if (err) { reject(err); }
+					accessTokenInfo = createExpiresAtProp(accessTokenInfo);
+					let expiryTimeInSeconds = getExpirationTimeForCache(accessTokenInfo);
+					await BoxCache.setBoxToken(key, accessTokenInfo, expiryTimeInSeconds);
+					resolve(accessTokenInfo);
 				});
-			}
-		})();
+			});
+		}
 	}
 }
 
