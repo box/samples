@@ -1,0 +1,6 @@
+node_modules
+.eslintrc
+gulpfile.js
+Dockerfile
+npm-debug.log
+package-lock.json

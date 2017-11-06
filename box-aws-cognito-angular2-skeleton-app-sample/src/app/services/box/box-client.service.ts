@@ -145,9 +145,13 @@ export function defaultFactory(http: Http, auth: AuthService, options: RequestOp
     const EXPIRES_IN = BOX_CONFIG.tokenExpirationPeriod;
 
     const DEFAULT_REFRESH_TOKEN_FUNCTION = () => {
-        return Observable.fromPromise(auth.retrieveAccessToken())
+        return Observable.fromPromise(auth.retrieveIdToken())
             .flatMap(token => {
-                return http.post(BOX_CONFIG.refreshTokenUrl, { token });
+                let headers = new Headers();
+                headers.append('Authorization', token);
+                return http.get(BOX_CONFIG.refreshTokenUrl, {
+                    headers
+                });
             });
     };
 

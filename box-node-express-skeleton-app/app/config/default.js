@@ -4,7 +4,16 @@ const path = require('path');
 
 module.exports = {
 	BoxSDKConfig: {
-		boxConfigFilePath: ""
+		clientID: "",
+		clientSecret: "",
+		publicKeyID: "",
+		privateKey: "",
+		privateKeyFilename: "",
+		passphrase: "",
+		enterpriseID: "",
+		primaryKey: "",
+		secondaryKey: "",
+		boxConfigFilePath: "config.json"
 	},
 	BoxOptions: {
 		inMemoryStoreSize: "100",
@@ -19,8 +28,6 @@ module.exports = {
 		callbackUrl: "http://localhost:3000/callback",
 		sessionSecret: "securepassword",
 		inMemoryStoreSize: "100",
-		managementAPIClientId: "",
-		managementAPIClientSecret: ""
 	},
 
 	RedisConfig: {

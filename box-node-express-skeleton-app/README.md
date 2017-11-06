@@ -8,41 +8,39 @@
 
 ### Configuration
 #### Box Platform Configuration
-##### Step 1. Create a Box application
-1. Log into the [Box Developer Console](https://developers.box.com)
-    * Switch to the open beta of the new Developer Console, if needed
-2. Select "Create New App"
-    * Select "Custom App" and press "Next"
-    * Select "Server Authentication" and press "Next"
-        * *This sample demonstrates a server-to-server integration*
-    * Name the application "Box Node Express App - YOUR NAME"
-        * *Application names must be unique across Box*
-    * Press "Create App" and then "View Your App"
-    * Check the "Manage users" scope and press "Save Changes"
-    * In the "CORS Allowed Origins" section, add `http://localhost:3000` to use the UI Elements.
+#### Step 1. Create a Box Application
+1. Sign up for a [free Box Developer account](https://account.box.com/signup/n/developer) or log in to the [Box Developer Console](https://app.box.com/developers/console).
+2. Select "Create New App".
+    * Select "Custom App" and click "Next".
+    * Select "OAuth 2.0 with JWT (Server Authentication)" and click "Next".
+    * Name the application "Box Node Cognito Integration Sample - YOUR NAME".
+        * *Application names must be unique across Box.*
+    * Click "Create App" and then "View Your App".
+3. Click "Generate a Public/Private Keypair".
+    * *You may need to enter a 2-factor confirmation code.*
+    * Save the JSON config file -- this config file also contains the private key generated for your application.
+        * *Note: Box does not store the generated private key and this config file is the only copy of the private key. You can always delete this keypair from your application and generate a new keypair if you lose this config file.*
+2. Be sure to add your configuration file to the `app` directory.
 
-##### Step 2. Generate your Box Config file
-1. Follow the steps outlined here:
-    [Box App Creation Guide](https://developer.box.com/docs/configuring-service-accounts#section-6-generate-a-publicprivate-keypair)
+#### Step 2. Authorize the Application in Your Box Account
+1. In a new tab, log in to your Box account with the admin account and go to the Admin Console.
+    * Applications that use Server Authentication must be authorized by the admin of the account.
+    * Signing up for a [free Box Developer account](https://account.box.com/signup/n/developer) gives you access to a Box Enterprise.
+2. Under the gear icon, go to Enterprise Settings (or Business Settings, depending on your account type).
+3. Navigate to the Apps tab.
+3. Under "Custom Applications", click "Authorize New App".
+4. Enter the "Client ID" value from your Box application in the "API Key" field.
+    * Your application is now authorized to access your Box account.
 
-
-##### Step 3. Authorize the application into your Box account
-1. In a new tab, log into your Box account as an admin and go to the Admin Console
-    * *Applications that use Server Authentication must be authorized by the admin of the account*
-2. Under the gear icon, go to Enterprise Settings (or Business Settings, depending on your account type)
-    * You'll need the "Enterprise ID" of your account later
-3. Go to the Apps tab
-3. Under "Custom Applications", press "Authorize New App"
-4. Enter your "Client ID" from the developer console in the "API Key" field
-    * Your application is now authorized to access your Box account
-
-##### Step 4. Add environment variables to the Node Express App
+##### Step 3. Add environment variables to the Node Express App
 1. Navigate to `box-node-express-skeleton-app` > `app` > `config` > `default.js`.
 2. Add your own Box Config to the `app` directory under `box-node-express-skeleton-app` > `app`.
 3. Add the environment variables from your Box application to the `default.js` file:
+    * *Note: If you name your config file `config.json`, there are no changes needed.*
     * Under `module.exports.BoxSDKConfig`:
     ```
     boxConfigFilePath: Path to your Box Config file generated when creating a new Box App.
+    // For example, boxConfigFilePath: "config.json"
     ```
 
 #### Auth0 Configuration
@@ -61,17 +59,7 @@ For that reason, we've included the needed code and setup for an identity servic
     * Client ID
     * Client Secret
 
-#### Step 2. Create an Auth0 Management API Token Client Grant
-1. This project makes use of Auth0's Management API. You'll need to grant your Default client to have access to the Management API.
-    * Read more about this [here](https://auth0.com/docs/api/management/v2/tokens#1-create-and-authorize-a-client)
-2. Navigate to the [APIs](https://manage.auth0.com/#/apis) portion and click "Auth0 Management API".
-3. Under "Non Interactive Clients" click the slider to "Authorized".
-4. Add the following scopes:
-    * read:users_app_metadata
-    * create:users_app_metadata
-    * update:users_app_metadata
-
-#### Step 3. Add Auth0 configuration values to the Node Express application.
+#### Step 2. Add Auth0 configuration values to the Node Express application.
 1. Navigate to `box-node-express-skeleton-app` > `config` > `default.js`
 2. In the `default.js` file, replace these values with those from your Auth0 client:
     * Under `module.exports.Auth0Config`

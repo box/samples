@@ -8,8 +8,8 @@ export const environment = {
 
   region: 'us-west-2',
 
-  identityPoolId: 'us-west-2:0974fc74-5978-46ee-bebc-d21cf5c14810',
-  userPoolId: 'us-west-2_ZF8kn0FQ7',
-  clientId: '78aubm5e3uo7tni9n6sht6ff85',
+  identityPoolId: 'us-west-2:b8447394-a66d-48cd-8176-af497c21873a',
+  userPoolId: 'us-west-2_3LcxBoFos',
+  clientId: '46gnqe41uumnealrgfa46tt1oi',
 };
 

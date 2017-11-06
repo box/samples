@@ -4,8 +4,6 @@ const CacheService = require('../cache-service/cacheService');
 const config = require('config');
 const BoxSDKConfig = config.get('BoxSDKConfig');
 const BoxOptions = config.get('BoxOptions');
-const Promise = require('bluebird');
-const asyncFunc = Promise.coroutine;
 
 const BOX_ENTERPRISE = "enterprise";
 const BOX_USER = "user";
@@ -22,32 +20,32 @@ class BoxTokenCache {
 		this.cacheKeyPrefixUserToken = CACHE_KEY_PREFIX_USER_TOKEN;
 	}
 
-	getBoxToken(key) {
-		let self = this;
-		return asyncFunc(function* () {
-			let token = self.inMemoryStore.get(key);
-			if (token) {
-				return token;
-			} else {
-				let boxToken = yield self.cache.retrieveKey(key);
-				boxToken = (boxToken) ? JSON.parse(boxToken) : null;
-				clearInMemoryStore(self.inMemoryStore);
-				self.inMemoryStore.set(key, boxToken);
-				return boxToken;
-			}
-		})();
+	async getBoxToken(key) {
+		let token = this.inMemoryStore.get(key);
+		if (token) {
+			return token;
+		} else {
+			let boxToken = await this.cache.retrieveKey(key);
+			boxToken = (boxToken) ? JSON.parse(boxToken) : null;
+			clearInMemoryStore(this.inMemoryStore);
+			this.inMemoryStore.set(key, boxToken);
+			return boxToken;
+		}
 	}
 
-	setBoxToken(key, boxToken, expiration) {
-		let self = this;
-		return asyncFunc(function* () {
-			clearInMemoryStore(self.inMemoryStore);
-			self.inMemoryStore.set(key, boxToken);
-			expiration = expiration || 3600;
-			boxToken = JSON.stringify(boxToken);
-			yield self.cache.setKeyWithExpiration(key, boxToken, expiration);
-			return true;
-		})();
+	async setBoxToken(key, boxToken, expiration) {
+		clearInMemoryStore(this.inMemoryStore);
+		this.inMemoryStore.set(key, boxToken);
+		expiration = expiration || 3600;
+		boxToken = JSON.stringify(boxToken);
+		await this.cache.setKeyWithExpiration(key, boxToken, expiration);
+		return true;
+	}
+
+	async removeBoxToken(key) {
+		this.inMemoryStore.delete(key);
+		await this.cache.deleteKey(key);
+		return true;
 	}
 }
 

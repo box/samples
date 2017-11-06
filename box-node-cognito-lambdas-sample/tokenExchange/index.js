@@ -1,58 +1,62 @@
 'use strict';
 
-const boxManager = require('./box-manager');
-const cognitoManager = require('./cognito-manager');
+const boxManager = require('./boxManager');
 
-exports.handler = function (event, context, callback) {
-    console.log(`Event : ${JSON.stringify(event)}`);
-    
-    //Extract the troken from the event body
-    let token = JSON.parse(event.body).token;
-    if (!token) {
-        callback(null, { 
+//The authorizer attached to the API Gateway will send in the "sub" field within the claims when a JWT ID token is sent in the "Authorization" header.
+//The "sub" field is the user ID in the Cognito User Pool.
+const retrieveCognitoID = (event, callback) => {
+    if (event && event.requestContext && event.requestContext.authorizer
+        && event.requestContext.authorizer.claims && event.requestContext.authorizer.claims.sub) {
+        return event.requestContext.authorizer.claims.sub;
+    } else {
+        callback(null, {
             statusCode: '401',
             body: JSON.stringify({
-                message: 'No token found.'
+                error: "No ID found for this user."
             })
         });
     }
+}
 
-    //Get the Cognito user using the token
-    cognitoManager.getUser(token)
-        .then(function(user) {
-            console.log(`User is: ${JSON.stringify(user)}`);
-            
-            return cognitoManager.adminGetUser(user);
-        }).then(function(response) {
-            //Get the Box user property
-            var boxAppUserId = cognitoManager.getAppUserProperty(response.UserAttributes);
-            console.log(`Box App user id: ${boxAppUserId}`);
-            
+exports.handler = function (event, context, callback) {
+    console.log(`Event : ${JSON.stringify(event)}`);
+    const cognitoID = retrieveCognitoID(event, callback);
+    console.log(`Cognito ID: ${cognitoID}`);
+    //Retrieve the Box App User using the user's Cognito ID
+    boxManager.getAppUserID(cognitoID)
+        .then((appUserID) => {
             //If the box user is not present in Cognito, throw error
-            if (!boxAppUserId) {
+            if (!appUserID) {
                 callback(null, {
                     statusCode: '500',
                     body: JSON.stringify({
-                        error: 'Error retrieving user information from Cognito.'
+                        error: 'Error retrieving user information from Box.'
                     })
-                });    
-            } else {
-                //Generate the new app user token from Box.
-                return boxManager.generateUserToken(boxAppUserId);
+                });
             }
-        }).then(function(boxToken) {
+            console.log(`App User ID is: ${appUserID}`);
+            return boxManager.generateUserToken(appUserID);
+        }).then(function (boxToken) {
             //Sending the Box app user token.
+            if (!boxToken) {
+                callback(null, {
+                    statusCode: '500',
+                    body: JSON.stringify({
+                        error: 'Error retrieving new token from Box.'
+                    })
+                });
+            }
             callback(null, {
                 statusCode: '200',
                 body: JSON.stringify(boxToken)
-            });      
-        }).catch(function(error) {
+            });
+        }).catch(function (error) {
             //Sending the error as response.
             callback(null, {
                 statusCode: '500',
                 body: JSON.stringify({
                     error: error
                 })
-            });        
+            });
         });
 };

@@ -1,6 +1,4 @@
 'use strict';
-const Promise = require('bluebird');
-const asyncFunc = Promise.coroutine;
 const Redis = require('ioredis');
 const config = require('config');
 const RedisConfig = config.get('RedisConfig');
@@ -24,6 +22,10 @@ class CacheService {
 
 	setKey(key, value) {
 		return this.client.set(key, value);
+	}
+
+	deleteKey(key) {
+		return this.client.del(key);
 	}
 
 	setKeyWithExpiration(key, value, expiration) {
