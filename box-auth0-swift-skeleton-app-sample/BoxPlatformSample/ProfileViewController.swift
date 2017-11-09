@@ -18,12 +18,11 @@ class ProfileViewController : UIViewController, BOXFolderViewControllerDelegate,
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var boxIdLabel: UILabel!
     @IBOutlet weak var boxAccessToken: UILabel!
-    @IBOutlet weak var folderName: UILabel!
     
     var profile: Profile!
     var idToken: String!
     var accessToken: String!
-    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     // Implement Content SDK
     var boxClient: BOXContentClient {
@@ -128,11 +127,7 @@ class ProfileViewController : UIViewController, BOXFolderViewControllerDelegate,
     // Handle image picker and upload file to Box
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // start activity indicator for "Uploading" state
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-        view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
+        startActivityIndicator()
         
         // dismiss photo picker or camera
         self.dismiss(animated: true, completion: nil)
@@ -156,6 +151,14 @@ class ProfileViewController : UIViewController, BOXFolderViewControllerDelegate,
             self.activityIndicator.stopAnimating()
             self.present(alert, animated: true, completion: nil)
         })
+    }
+    
+    private func startActivityIndicator() {
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
     }
 }
 
