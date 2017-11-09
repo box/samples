@@ -23,6 +23,7 @@ class ProfileViewController : UIViewController, BOXFolderViewControllerDelegate,
     var profile: Profile!
     var idToken: String!
     var accessToken: String!
+    var activityIndicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     // Implement Content SDK
     var boxClient: BOXContentClient {
@@ -126,6 +127,15 @@ class ProfileViewController : UIViewController, BOXFolderViewControllerDelegate,
     
     // Handle image picker and upload file to Box
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        // start activity indicator for "Uploading" state
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
+        // dismiss photo picker or camera
+        self.dismiss(animated: true, completion: nil)
         
         guard let selectedFile = info[UIImagePickerControllerOriginalImage] as? UIImage else {
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
@@ -135,28 +145,17 @@ class ProfileViewController : UIViewController, BOXFolderViewControllerDelegate,
         let currentTimeStamp = String(Int(NSDate().timeIntervalSince1970))
         let fileName = "uploadedImage_\(currentTimeStamp).jpg"
         
-        // new content client for upload
-        let boxUploadClient = BOXContentClient.forNewSession()
-        boxUploadClient!.accessTokenDelegate = self
-        
-        // Authenticate app user
-        boxUploadClient!.authenticate { (user, error) in
-            if(error != nil) {
-                print(error!)
-                return
-            }
-        }
         // upload file to Box
-        let uploadRequest  : BOXFileUploadRequest = boxUploadClient!.fileUploadRequestToFolder(withID: BOXAPIFolderIDRoot, from: toUploadImage, fileName: fileName)
-        uploadRequest.perform()
-        
-        let alert = UIAlertController(title: "Successfully uploaded file!", message: "View uploaded photo by selecting \"View Files\"", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { (action) in
-            alert.dismiss(animated: true, completion: nil)
-        }))
-        
-        dismiss(animated: true, completion: nil)
-        self.present(alert, animated: true, completion: nil)
+        let uploadRequest  : BOXFileUploadRequest? = boxClient.fileUploadRequestToFolder(withID: BOXAPIFolderIDRoot, from: toUploadImage, fileName: fileName)
+        uploadRequest?.perform(progress: { (_ totalBytesTransferred: Int64, _ totalBytesExpectedToTransfer: Int64) in
+        }, completion: { (file, error) in
+            let alert = UIAlertController(title: "Successfully Uploaded", message: "View uploaded photo by selecting \"View Files\"", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Close", style: .default, handler: { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            }))
+            self.activityIndicator.stopAnimating()
+            self.present(alert, animated: true, completion: nil)
+        })
     }
 }
 
