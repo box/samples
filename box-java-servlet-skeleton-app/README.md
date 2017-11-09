@@ -35,7 +35,7 @@ If you don't install this, you'll get an exception about key length. This is not
     * *You may need to enter a 2-factor confirmation code.*
     * Save the JSON config file -- this config file also contains the private key generated for your application.
         * *Note: Box does not store the generated private key and this config file is the only copy of the private key. You can always delete this keypair from your application and generate a new keypair if you lose this config file.*
-4. Be sure to add your configuration file to the `src > main > resource` directory.
+4. Be sure to add your configuration file to the root of this project directory.
 5. In the "CORS Allowed Origins" section, add `http://localhost:8080`.
 
 #### Step 2. Authorize the Application in Your Box Account
@@ -49,7 +49,7 @@ If you don't install this, you'll get an exception about key length. This is not
     * Your application is now authorized to access your Box account.
 
 ##### Step 3. Add Configuration File to the Java App
-1. Add your generated Box config file to `src > main > resource` and name the file `config.json`.
+1. Add your generated Box config file to the root of this project and name the file `config.json`.
 
 #### Auth0 Configuration
 Additionally, since you manage the identity and authorization for your Box App Users within your Java application, you'll need an identity service to fully utilize JWT authentication on behalf of your App Users.

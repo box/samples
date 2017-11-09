@@ -7,6 +7,7 @@ import com.box.sdk.http.HttpMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -32,19 +33,14 @@ public class BoxHelper {
     static BoxConfig boxConfig;
 
     static {
-        Path configPath;
-        try {
-            System.out.println("Searching for file..");
-            configPath = Paths.get(Thread.currentThread().getContextClassLoader().getResource(BOX_CONFIG).toURI());
-            System.out.println(configPath.toString());
-            try (BufferedReader reader = Files.newBufferedReader(configPath, Charset.forName("UTF-8"))) {
-                boxConfig = BoxConfig.readFrom(reader);
-                accessTokenCache = new InMemoryLRUAccessTokenCache(MAX_CACHE_ENTRIES);
-            } catch (java.io.IOException e1) {
-                e1.printStackTrace();
-            }
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+        System.out.println("Searching for file..");
+        Path configPath = Paths.get(String.join("", System.getProperty("user.dir"), File.separator, BOX_CONFIG));
+        System.out.println(configPath.toString());
+        try (BufferedReader reader = Files.newBufferedReader(configPath, Charset.forName("UTF-8"))) {
+            boxConfig = BoxConfig.readFrom(reader);
+            accessTokenCache = new InMemoryLRUAccessTokenCache(MAX_CACHE_ENTRIES);
+        } catch (java.io.IOException e1) {
+            e1.printStackTrace();
         }
     }
 
