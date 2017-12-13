@@ -43,6 +43,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Capture photos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Select photos from library</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

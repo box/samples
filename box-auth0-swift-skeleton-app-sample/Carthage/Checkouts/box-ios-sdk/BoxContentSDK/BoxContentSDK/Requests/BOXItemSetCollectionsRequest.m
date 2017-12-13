@@ -128,8 +128,16 @@
     
     NSMutableArray *bodyContent = [NSMutableArray array];
     
-    for (NSString *collectionID in self.collectionIDs) {
-        [bodyContent addObject:@{BOXAPIObjectKeyID : collectionID}];
+    for (id collectionAttributes in self.collectionIDs) {
+        if ([collectionAttributes isKindOfClass:[NSString class]]) {
+            [bodyContent addObject:@{BOXAPIObjectKeyID : collectionAttributes}];
+        } else if ([collectionAttributes isKindOfClass:[NSDictionary class]]) {
+            if ((collectionAttributes[BOXAPIObjectKeyID] != nil) && (collectionAttributes[BOXAPIObjectKeyRank] != nil)) {
+                [bodyContent addObject:@{BOXAPIObjectKeyID : collectionAttributes[BOXAPIObjectKeyID], BOXAPIObjectKeyRank : collectionAttributes[BOXAPIObjectKeyRank]}];
+            } else if (collectionAttributes[BOXAPIObjectKeyID] != nil) {
+                [bodyContent addObject:@{BOXAPIObjectKeyID : collectionAttributes[BOXAPIObjectKeyID]}];
+            }
+        }
     }
     NSDictionary *bodyDictionary = @{BOXAPIObjectKeyCollections : bodyContent};
     
@@ -196,7 +204,6 @@
         };
         
         fileOperation.failureBlock = ^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-            
             if ([self.cacheClient respondsToSelector:@selector(cacheItemSetCollectionsRequest:withUpdatedItem:error:)]) {
                 [self.cacheClient cacheItemSetCollectionsRequest:self
                                                  withUpdatedItem:nil

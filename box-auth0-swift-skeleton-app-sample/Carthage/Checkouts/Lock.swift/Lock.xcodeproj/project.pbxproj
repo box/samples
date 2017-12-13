@@ -43,6 +43,7 @@
 		5B568F801E4B64D2004B3D98 /* Passwordless.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B568F7F1E4B64D2004B3D98 /* Passwordless.swift */; };
 		5B568F821E4B6506004B3D98 /* PasswordlessAuthenticatableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B568F811E4B6506004B3D98 /* PasswordlessAuthenticatableError.swift */; };
 		5B5F9F9F1E4B3FBE00EAB9EE /* PasswordlessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5F9F9E1E4B3FBE00EAB9EE /* PasswordlessView.swift */; };
+		5B64AC4F1F668CD0000A8842 /* InputFieldSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B64AC4D1F668B18000A8842 /* InputFieldSpec.swift */; };
 		5B6E02C01EA77B4E00B28579 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E02BF1EA77B4E00B28579 /* Extensions.swift */; };
 		5B889AEE1E700FCA00C9FBAF /* CountryCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B889AED1E700FCA00C9FBAF /* CountryCodes.swift */; };
 		5B8B795B1E8BAE5E00D0C57E /* passwordless_country_codes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B8B795A1E8BAE5E00D0C57E /* passwordless_country_codes.plist */; };
@@ -269,6 +270,7 @@
 		5B568F7F1E4B64D2004B3D98 /* Passwordless.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Passwordless.swift; sourceTree = "<group>"; };
 		5B568F811E4B6506004B3D98 /* PasswordlessAuthenticatableError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordlessAuthenticatableError.swift; sourceTree = "<group>"; };
 		5B5F9F9E1E4B3FBE00EAB9EE /* PasswordlessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordlessView.swift; sourceTree = "<group>"; };
+		5B64AC4D1F668B18000A8842 /* InputFieldSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputFieldSpec.swift; sourceTree = "<group>"; };
 		5B6631511DDB990B001CB043 /* EnterpriseDomainInteractorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterpriseDomainInteractorSpec.swift; sourceTree = "<group>"; };
 		5B6E02BF1EA77B4E00B28579 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5B889AED1E700FCA00C9FBAF /* CountryCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCodes.swift; sourceTree = "<group>"; };
@@ -491,6 +493,14 @@
 				5B38F84D1E93F2A000C25EAC /* OnePasswordSpec.swift */,
 			);
 			name = Extension;
+			sourceTree = "<group>";
+		};
+		5B64AC4C1F668AF5000A8842 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				5B64AC4D1F668B18000A8842 /* InputFieldSpec.swift */,
+			);
+			name = Components;
 			sourceTree = "<group>";
 		};
 		5B94D5AC1E8E6AF400E9D4F1 /* Extensions */ = {
@@ -800,6 +810,7 @@
 		5FEAE1D41D1A5154005C0028 /* LockTests */ = {
 			isa = PBXGroup;
 			children = (
+				5B64AC4C1F668AF5000A8842 /* Components */,
 				5F9231D31D5B6C2800D92580 /* Views */,
 				5F508FF81D1DB01D00EAA650 /* Interactors */,
 				5FBE5CCB1D3ED9210038536D /* Models */,
@@ -993,7 +1004,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = Auth0;
 				TargetAttributes = {
 					5BEDE1391EC0A9750007300D = {
@@ -1280,6 +1291,7 @@
 				5FBE5CC21D3E5EF50038536D /* MultifactorInteractorSpec.swift in Sources */,
 				5B3874D51E97C14000244326 /* PolicyViewSpec.swift in Sources */,
 				5B1FD9721E546F500055C1AC /* PasswordlessInteractorSpec.swift in Sources */,
+				5B64AC4F1F668CD0000A8842 /* InputFieldSpec.swift in Sources */,
 				5F73CDDE1D30B16900D8D8D1 /* DatabaseForgotPasswordPresenterSpec.swift in Sources */,
 				5BB142EF1E97C2F300315607 /* LockViewControllerSpec.swift in Sources */,
 				5F9231D51D5B6C5E00D92580 /* AuthCollectionViewSpec.swift in Sources */,
@@ -1452,14 +1464,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1503,14 +1521,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

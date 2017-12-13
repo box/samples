@@ -231,6 +231,7 @@
                                                 hasExpectedType:[NSNumber class]
                                                     nullAllowed:NO];
         
+        // Parse common collections into a BOXCollection
         NSArray *collectionsJSONArray = [NSJSONSerialization box_ensureObjectForKey:BOXAPIObjectKeyCollections 
                                                                        inDictionary:JSONResponse
                                                                     hasExpectedType:[NSArray class]
@@ -239,6 +240,35 @@
         for (NSDictionary *dict in collectionsJSONArray) {
             [collections addObject:[[BOXCollection alloc] initWithJSON:dict]];
         }
+        
+        // Parse membership collections into a BOXCollection
+        // TODO: Remove the collection count check once the service collection_membership implements object removal.
+        if ([collections count] > 0 ) {
+            NSArray *collectionMembershipsJSONArray = [NSJSONSerialization box_ensureObjectForKey:BOXAPIObjectKeyCollectionMemberships
+                                                                                     inDictionary:JSONResponse
+                                                                                  hasExpectedType:[NSArray class]
+                                                                                      nullAllowed:YES];
+            
+            for (NSDictionary *membershipDictionary in collectionMembershipsJSONArray) {
+                // Parse the collection object with in the collection membership
+                NSDictionary *collectionDictionary = [NSJSONSerialization box_ensureObjectForKey:BOXAPIObjectKeyCollection
+                                                                                    inDictionary:membershipDictionary
+                                                                                 hasExpectedType:[NSDictionary class]
+                                                                                     nullAllowed:YES];
+                
+                BOXCollection *collection = [[BOXCollection alloc] initWithJSON:collectionDictionary];
+                // Collection rank in the collection_memberships object requires BOXCollection info,
+                // Don't set the rank without the dependant collection object.
+                collection.collectionRank = [NSJSONSerialization box_ensureObjectForKey:BOXAPIObjectKeyCollectionRank
+                                                                           inDictionary:membershipDictionary
+                                                                        hasExpectedType:[NSNumber class]
+                                                                            nullAllowed:YES];
+                
+                [collections addObject:collection];
+            }
+        }
+        
+        // Set all collections and collection memberships found in json response.
         self.collections = collections;
         
     }
@@ -258,6 +288,19 @@
 - (BOOL)isBookmark
 {
     return NO;
+}
+
+- (NSNumber *)availableCollectionRank
+{
+    NSNumber *rank = nil;
+    for (BOXCollection *collection in self.collections) {
+        if ((collection.collectionRank != nil) &&
+            (collection.collectionRank != [NSNull null])) {
+            return collection.collectionRank;
+        }
+    }
+    
+    return rank;
 }
 
 @end
