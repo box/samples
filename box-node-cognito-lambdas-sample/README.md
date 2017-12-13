@@ -28,8 +28,8 @@ This sample gives the step-by-step instructions.
     * Signing up for a [free Box Developer account](https://account.box.com/signup/n/developer) gives you access to a Box Enterprise.
 2. Under the gear icon, go to Enterprise Settings (or Business Settings, depending on your account type).
 3. Navigate to the Apps tab.
-3. Under "Custom Applications", click "Authorize New App".
-4. Enter the "Client ID" value from your Box application in the "API Key" field.
+4. Under "Custom Applications", click "Authorize New App".
+5. Enter the "Client ID" value from your Box application in the "API Key" field.
     * Your application is now authorized to access your Box account.
 
 #### Step 3. Create Cognito User Pool

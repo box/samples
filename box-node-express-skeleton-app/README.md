@@ -13,14 +13,15 @@
 2. Select "Create New App".
     * Select "Custom App" and click "Next".
     * Select "OAuth 2.0 with JWT (Server Authentication)" and click "Next".
-    * Name the application "Box Node Cognito Integration Sample - YOUR NAME".
+    * Name the application "Box Node Express Sample - YOUR NAME".
         * *Application names must be unique across Box.*
     * Click "Create App" and then "View Your App".
 3. Click "Generate a Public/Private Keypair".
     * *You may need to enter a 2-factor confirmation code.*
     * Save the JSON config file -- this config file also contains the private key generated for your application.
         * *Note: Box does not store the generated private key and this config file is the only copy of the private key. You can always delete this keypair from your application and generate a new keypair if you lose this config file.*
-2. Be sure to add your configuration file to the `app` directory.
+4. Be sure to add your configuration file to the `app` directory.
+5. In the "CORS Allowed Origins" section, add `http://localhost:3000`.
 
 #### Step 2. Authorize the Application in Your Box Account
 1. In a new tab, log in to your Box account with the admin account and go to the Admin Console.
@@ -28,8 +29,8 @@
     * Signing up for a [free Box Developer account](https://account.box.com/signup/n/developer) gives you access to a Box Enterprise.
 2. Under the gear icon, go to Enterprise Settings (or Business Settings, depending on your account type).
 3. Navigate to the Apps tab.
-3. Under "Custom Applications", click "Authorize New App".
-4. Enter the "Client ID" value from your Box application in the "API Key" field.
+4. Under "Custom Applications", click "Authorize New App".
+5. Enter the "Client ID" value from your Box application in the "API Key" field.
     * Your application is now authorized to access your Box account.
 
 ##### Step 3. Add environment variables to the Node Express App

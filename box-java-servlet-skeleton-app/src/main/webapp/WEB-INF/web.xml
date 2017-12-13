@@ -1,83 +1,72 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<web-app metadata-complete="true"
-        xmlns="http://java.sun.com/xml/ns/javaee"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-        version="2.5">
-    <display-name>Auth0 Servlet Example</display-name>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1"
+         metadata-complete="true">
     <!-- Servlets -->
     <servlet>
         <servlet-name>Login</servlet-name>
-        <servlet-class>com.auth0.example.LoginServlet</servlet-class>
+        <servlet-class>com.box.example.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>com.box.example.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Dashboard</servlet-name>
-        <servlet-class>com.auth0.example.DashboardServlet</servlet-class>
+        <servlet-class>com.box.example.DashboardServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DocDetails</servlet-name>
-        <servlet-class>com.auth0.example.DocDetailsServlet</servlet-class>
+        <servlet-name>ContentPicker</servlet-name>
+        <servlet-class>com.box.example.ContentPickerServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Download</servlet-name>
-        <servlet-class>com.auth0.example.DownloadServlet</servlet-class>
+        <servlet-name>ContentUploader</servlet-name>
+        <servlet-class>com.box.example.ContentUploaderServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Thumbnail</servlet-name>
-        <servlet-class>com.auth0.example.ThumbnailServlet</servlet-class>
+        <servlet-name>ContentTree</servlet-name>
+        <servlet-class>com.box.example.ContentTreeServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Preview</servlet-name>
-        <servlet-class>com.auth0.example.PreviewServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>RedirectCallback</servlet-name>
-        <servlet-class>com.auth0.Auth0ServletCallback</servlet-class>
-        <init-param>
-            <param-name>auth0.redirect_on_success</param-name>
-            <param-value>/dashboard</param-value>
-        </init-param>
-        <init-param>
-            <param-name>auth0.redirect_on_error</param-name>
-            <param-value>/login</param-value>
-        </init-param>
+        <servlet-name>Callback</servlet-name>
+        <servlet-class>com.box.example.CallbackServlet</servlet-class>
     </servlet>
 
-    <!-- Servlet Mappings -->
-    <servlet-mapping>
-        <servlet-name>Dashboard</servlet-name>
-        <url-pattern>/dashboard</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DocDetails</servlet-name>
-        <url-pattern>/doc</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Download</servlet-name>
-        <url-pattern>/download</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Thumbnail</servlet-name>
-        <url-pattern>/thumbnail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Preview</servlet-name>
-        <url-pattern>/preview</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>RedirectCallback</servlet-name>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Dashboard</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContentPicker</servlet-name>
+        <url-pattern>/content-picker</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContentUploader</servlet-name>
+        <url-pattern>/content-uploader</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContentTree</servlet-name>
+        <url-pattern>/content-tree</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Callback</servlet-name>
         <url-pattern>/callback</url-pattern>
     </servlet-mapping>
 
     <!-- Filters -->
     <filter>
         <filter-name>AuthFilter</filter-name>
-        <filter-class>com.auth0.Auth0Filter</filter-class>
+        <filter-class>com.box.example.Auth0Filter</filter-class>
         <init-param>
             <param-name>auth0.redirect_on_authentication_error</param-name>
             <param-value>/login</param-value>
@@ -93,23 +82,19 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
-        <url-pattern>/doc</url-pattern>
+        <url-pattern>/content-picker</url-pattern>
     </filter-mapping>
 
-    <!-- Auth0 Configuration -->
     <context-param>
-        <param-name>auth0.client_id</param-name>
-        <param-value>auth0ClientId</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>auth0.client_secret</param-name>
-        <param-value>auth0ClientSecret</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>auth0.domain</param-name>
+        <param-name>com.auth0.domain</param-name>
         <param-value>auth0Domain</param-value>
     </context-param>
-
+    <context-param>
+        <param-name>com.auth0.clientId</param-name>
+        <param-value>auth0ClientId</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.auth0.clientSecret</param-name>
+        <param-value>auth0ClientSecret</param-value>
+    </context-param>
 </web-app>

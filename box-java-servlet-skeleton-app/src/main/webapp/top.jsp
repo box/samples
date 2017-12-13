@@ -1,3 +1,5 @@
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,7 +10,11 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:100,200,400,300,600' rel='stylesheet' type='text/css'>
     <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
-    <script src="https://cdn.auth0.com/js/lock-8.2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn01.boxcdn.net/platform/preview/1.16.0/en-US/preview.css" />
+    <link rel="stylesheet" href="https://cdn01.boxcdn.net/platform/elements/1.6.1/en-US/explorer.css" />
+    <link rel="stylesheet" href="https://cdn01.boxcdn.net/platform/elements/1.6.1/en-US/picker.css" />
+    <link rel="stylesheet" href="https://cdn01.boxcdn.net/platform/elements/1.6.1/en-US/uploader.css" />
+    <link rel="stylesheet" href="https://cdn01.boxcdn.net/platform/elements/1.6.1/en-US/tree.css" />
     <style>
         body{
             font-family:"Open Sans",sans-serif;
@@ -18,8 +24,6 @@
             }
         h1{font-weight: 300;}
         h3{font-weight: 300;}
-        .key{text-align: right; font-weight: bold;}
-        .value{font-family: "Courier";}
         .navbar-inverse {
             background-color: #3278cf;
             border-color: #3278cf;
@@ -29,35 +33,16 @@
             font-size: 150%;
             color: #fff
         }
-        .navbar-inverse .username {
-            margin-top: 14px;
-            text-align: right;
-            color: #fff
-        }
-        .navbar-inverse .username img {
-            margin-top: -3px
-        }
         .footer {
             height: 50px;
             text-align: right;
             font-size: 120%;
             color: #DDD
         }
-        .footer .navbar {background-color: #333}
-        .footer .navbar .logout {margin-top: 12px}
-        .footer .navbar .logout a {color: #fff}
         .btn-primary {
             background-color: #3278cf;
             border-color: #3278cf
         }
-        .signin-button {margin-top: 100px}
-        .modal-dialog {
-            height: 800px;
-            width: 960px;
-            background-color: white;
-        }
-        .modal-dialog .modal-body {height: 730px; width: 960px}
-        .modal-dialog .modal-footer .btn {font-size: 100%;}
     </style>
   </head>
   <body>
@@ -68,19 +53,5 @@
               Box Platform Java Example
             </a>
           </div>
-          <%
-          com.auth0.Auth0User user = com.auth0.Auth0User.get(request);
-          if (user!= null) {
-          %>
-            <div class='username'>
-                <span>
-                  <img class='img-circle' src='<%=user.getPicture()%>' width='30px'>
-                </span>
-                <span>
-                  <%= user.getName()%>
-                </span>
-            </div>
-          <% } %>
-        </div>
       </nav>
     <div class="container">
