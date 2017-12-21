@@ -19,7 +19,7 @@
     "angular-material": "^1.1.1",
     "angular-messages": "^1.5.8",
     "angular-ui-router": "^0.3.1",
-    "auth0-js": "^7.6.1",
+    "auth0-js": "^8.12.0",
     "ng-file-upload": "^12.2.12"
   }
 }
