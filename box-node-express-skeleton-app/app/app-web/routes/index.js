@@ -1,19 +1,28 @@
 'use strict';
-let express = require('express');
-let router = express.Router();
-let passport = require('passport');
-let ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
+const config = require('config');
+const Auth0Config = config.get('Auth0Config');
 
-let indexCtrl = require('../controllers/indexController');
-let loginCtrl = require('../controllers/loginController');
-let usersCtrl = require('../controllers/usersController');
-let contentPickerCtrl = require('../controllers/contentPickerController');
-let contentUploaderCtrl = require('../controllers/contentUploaderController');
-let contentTreeCtrl = require('../controllers/contentTreeController');
-let logoutCtrl = require('../controllers/logoutController');
+const indexCtrl = require('../controllers/indexController');
+const loginCtrl = require('../controllers/loginController');
+const usersCtrl = require('../controllers/usersController');
+const contentPickerCtrl = require('../controllers/contentPickerController');
+const contentUploaderCtrl = require('../controllers/contentUploaderController');
+const contentTreeCtrl = require('../controllers/contentTreeController');
+const logoutCtrl = require('../controllers/logoutController');
 
 router.get('/', indexCtrl.main);
-router.get('/login', loginCtrl.main);
+router.get('/login', passport.authenticate('auth0', {
+    clientID: Auth0Config.clientId,
+    domain: Auth0Config.domain,
+    redirectUri: Auth0Config.callbackUrl || 'http://localhost:3000/callback',
+    responseType: 'code',
+    audience: 'https://' + Auth0Config.domain + '/userinfo',
+    scope: 'openid profile'
+}), (req, res) => { res.redirect("/"); });
 router.get('/callback', passport.authenticate('auth0', { failureRedirect: '/' }), loginCtrl.callback);
 router.get('/user/:id?', ensureLoggedIn, usersCtrl.main);
 router.get('/content-picker/:id?', ensureLoggedIn, contentPickerCtrl.main);

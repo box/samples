@@ -8,8 +8,8 @@ const BoxOptions = config.get('BoxOptions');
 const BOX_ENTERPRISE = "enterprise";
 const BOX_USER = "user";
 
-const CACHE_KEY_PREFIX_ENTERPRISE_TOKEN = `${BoxSDKConfig.boxEnterpriseId}|${BOX_ENTERPRISE}`;
-const CACHE_KEY_PREFIX_USER_TOKEN = `${BoxSDKConfig.boxEnterpriseId}|${BOX_USER}`;
+const CACHE_KEY_PREFIX_ENTERPRISE_TOKEN = `${BoxSDKConfig.enterpriseID}|${BOX_ENTERPRISE}`;
+const CACHE_KEY_PREFIX_USER_TOKEN = `${BoxSDKConfig.enterpriseID}|${BOX_USER}`;
 
 //Implementation of a BoxCache: has getBoxToken and setBoxToken
 class BoxTokenCache {

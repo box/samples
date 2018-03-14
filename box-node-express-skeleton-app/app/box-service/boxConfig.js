@@ -94,7 +94,7 @@ module.exports = class BoxConfig {
     }
 
     setConfig(config, isFilename = false, readPrivateKey = false) {
-        let config = {};
+        config = config || {};
         let privateKey;
         if (isFilename) {
             config = JSON.parse(fs.readFileSync(config));
