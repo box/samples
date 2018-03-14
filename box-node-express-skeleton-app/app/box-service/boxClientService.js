@@ -57,7 +57,7 @@ class BoxClientService {
 	}
 
 	getLongRunningServiceAccountClient() {
-		return this.BoxSdk.getAppAuthClient(BOX_ENTERPRISE, BoxSDKConfig.boxEnterpriseId);
+		return this.BoxSdk.getAppAuthClient(BOX_ENTERPRISE, BoxSDKConfig.enterpriseID);
 	}
 
 	getLongRunningUserClient(boxId) {
@@ -81,7 +81,7 @@ class BoxClientService {
 			return enterpriseToken;
 		} else {
 			return await new Promise((resolve, reject) => {
-				this.BoxSdk.getEnterpriseAppAuthTokens(BoxSDKConfig.boxEnterpriseId, async (err, enterpriseToken) => {
+				this.BoxSdk.getEnterpriseAppAuthTokens(BoxSDKConfig.enterpriseID, async (err, enterpriseToken) => {
 					if (err) { reject(err); }
 					enterpriseToken = createExpiresAtProp(enterpriseToken);
 					let expiryTimeInSeconds = getExpirationTimeForCache(enterpriseToken);
