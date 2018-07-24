@@ -1,0 +1,43 @@
+{
+    "name": "box-sample-custom-skills-code",
+    "version": "1.0.0",
+    "description": "Box Skill Sample Custom Skills project.",
+    "scripts": {
+        "format":
+            "NODE_ENV=dev ./node_modules/.bin/prettier \"**/*.js\" --print-width 120 --single-quote --tab-width 4 --write; ./node_modules/.bin/eslint \"**/*.js\" --fix",
+        "test": "NODE_ENV=dev ./node_modules/.bin/jest --coverage",
+        "zip":
+            "zip -rMM9 -q ../sample-custom-skill-nodejs.zip * -x *.json && echo \"\\033[0;32m SUCCESS: sample-custom-skill-nodejs.zip created! \\033[0m\n\" || echo \"\\033[0;31m FAIL: Zip creation failed \\033[0m\n\"",
+        "build":
+            "rm -rf lib; mkdir lib; npx babel index.js metadata-card-adaptor.js --out-dir lib; cp package.json error-parser.js skills-kit.js lib/; cd lib; NODE_ENV=production npm install; npm run zip",
+        "deploy": "npm run build; ./node_modules/.bin/serverless deploy",
+        "undeploy": "NODE_ENV=dev ./node_modules/.bin/serverless remove -v"
+    },
+    "author": "Box <oss@box.com>",
+    "license": "Apache-2.0",
+    "homepage": "https://developer.box.com/docs/box-skills",
+    "dependencies": {
+        "box-node-sdk": "^1.9.0",
+        "enum": "^2.5.0",
+        "lodash": "^4.17.10",
+        "path": "^0.12.7",
+        "require-https": "^1.1.2"
+    },
+    "devDependencies": {
+        "babel": "^6.23.0",
+        "babel-cli": "^6.26.0",
+        "babel-eslint": "^8.2.2",
+        "babel-plugin-transform-async-to-generator": "^6.24.1",
+        "babel-preset-env": "^1.6.1",
+        "eslint": "^4.19.1",
+        "eslint-config-airbnb-base": "^12.1.0",
+        "eslint-config-prettier": "^2.9.0",
+        "eslint-plugin-import": "^2.9.0",
+        "jest": "^22.4.3",
+        "prettier": "^1.11.1",
+        "serverless": "^1.28.0"
+    },
+    "jest": {
+        "verbose": true
+    }
+}

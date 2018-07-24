@@ -1,0 +1,31 @@
+# For full Serverless config options, check the docs:
+#    https://serverless.com/framework/docs/providers/aws/guide/serverless.yml/
+
+service: box-sample-custom-skill-nodejs
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  timeout: 30 # attached to API Gateway so it's automatically limited to 30 seconds.
+  versionFunctions: true # maintains past versions in single deployment
+
+
+# overwriting defaults
+  stage: ${opt:stage, 'dev'}
+  region: us-west-2
+
+# packaging information
+package:
+  artifact: ./sample-custom-skill-nodejs.zip
+
+# service wide environment variables
+  environment:
+    BOX_API_ENDPOINT: https://api.box.com/2.0
+
+functions:
+  skill:
+    handler: index.handler
+    events: # The Events that trigger this Function
+      - http:
+          path: ${self:service}
+          method: any
